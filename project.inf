@@ -1,4 +1,5 @@
 Type: ae3.Package
 Name: ae3.api
 Title: AE3 API Package
-Provides: ae3.api
+Provides:	ae3.api \
+			build-prepare:compile-java \
