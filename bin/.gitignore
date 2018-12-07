@@ -1,2 +1,4 @@
 bin/
 *.class
+*.log
+hs_err_pid*
