@@ -5,57 +5,20 @@ import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.exec.Exec;
 import ru.myx.ae3.help.Format;
 
-/**
- * 
- * @author myx
- * 
- * 
+/** @author myx
+ *
+ *
  * @param <V>
- *            value type
- */
+ *            value type */
 public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Value<V>, Describable {
 	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	boolean isFailed();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	boolean isDone();
-	
-	/**
-	 * 
-	 * @return
-	 */
-	default boolean baseAwait() {
-		
-		
-		if (this.isFailed()) {
-			return false;
-		}
-		try {
-			this.baseValue();
-			return true;
-		} catch (Throwable t) {
-			return false;
-		}
-	}
-	
-	/**
-	 * Actually throws something based on 'error' field. Never returns normally.
+	/** Actually throws something based on 'error' field. Never returns normally.
 	 *
 	 * @param error
 	 * @param task
-	 * 
-	 * @return
-	 */
+	 *
+	 * @return */
 	static Error throwTaskFailedError(final Object error, final FutureValue<?> task) {
-		
 		
 		if (error instanceof Error) {
 			throw (Error) error;
@@ -77,10 +40,23 @@ public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Val
 				task.baseDescribe(),
 				task.getClass().getSimpleName() + ": task failed");
 	}
-	
+
+	/** @return */
+	default boolean baseAwait() {
+		
+		if (this.isFailed()) {
+			return false;
+		}
+		try {
+			this.baseValue();
+			return true;
+		} catch (final Throwable t) {
+			return false;
+		}
+	}
+
 	@Override
 	default Object baseDescribe() {
-		
 		
 		if (!this.isDone()) {
 			return "Unfinished task: class=" + this.getClass().getSimpleName();
@@ -94,10 +70,19 @@ public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Val
 			return Format.Describe.toEcmaSource(t, "");
 		}
 	}
-	
-	/**
-	 * 
-	 * @return
-	 */
+
+	/** @return */
+	default boolean isCancelled() {
+		
+		return this.isFailed();
+	}
+
+	/** @return */
+	boolean isDone();
+
+	/** @return */
+	boolean isFailed();
+
+	/** @return */
 	// BaseObject toNative();
 }

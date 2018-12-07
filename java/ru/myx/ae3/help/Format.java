@@ -20,9 +20,8 @@ import ru.myx.ae3.report.Report;
 
 /** @author barachta
  *
- * myx - barachta 
- *         Window>Preferences>Java>Templates. To enable and disable the creation of type comments go
- *         to Window>Preferences>Java>Code Generation. */
+ *         myx - barachta Window>Preferences>Java>Templates. To enable and disable the creation of
+ *         type comments go to Window>Preferences>Java>Code Generation. */
 public class Format extends AbstractSAPI {
 	
 	/** Inexact, Human readable
@@ -696,6 +695,8 @@ public class Format extends AbstractSAPI {
 							continue;
 						}
 						//$FALL-THROUGH$
+					default :
+						break;
 				}
 				prev = 0;
 				if (c < 32) {
@@ -868,6 +869,8 @@ public class Format extends AbstractSAPI {
 							continue;
 						}
 						//$FALL-THROUGH$
+					default :
+						break;
 				}
 				prev = 0;
 				if (c < 32) {
@@ -1258,6 +1261,8 @@ public class Format extends AbstractSAPI {
 				case '\'' :
 				case 0xB7 :
 					return true;
+				default :
+					break;
 			}
 			if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') {
 				return true;
@@ -1350,6 +1355,8 @@ public class Format extends AbstractSAPI {
 				case 0x0A :
 				case 0x0D :
 					return true;
+				default :
+					break;
 			}
 			if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') {
 				return true;
@@ -1410,6 +1417,8 @@ public class Format extends AbstractSAPI {
 				case '.' :
 				case 0xB7 :
 					return true;
+				default :
+					break;
 			}
 			if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') {
 				return true;
@@ -1476,6 +1485,8 @@ public class Format extends AbstractSAPI {
 				case ':' :
 				case '_' :
 					return true;
+				default :
+					break;
 			}
 			if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') {
 				return true;
