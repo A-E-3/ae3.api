@@ -1,5 +1,4 @@
-#
-# Ignore CVS files
-#
+bin/
 */CVS/*
-
+*.class
+*.log
