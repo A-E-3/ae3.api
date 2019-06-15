@@ -8,6 +8,7 @@ import java.util.Iterator;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
+import ru.myx.ae3.common.FutureValue;
 import ru.myx.ae3.e4.vm.VmReflected;
 import ru.myx.ae3.exec.ExecProcess;
 import ru.myx.ae3.exec.ExecStateCode;
@@ -24,27 +25,27 @@ public interface BaseObject extends VmReflected
 /* , Comparable<Object> - conflicts with JDK */
 /* , Iterable<String> - conflicts with collections */
 /* , Map< String , Object > - too complicated */ {
-	
+
 	/** BaseObject PROTOTYPE - root prototype has no prototype */
 	@ReflectionHidden
 	@NotNull
 	BaseObject PROTOTYPE = BaseObject.createObject(null);
-	
+
 	/** FALSE */
 	@ReflectionHidden
 	@NotNull
 	BasePrimitiveBoolean FALSE = new PrimitiveBooleanFalse();
-	
+
 	/** TRUE */
 	@ReflectionHidden
 	@NotNull
 	BasePrimitiveBoolean TRUE = new PrimitiveBooleanTrue();
-	
+
 	/** UNDEFINED */
 	@ReflectionHidden
 	@NotNull
 	BasePrimitiveUndefined UNDEFINED = new BasePrimitiveUndefined();
-	
+
 	/** NULL */
 	@ReflectionHidden
 	@NotNull
@@ -54,19 +55,20 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	Iterator<String> ITERATOR_EMPTY = (Iterator<String>) IteratorEmpty.INSTANCE;
-	
+
 	/** iterator() method should not ever return NULL, return this value at least. */
 	@SuppressWarnings("unchecked")
 	@ReflectionHidden
 	@NotNull
 	Iterator<BasePrimitive<?>> ITERATOR_EMPTY_PRIMITIVE = (Iterator<BasePrimitive<?>>) IteratorEmpty.INSTANCE;
-	
+
 	/** constant, read only */
 	@ReflectionHidden
 	@NotNull
 	SealedEmptyObject SEALED_EMPTY_OBJECT = SealedEmptyObject.INSTANCE;
-	
-	/** <pre>
+
+	/**
+	 * <pre>
 	 * 11.8.5 The Abstract Relational Comparison Algorithm
 	 * </pre>
 	 *
@@ -75,7 +77,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	static int compareGeneric(final BaseObject o1, final BaseObject o2) {
-		
+
 		if (o1 == o2) {
 			return 0;
 		}
@@ -85,7 +87,7 @@ public interface BaseObject extends VmReflected
 		if (o2 == BasePrimitiveNumber.NAN) {
 			return 1;
 		}
-		
+
 		/** 1. If the LeftFirst flag is true, then<br>
 		 * a. Let px be the result of calling ToPrimitive(x, hint Number).<br>
 		 * b. Let py be the result of calling ToPrimitive(y, hint Number).<br>
@@ -93,25 +95,25 @@ public interface BaseObject extends VmReflected
 		 * <br>
 		 * a. Let py be the result of calling ToPrimitive(y, hint Number).<br>
 		 * b. Let px be the result of calling ToPrimitive(x, hint Number).<br>
-		*/
-		
+		 */
+
 		final BasePrimitive<?> px = o1.baseToPrimitive(ToPrimitiveHint.NUMBER);
 		final BasePrimitive<?> py = o2.baseToPrimitive(ToPrimitiveHint.NUMBER);
-		
+
 		if (!(px instanceof CharSequence && py instanceof CharSequence)) {
 			/** 3. If it is not the case that both Type(px) is String and Type(py) is String,
 			 * then */
 			/** a. Let nx be the result of calling ToNumber(px). Because px and py are primitive
 			 * values evaluation order is not important. <br>
 			 * b. Let ny be the result of calling ToNumber(py).<br>
-			*/
+			 */
 			// final BasePrimitiveNumber nx = px.baseToNumber();
 			final double nx = px.doubleValue();
 			// final BasePrimitiveNumber ny = py.baseToNumber();
 			final double ny = py.doubleValue();
 			/** c. If nx is NaN, return undefined. <br>
 			 * d. If ny is NaN, return undefined.<br>
-			*/
+			 */
 			// if (nx == BasePrimitiveNumber.NAN || ny ==
 			// BasePrimitiveNumber.NAN) {
 			if (Double.isNaN(nx)) {
@@ -127,7 +129,7 @@ public interface BaseObject extends VmReflected
 			/** e. If nx and ny are the same Number value, return false.<br>
 			 * f. If nx is +0 and ny is −0, return false.<br>
 			 * g. If nx is −0 and ny is +0, return false.<br>
-			*/
+			 */
 			if (nx == ny) {
 				return 0;
 			}
@@ -135,7 +137,7 @@ public interface BaseObject extends VmReflected
 			 * i. If ny is +∞, return true.<br>
 			 * j. If ny is −∞, return false.<br>
 			 * k. If nx is −∞, return true.<br>
-			*/
+			 */
 			// if (nx == BasePrimitiveNumber.PINF) {
 			if (Double.isInfinite(nx) && nx > 0) {
 				return 1;
@@ -187,7 +189,7 @@ public interface BaseObject extends VmReflected
 			return px.stringValue().compareTo(py.stringValue());
 		}
 	}
-	
+
 	/** Creates default extensible unsealed array object just like '[]' will do in the script
 	 *
 	 *
@@ -199,13 +201,13 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	static <T> BaseList<T> createArray() {
-		
+
 		return Base.OBJECT_FACTORY.createArray();
 		/** try { return (BaseList<T>) Base.OF_CLS_BASE_LIST.newInstance(); } catch
 		 * (InstantiationException | IllegalAccessException e) { throw new
 		 * RuntimeException("BaseObject: array factory failure", e); } */
 	}
-	
+
 	/** Creates default extensible unsealed array object just like '[]' will do in the script
 	 *
 	 *
@@ -218,7 +220,7 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	static <T> BaseList<T> createArray(final BaseArray populate) {
-		
+
 		final int length = populate.length();
 		final BaseList<T> result = Base.OBJECT_FACTORY.createArray(length);
 		for (int i = 0; i < length; ++i) {
@@ -229,7 +231,7 @@ public interface BaseObject extends VmReflected
 		 * (InstantiationException | IllegalAccessException e) { throw new
 		 * RuntimeException("BaseObject: array factory failure", e); } */
 	}
-	
+
 	/** Creates default extensible unsealed array object just like '[]' will do in the script
 	 *
 	 *
@@ -242,13 +244,13 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	static <T> BaseList<T> createArray(final int expectedLength) {
-		
+
 		return Base.OBJECT_FACTORY.createArray(expectedLength);
 		/** try { return (BaseList<T>) Base.OF_CLS_BASE_LIST.newInstance(); } catch
 		 * (InstantiationException | IllegalAccessException e) { throw new
 		 * RuntimeException("BaseObject: array factory failure", e); } */
 	}
-	
+
 	/** Creates default extensible unsealed object just like '{}' will do in the script
 	 *
 	 *
@@ -259,13 +261,13 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	static BaseMapEditable createObject() {
-		
+
 		return Base.OBJECT_FACTORY.createObject();
 		/** try { return Base.OF_CLS_BASE_MAP.newInstance(); } catch (InstantiationException |
 		 * IllegalAccessException e) { throw new RuntimeException("BaseObject: BaseMap factory
 		 * failure", e); } */
 	}
-	
+
 	/** Creates default extensible unsealed object just like '{}' will do in the script but with
 	 * given prototype.
 	 *
@@ -275,7 +277,7 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	static BaseMapEditable createObject(final BaseObject prototype) {
-		
+
 		return Base.OBJECT_FACTORY.createObject(prototype);
 		/** try { return Base.OF_CNS_BASE_MAP.newInstance(prototype); } catch
 		 * (InvocationTargetException e) { throw new RuntimeException( "BaseObject: BaseMap factory
@@ -283,8 +285,9 @@ public interface BaseObject extends VmReflected
 		 * IllegalArgumentException e) { throw new RuntimeException( "BaseObject: BaseMap factory
 		 * failure", e); } */
 	}
-	
-	/** <pre>
+
+	/**
+	 * <pre>
 	 * 11.9.1 The Equals Operator ( == )
 	 * The production EqualityExpression : EqualityExpression == RelationalExpression is evaluated as follows:
 	 * 1. Evaluate EqualityExpression.
@@ -358,7 +361,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	static boolean equalsGeneric(final BaseObject b, final Object o) {
-		
+
 		if (b == null || o == null) {
 			return false;
 		}
@@ -383,7 +386,7 @@ public interface BaseObject extends VmReflected
 			 * 8. If x is +0 and y is −0, return true.<br>
 			 * 9. If x is −0 and y is +0, return true.<br>
 			 * 10. Return false. <br>
-			*/
+			 */
 			if (object.baseIsPrimitiveNumber()) {
 				return b.baseValue().equals(object.baseValue());
 			}
@@ -422,7 +425,7 @@ public interface BaseObject extends VmReflected
 		 * each other (section 13.1.2). Otherwise, return false. */
 		/** 14. If x is null and y is undefined, return true.<br>
 		 * 15. If x is undefined and y is null, return true. <br>
-		*/
+		 */
 		if (o == BaseObject.UNDEFINED || o == BaseObject.NULL) {
 			return false;
 		}
@@ -447,7 +450,7 @@ public interface BaseObject extends VmReflected
 		/** 22. Return false. */
 		return false;
 	}
-	
+
 	/** ECMA EQU comparison is not the same as ECMA.compare() == 0. {a:5} is not equal to {a:5}. It
 	 * doesn't do any 'valueOf' and 'toString' calls.
 	 *
@@ -524,14 +527,14 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	static boolean equalsNative(@NotNull final BaseObject o1, @NotNull final BaseObject o2) {
-		
+
 		if (o1 == BasePrimitiveNumber.NAN || o2 == BasePrimitiveNumber.NAN) {
 			return false;
 		}
 		if (o1 == o2) {
 			return true;
 		}
-		
+
 		/** False exact
 		 *
 		 * FIXME: js should do: '000' == false */
@@ -539,40 +542,40 @@ public interface BaseObject extends VmReflected
 			if (o1 == null || o1 == BaseObject.UNDEFINED || o1 == BaseObject.NULL) {
 				return o2 == null || o2 == BaseObject.UNDEFINED || o2 == BaseObject.NULL;
 			}
-			
+
 			if (o2 == null || o2 == BaseObject.UNDEFINED || o2 == BaseObject.NULL) {
 				return false/* o1 == null || o1 == BaseObject.UNDEFINED || o1 == BaseObject.NULL */;
 			}
-			
+
 			if (o1 == BaseObject.FALSE) {
 				return !o2.baseToJavaBoolean();
 			}
-			
+
 			if (o2 == BaseObject.FALSE) {
 				return !o1.baseToJavaBoolean();
 			}
 		}
-		
+
 		/** True exact */
 		{
 			if (o1 == BaseObject.TRUE) {
 				return /* o2 != null && */ o2 == BaseObject.TRUE || o2.baseToJavaBoolean();
 			}
-			
+
 			if (o2 == BaseObject.TRUE) {
 				return /* o1 != null && */ o1.baseToJavaBoolean();
 			}
 		}
-		
+
 		/** False-alike */
 		{
 			if ((o1 == BasePrimitiveNumber.ZERO || o1 == BaseString.EMPTY) && (o2 == BasePrimitiveNumber.ZERO || o2 == BaseString.EMPTY)) {
 				return true;
 			}
 		}
-		
+
 		// assert o1 != null && o2 != null : "should not get there ^^^^^";
-		
+
 		/** 11. If Type(x) is String, then return true if x and y are exactly the same sequence of
 		 * characters (same length and same characters in corresponding positions). Otherwise,
 		 * return false.
@@ -672,12 +675,99 @@ public interface BaseObject extends VmReflected
 		}
 		return false;
 	}
-	
+
+	/** 11.9.6 The Strict Equality Comparison Algorithm
+	 * <p>
+	 * The comparison x === y, where x and y are values, produces true or false. Such a comparison
+	 * is performed as follows: <br>
+	 * 1. If Type(x) is different from Type(y), return false.<br>
+	 * 2. If Type(x) is Undefined, return true. <br>
+	 * 3. If Type(x) is Null, return true. <br>
+	 * 4. If Type(x) is not Number, go to step 11.<br>
+	 * 5. If x is NaN, return false. <br>
+	 * 6. If y is NaN, return false. <br>
+	 * 7. If x is the same number value as y, return true.<br>
+	 * 8. If x is +0 and y is −0, return true. <br>
+	 * 9. If x is −0 and y is +0, return true. <br>
+	 * 10. Return false. <br>
+	 * 11. If Type(x) is String, then return true if x and y are exactly the same sequence of
+	 * characters (same length and same characters in corresponding positions); otherwise, return
+	 * false.<br>
+	 * 12. If Type(x) is Boolean, return true if x and y are both true or both false; otherwise,
+	 * return false.<br>
+	 * 13. Return true if x and y refer to the same object or if they refer to objects joined to
+	 * each other (section 13.1.2). Otherwise, return false. <br>
+	 * <p>
+	 *
+	 * @param o1
+	 * @param o2
+	 * @return */
+	@ReflectionHidden
+	static boolean equalsStrict(@NotNull final BaseObject o1, @NotNull final BaseObject o2) {
+
+		if (o1 == BasePrimitiveNumber.NAN || o2 == BasePrimitiveNumber.NAN) {
+			return false;
+		}
+		if (o2 == o1) {
+			return true;
+		}
+		/** have to do all of this because of non-detachable values */
+		if (o1 instanceof BasePrimitive<?> && o2 instanceof BasePrimitive<?>) {
+			/** Strings are strictly comparable
+			 *
+			 * No code needed:<code>
+			 * </code> */
+			if (o1.baseIsPrimitiveString() && o2.baseIsPrimitiveString()) {
+				return o1.toString().equals(o2.toString());
+			}
+			/** Numbers are strictly comparable
+			 *
+			 * No code needed:<code>
+			 * </code> */
+			if (o1.baseIsPrimitiveNumber() && o2.baseIsPrimitiveNumber()) {
+				return ((BasePrimitive<?>) o1).doubleValue() == ((BasePrimitive<?>) o2).doubleValue();
+			}
+			/** Booleans are strictly comparable
+			 *
+			 * No code needed:<code>
+			if (argumentA.baseIsPrimitiveBoolean() && argumentB.baseIsPrimitiveBoolean()) {
+				ctx.r7RR = argumentA.equals( argumentB )
+						? BaseObject.TRUE
+						: BaseObject.FALSE;
+				return null;
+			}
+			 * </code> */
+		}
+		{
+			final Object base = o1.baseValue();
+			if (base != o1) {
+				if (base instanceof BaseObject) {
+					return BaseObject.equalsStrict((BaseObject) base, o2);
+				} else //
+				if (o1 instanceof FutureValue) {
+					return BaseObject.equalsStrict(Base.forUnknown(base), o2);
+				}
+			}
+		}
+		{
+			final Object base = o2.baseValue();
+			if (base != o2) {
+				if (base instanceof BaseObject) {
+					return BaseObject.equalsStrict(o1, (BaseObject) base);
+				} else //
+				if (o2 instanceof FutureValue) {
+					return BaseObject.equalsStrict(o1, Base.forUnknown(base));
+				}
+			}
+		}
+		return false;
+	}
+
 	/** @param b
 	 * @return */
 	@ReflectionHidden
 	static int hashCodeGeneric(final BaseObject b) {
-		
+
 		final Object value = b.baseValue();
 		if (value == b) {
 			return System.identityHashCode(b);
@@ -686,22 +776,22 @@ public interface BaseObject extends VmReflected
 			? 0
 			: value.hashCode();
 	}
-	
+
 	/** Return NULL is not a writable array.
 	 *
 	 * @return TODO */
 	// BaseArrayWritable<? extends Object, ? extends Object>
 	// baseArrayWritable();
-	
+
 	/** Return NULL if not an array.
 	 *
 	 * @return NULL by default */
 	@ReflectionHidden
 	default BaseArray baseArray() {
-		
+
 		return null;
 	}
-	
+
 	/** Returns a function associated with this object. Executes code associated with the object.
 	 * Invoked via a function call expression. Objects that implement this internal method are
 	 * called functions.
@@ -726,10 +816,10 @@ public interface BaseObject extends VmReflected
 	 * @return null by default */
 	@ReflectionHidden
 	default BaseFunction baseCall() {
-		
+
 		return null;
 	}
-	
+
 	/** @param ctx
 	 * @param name
 	 * @param soft
@@ -739,7 +829,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseObject baseCall(final ExecProcess ctx, final String name, final boolean soft, final BaseObject argument) {
-		
+
 		final BaseObject value = this.baseGet(name, BaseObject.UNDEFINED);
 		final BaseFunction candidate = value.baseCall();
 		if (candidate == null) {
@@ -748,10 +838,10 @@ public interface BaseObject extends VmReflected
 			}
 			throw new IllegalArgumentException("No " + name + " method detected, candidateClass=" + value.getClass().getName());
 		}
-		
+
 		return candidate.callNE1(ctx, this, argument);
 	}
-	
+
 	/** @param name
 	 * @param soft
 	 *            when true, no error will be thrown when there is no such property or it is not a
@@ -759,7 +849,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseObject baseCall(final String name, final boolean soft) {
-		
+
 		final BaseObject value = this.baseGet(name, BaseObject.UNDEFINED);
 		final BaseFunction candidate = value.baseCall();
 		if (candidate == null) {
@@ -768,10 +858,10 @@ public interface BaseObject extends VmReflected
 			}
 			throw new IllegalArgumentException("No " + name + " method detected, candidateClass=" + value.getClass().getName());
 		}
-		
+
 		return candidate.callNJ0(this);
 	}
-	
+
 	/** @param name
 	 * @param soft
 	 *            when true, no error will be thrown when there is no such property or it is not a
@@ -780,7 +870,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseObject baseCall(final String name, final boolean soft, final BaseObject argument) {
-		
+
 		final BaseObject value = this.baseGet(name, BaseObject.UNDEFINED);
 		final BaseFunction candidate = value.baseCall();
 		if (candidate == null) {
@@ -789,10 +879,10 @@ public interface BaseObject extends VmReflected
 			}
 			throw new IllegalArgumentException("No " + name + " method detected, candidateClass=" + value.getClass().getName());
 		}
-		
+
 		return candidate.callNJ1(this, argument);
 	}
-	
+
 	/** The value of the [[Class]] property is defined by this specification for every kind of
 	 * built-in object. The value of the [[Class]] property of a host object may be any value, even
 	 * a value used by a built-in object for its [[Class]] property. The value of a [[Class]]
@@ -803,10 +893,10 @@ public interface BaseObject extends VmReflected
 	 * @return class, 'Object' by default */
 	@ReflectionHidden
 	default String baseClass() {
-		
+
 		return "Object";
 	}
-	
+
 	/** Should delete all delete-able own properties.
 	 *
 	 * <pre>
@@ -820,13 +910,13 @@ public interface BaseObject extends VmReflected
 	 * Deletes all own keys by default */
 	@ReflectionHidden
 	default void baseClear() {
-		
+
 		final Iterator<String> iterator = this.baseKeysOwn();
 		for (; iterator.hasNext();) {
 			this.baseDelete(iterator.next());
 		}
 	}
-	
+
 	/** Returns constructor associated with this object. Constructs an object. Invoked via the new
 	 * operator. Objects that implement this internal method are called constructors.
 	 *
@@ -851,10 +941,10 @@ public interface BaseObject extends VmReflected
 	 * @return null by default */
 	@ReflectionHidden
 	default BaseFunction baseConstruct() {
-		
+
 		return null;
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -866,12 +956,12 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final BasePrimitive<?> name, final BaseObject value) {
-		
+
 		return name instanceof BasePrimitiveString
 			? this.baseDefine((BasePrimitiveString) name, value, BaseProperty.ATTRS_MASK_WED)
 			: this.baseDefine(name.stringValue(), value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -883,10 +973,10 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final BasePrimitiveString name, final BaseObject value) {
-		
+
 		return this.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** Sets object's own property with specified attributes attached. In scripting, explicit store
 	 * object specifier (i.e. "a.b = 5" as opposed to "a = 5") should use this method.
 	 *
@@ -896,14 +986,14 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(@NotNull final BasePrimitiveString name, @NotNull final BaseObject value, final short attributes) {
-		
+
 		assert value != null : "NULL java object!";
 		final BaseProperty property = this.baseFindProperty(name);
 		if (property == null) {
 			return false;
 		}
 		final short propertyAttributes = property.propertyAttributes(name);
-		if ((propertyAttributes & BaseProperty.ATTRS_DYNAMIC_OR_PROCEDURAL) != 0) {
+		if ((propertyAttributes & BaseProperty.ATTRS_DYNAMIC_OR_PROCEDURAL_SET) != 0) {
 			return property.propertySet(this, name, value, attributes);
 		}
 		if ((propertyAttributes & BaseProperty.ATTR_WRITABLE) == 0 || (attributes & BaseProperty.ATTRS_MASK_WED) != (propertyAttributes & BaseProperty.ATTRS_MASK_WED)) {
@@ -911,7 +1001,7 @@ public interface BaseObject extends VmReflected
 		}
 		return property.propertySet(this, name, value, attributes);
 	}
-	
+
 	/** level0 macro.
 	 *
 	 * @param object
@@ -921,12 +1011,12 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final CharSequence name, final BaseObject value, final short attributes) {
-		
+
 		return name instanceof BasePrimitiveString
 			? this.baseDefine((BasePrimitiveString) name, value, attributes)
 			: this.baseDefine(name.toString(), value, attributes);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -937,11 +1027,11 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final BaseObject value) {
-		
+
 		assert value != null : "NULL java object!";
 		return this.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** BaseOrdinary
 	 *
 	 *
@@ -954,7 +1044,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final BaseObject value, final short attributes) {
-		
+
 		assert name != null : "Name is NULL";
 		assert value != null : "Shouldn't be NULL, use BaseObject.UNDEFINED or BaseObject.NULL instead";
 		final BaseProperty property = this.baseFindProperty(name);
@@ -962,7 +1052,7 @@ public interface BaseObject extends VmReflected
 			return false;
 		}
 		final short propertyAttributes = property.propertyAttributes(name);
-		if ((propertyAttributes & BaseProperty.ATTRS_DYNAMIC_OR_PROCEDURAL) != 0) {
+		if ((propertyAttributes & BaseProperty.ATTRS_DYNAMIC_OR_PROCEDURAL_SET) != 0) {
 			return property.propertySet(this, name, value, attributes);
 		}
 		if ((propertyAttributes & BaseProperty.ATTR_WRITABLE) == 0 || (attributes & BaseProperty.ATTRS_MASK_WED) != (propertyAttributes & BaseProperty.ATTRS_MASK_WED)) {
@@ -970,7 +1060,7 @@ public interface BaseObject extends VmReflected
 		}
 		return property.propertySet(this, name, value, attributes);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -981,10 +1071,10 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final BaseString<?> value) {
-		
+
 		return this.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -995,12 +1085,15 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final boolean value) {
-		
-		return this.baseDefine(name, value
-			? BaseObject.TRUE
-			: BaseObject.FALSE, BaseProperty.ATTRS_MASK_WED);
+
+		return this.baseDefine(
+				name,
+				value
+					? BaseObject.TRUE
+					: BaseObject.FALSE,
+				BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -1011,13 +1104,13 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final CharSequence value) {
-		
+
 		assert value != null : "NULL java object!";
 		return value instanceof BaseObject
 			? this.baseDefine(name, (BaseObject) value, BaseProperty.ATTRS_MASK_WED)
 			: this.baseDefine(name, value.toString(), BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -1028,20 +1121,20 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final double value) {
-		
+
 		return this.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** @param name
 	 * @param value
 	 * @param attributes
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final double value, final short attributes) {
-		
+
 		return this.baseDefine(name, Base.forDouble(value), attributes);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -1052,20 +1145,20 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final long value) {
-		
+
 		return this.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** @param name
 	 * @param value
 	 * @param attributes
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final long value, final short attributes) {
-		
+
 		return this.baseDefine(name, Base.forLong(value), attributes);
 	}
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -1076,24 +1169,25 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final String value) {
-		
+
 		return this.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-	
+
 	/** @param name
 	 * @param value
 	 * @param attributes
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDefine(final String name, final String value, final short attributes) {
-		
+
 		return this.baseDefine(name, Base.forString(value), attributes);
 	}
-	
-	/** @param source */
+
+	/** @param source
+	 */
 	@ReflectionHidden
 	default void baseDefineImportAllEnumerable(final BaseObject source) {
-		
+
 		if (source == null || source.baseIsPrimitive()) {
 			return;
 		}
@@ -1102,11 +1196,12 @@ public interface BaseObject extends VmReflected
 			this.baseDefine(key, source.baseGet(key, BaseObject.UNDEFINED), BaseProperty.ATTRS_MASK_WED);
 		}
 	}
-	
-	/** @param source */
+
+	/** @param source
+	 */
 	@ReflectionHidden
 	default void baseDefineImportOwnAll(final BaseObject source) {
-		
+
 		if (source == null || source.baseIsPrimitive()) {
 			return;
 		}
@@ -1115,11 +1210,12 @@ public interface BaseObject extends VmReflected
 			this.baseDefine(key, source.baseGet(key, BaseObject.UNDEFINED), BaseProperty.ATTRS_MASK_WED);
 		}
 	}
-	
-	/** @param source */
+
+	/** @param source
+	 */
 	@ReflectionHidden
 	default void baseDefineImportOwnEnumerable(final BaseObject source) {
-		
+
 		if (source == null || source.baseIsPrimitive()) {
 			return;
 		}
@@ -1128,7 +1224,7 @@ public interface BaseObject extends VmReflected
 			this.baseDefine(key, source.baseGet(key, BaseObject.UNDEFINED), BaseProperty.ATTRS_MASK_WED);
 		}
 	}
-	
+
 	/** Converts to String by default, implements index in classes like BaseArrayWritable.
 	 *
 	 *
@@ -1136,7 +1232,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default boolean baseDelete(final BaseObject propertyName) {
-		
+
 		/** remove? leave it only in BaseArray? Why check - override? */
 		if (propertyName.baseIsPrimitiveInteger()) {
 			final BaseArray array = this.baseArray();
@@ -1149,10 +1245,10 @@ public interface BaseObject extends VmReflected
 				return false;
 			}
 		}
-		
+
 		return this.baseDelete(propertyName.baseToJavaString());
 	}
-	
+
 	/** [[Delete]] (P) When the [[Delete]] method of O is called with property name P, the following
 	 * steps are taken:<br>
 	 * 1. If O doesn’t have a property with name P, return true.<br>
@@ -1164,7 +1260,7 @@ public interface BaseObject extends VmReflected
 	 * @return boolean */
 	@ReflectionHidden
 	boolean baseDelete(String name);
-	
+
 	/** Handy
 	 *
 	 * @param name
@@ -1172,12 +1268,12 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final BasePrimitive<?> name) {
-		
+
 		return name instanceof BasePrimitiveString
 			? this.baseFindProperty((BasePrimitiveString) name)
 			: this.baseFindProperty(name.baseToJavaString());
 	}
-	
+
 	/** 8.6.2.1.1 [[GetProperty]] (P)
 	 * <p>
 	 * When the [[GetProperty]] method of O is called with property name P, the following steps are
@@ -1194,20 +1290,20 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final BasePrimitiveString name) {
-		
+
 		for (final BaseProperty property = this.baseGetOwnProperty(name); property != null;) {
 			return property;
 		}
-		
+
 		for (final BaseObject prototype = this.basePrototype(); prototype != null;) {
 			return prototype.baseFindProperty(name);
 		}
 		return null;
-		
+
 		/** The initially correct code.
 		 *
 		 * <code>
-		
+
 		for (BaseObject object = this.basePrototype(); object != null; object = object.basePrototype()) {
 			for (final BaseProperty property = object.baseGetOwnProperty(name); property != null;) {
 				return property;
@@ -1216,7 +1312,7 @@ public interface BaseObject extends VmReflected
 		return null;
 		 * </code> */
 	}
-	
+
 	/** 8.6.2.1.1 [[GetProperty]] (P)
 	 * <p>
 	 * When the [[GetProperty]] method of O is called with property name P, the following steps are
@@ -1233,20 +1329,20 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final BasePrimitiveString name, @NotNull final BaseObject stop) {
-		
+
 		for (final BaseProperty property = this.baseGetOwnProperty(name); property != null;) {
 			return property;
 		}
-		
+
 		for (final BaseObject prototype = this.basePrototype(); prototype != null && prototype != stop;) {
 			return prototype.baseFindProperty(name, stop);
 		}
 		return null;
-		
+
 		/** The initially correct code.
 		 *
 		 * <code>
-		
+
 		for (BaseObject object = this.basePrototype(); object != null; object = object.basePrototype()) {
 			for (final BaseProperty property = object.baseGetOwnProperty(name); property != null;) {
 				return property;
@@ -1255,19 +1351,19 @@ public interface BaseObject extends VmReflected
 		return null;
 		 * </code> */
 	}
-	
+
 	/** Handy
 	 *
 	 * @param name
 	 * @return */
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final CharSequence name) {
-		
+
 		return name instanceof BasePrimitiveString
 			? this.baseFindProperty((BasePrimitiveString) name)
 			: this.baseFindProperty(name.toString());
 	}
-	
+
 	/** 8.6.2.1.1 [[GetProperty]] (P)
 	 * <p>
 	 * When the [[GetProperty]] method of O is called with property name P, the following steps are
@@ -1283,20 +1379,20 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final String name) {
-		
+
 		for (final BaseProperty property = this.baseGetOwnProperty(name); property != null;) {
 			return property;
 		}
-		
+
 		for (final BaseObject prototype = this.basePrototype(); prototype != null;) {
 			return prototype.baseFindProperty(name);
 		}
 		return null;
-		
+
 		/** The initially correct code.
 		 *
 		 * <code>
-		
+
 		for (BaseObject object = this.basePrototype(); object != null; object = object.basePrototype()) {
 			for (final BaseProperty property = object.baseGetOwnProperty(name); property != null;) {
 				return property;
@@ -1305,7 +1401,7 @@ public interface BaseObject extends VmReflected
 		return null;
 		 * </code> */
 	}
-	
+
 	/** 8.6.2.1.1 [[GetProperty]] (P)
 	 * <p>
 	 * When the [[GetProperty]] method of O is called with property name P, the following steps are
@@ -1322,20 +1418,20 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final String name, @NotNull final BaseObject stop) {
-		
+
 		for (final BaseProperty property = this.baseGetOwnProperty(name); property != null;) {
 			return property;
 		}
-		
+
 		for (final BaseObject prototype = this.basePrototype(); prototype != null && prototype != stop;) {
 			return prototype.baseFindProperty(name, stop);
 		}
 		return null;
-		
+
 		/** The initially correct code.
 		 *
 		 * <code>
-		
+
 		for (BaseObject object = this.basePrototype(); object != null; object = object.basePrototype()) {
 			for (final BaseProperty property = object.baseGetOwnProperty(name); property != null;) {
 				return property;
@@ -1344,13 +1440,13 @@ public interface BaseObject extends VmReflected
 		return null;
 		 * </code> */
 	}
-	
+
 	/** @param name
 	 * @param defaultValue
 	 * @return */
 	@ReflectionHidden
 	default BaseObject baseGet(final BaseObject name, final BaseObject defaultValue) {
-		
+
 		if (name instanceof BasePrimitiveString) {
 			return this.baseGet((BasePrimitiveString) name, defaultValue);
 		}
@@ -1372,20 +1468,20 @@ public interface BaseObject extends VmReflected
 		}
 		return this.baseGet(name.baseToPrimitive(null), defaultValue);
 	}
-	
+
 	/** @param name
 	 * @param defaultValue
 	 * @return */
 	@ReflectionHidden
 	default BaseObject baseGet(final BasePrimitive<?> name, final BaseObject defaultValue) {
-		
+
 		if (name instanceof BasePrimitiveString) {
 			return this.baseGet((BasePrimitiveString) name, defaultValue);
 		}
 		if (name instanceof CharSequence) {
 			return this.baseGet(name.toString(), defaultValue);
 		}
-		
+
 		if (name instanceof PrimitiveNumberIntegerAbstract || name.baseIsPrimitiveInteger()) {
 			final BaseArray array = this.baseArray();
 			if (array != null) {
@@ -1397,7 +1493,7 @@ public interface BaseObject extends VmReflected
 			? this.baseGet(identity, defaultValue)
 			: this.baseGet(name.stringValue(), defaultValue);
 	}
-	
+
 	/** [[Get]] (P) When the [[Get]] method of O is called with property name P, the following steps
 	 * are taken: <br>
 	 * 1. If O doesn’t have a property with name P, go to step 4. <br>
@@ -1412,28 +1508,30 @@ public interface BaseObject extends VmReflected
 	 * @return property */
 	@ReflectionHidden
 	default BaseObject baseGet(final BasePrimitiveString name, final BaseObject defaultValue) {
-		
+
 		for (final BaseProperty property = this.baseFindProperty(name); property != null;) {
 			return property.propertyGet(this, name);
 		}
 		return defaultValue;
 	}
-	
+
 	/** @param name
 	 * @param defaultValue
 	 * @return */
 	@ReflectionHidden
 	default BaseObject baseGet(final CharSequence name, final BaseObject defaultValue) {
-		
+
 		if (name instanceof BasePrimitiveString) {
 			return this.baseGet((BasePrimitiveString) name, defaultValue);
 		}
-		
-		return this.baseGet(name instanceof String
-			? (String) name
-			: name.toString(), defaultValue);
+
+		return this.baseGet(
+				name instanceof String
+					? (String) name
+					: name.toString(),
+				defaultValue);
 	}
-	
+
 	/** [[Get]] (P) When the [[Get]] method of O is called with property name P, the following steps
 	 * are taken: <br>
 	 * 1. If O doesn’t have a property with name P, go to step 4. <br>
@@ -1448,7 +1546,7 @@ public interface BaseObject extends VmReflected
 	 * @return property */
 	@ReflectionHidden
 	default BaseObject baseGet(final String name, final BaseObject defaultValue) {
-		
+
 		for (final BaseProperty property = this.baseFindProperty(name); property != null;) {
 			return property.propertyGet(this, name);
 		}
@@ -1485,7 +1583,7 @@ public interface BaseObject extends VmReflected
 			? this.baseGetOwnProperty((BasePrimitiveString) name)
 			: this.baseGetOwnProperty(name.toString());
 	}
-	
+
 	/** 8.6.2.1.2 [[GetOwnProperty]] (P)
 	 * <p>
 	 * When the [[GetOwnProperty]] method of O is called with property name P, the following steps
@@ -1505,52 +1603,52 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	BaseProperty baseGetOwnProperty(String name);
-	
+
 	/** Returns false when no enumerable own properties available of any kind.
 	 *
 	 * @return */
 	@ReflectionHidden
 	boolean baseHasKeysOwn();
-	
+
 	/** @return */
 	@ReflectionHidden
 	boolean baseIsExtensible();
-	
+
 	/** @return FALSE by default */
 	@ReflectionHidden
 	default boolean baseIsPrimitive() {
-		
+
 		return false;
 	}
-	
+
 	/** @return FALSE by default */
 	@ReflectionHidden
 	default boolean baseIsPrimitiveBoolean() {
-		
+
 		return false;
 	}
-	
+
 	/** @return FALSE by default */
 	@ReflectionHidden
 	default boolean baseIsPrimitiveInteger() {
-		
+
 		return false;
 	}
-	
+
 	/** @return FALSE by default */
 	@ReflectionHidden
 	default boolean baseIsPrimitiveNumber() {
-		
+
 		return false;
 	}
-	
+
 	/** @return FALSE by default */
 	@ReflectionHidden
 	default boolean baseIsPrimitiveString() {
-		
+
 		return false;
 	}
-	
+
 	/** Never returns null. BaseObject.ITERATOR_EMPTY at least
 	 *
 	 * Should list only those own properties whose 'enumerable' attribute is set to TRUE.
@@ -1565,10 +1663,10 @@ public interface BaseObject extends VmReflected
 	 * @return keys own by default */
 	@ReflectionHidden
 	default Iterator<? extends CharSequence> baseKeysOwnAll() {
-		
+
 		return this.baseKeysOwn();
 	}
-	
+
 	/** Never returns null. BaseObject.ITERATOR_EMPTY_PRIMITIVE at least
 	 *
 	 * Should list only those own properties whose 'enumerable' attribute is set to TRUE.
@@ -1576,7 +1674,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@ReflectionHidden
 	Iterator<? extends BasePrimitive<?>> baseKeysOwnPrimitive();
-	
+
 	/** The value of the [[Prototype]] property must be either an object or null, and every
 	 * [[Prototype]] chain must have finite length (that is, starting from any object, recursively
 	 * accessing the [[Prototype]] property must eventually lead to a null value). Whether or not a
@@ -1585,17 +1683,17 @@ public interface BaseObject extends VmReflected
 	 * @return prototype object or null */
 	@ReflectionHidden
 	default BaseObject basePrototype() {
-		
+
 		return BaseObject.PROTOTYPE;
 	}
-	
+
 	/** @return boolean, TRUE by default */
 	@ReflectionHidden
 	default BasePrimitiveBoolean baseToBoolean() {
-		
+
 		return BaseObject.TRUE;
 	}
-	
+
 	/** 9.5 ToInt32: (Signed 32 Bit Integer)
 	 * <p>
 	 * The operator ToInt32 converts its argument to one of 232 integer values in the range −231
@@ -1625,10 +1723,10 @@ public interface BaseObject extends VmReflected
 	 *         default: this.baseToPrimitive( ToPrimitiveHint.NUMBER ).baseToInt32() */
 	@ReflectionHidden
 	default BasePrimitiveNumber baseToInt32() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.NUMBER).baseToInt32();
 	}
-	
+
 	/** 9.4 ToInteger
 	 * <p>
 	 * The operator ToInteger converts its argument to an integral numeric value. This operator
@@ -1645,17 +1743,17 @@ public interface BaseObject extends VmReflected
 	 *         default: this.baseToPrimitive( ToPrimitiveHint.NUMBER ).baseToInteger() */
 	@ReflectionHidden
 	default BasePrimitiveNumber baseToInteger() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.NUMBER).baseToInteger();
 	}
-	
+
 	/** @return */
 	@ReflectionHidden
 	default boolean baseToJavaBoolean() {
-		
+
 		return this.baseToBoolean().booleanValue();
 	}
-	
+
 	/** Returns same as @baseToJavaString by default, and (the whole reason for this method) returns
 	 * 'this' for BaseString instances.
 	 *
@@ -1663,32 +1761,32 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	default CharSequence baseToJavaCharSequence() {
-		
+
 		return this.baseToJavaString();
 	}
-	
+
 	/** @return */
 	@ReflectionHidden
 	default int baseToJavaInteger() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.NUMBER).intValue();
 	}
-	
+
 	/** @return */
 	@ReflectionHidden
 	default long baseToJavaLong() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.NUMBER).longValue();
 	}
-	
+
 	/** @return */
 	@ReflectionHidden
 	@NotNull
 	default String baseToJavaString() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.STRING).stringValue();
 	}
-	
+
 	/** For Object
 	 * <p>
 	 * Apply the following steps:<br>
@@ -1701,10 +1799,10 @@ public interface BaseObject extends VmReflected
 	 *         default: this.baseToPrimitive( ToPrimitiveHint.NUMBER ).baseToNumber() */
 	@ReflectionHidden
 	default BasePrimitiveNumber baseToNumber() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.NUMBER).baseToNumber();
 	}
-	
+
 	/** [[DefaultValue]] (hint) When the [[DefaultValue]] method of O is called with hint String,
 	 * the following steps are taken:<br>
 	 * 1. Call the [[Get]] method of object O with argument "toString".<br>
@@ -1754,7 +1852,7 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	@NotNull
 	default BasePrimitive<?> baseToPrimitive(@Nullable final ToPrimitiveHint hint) {
-		
+
 		if (hint == null || hint == ToPrimitiveHint.NUMBER) {
 			{
 				final BaseProperty property = this.baseFindProperty(BaseString.STR_VALUE_OF, BaseObject.PROTOTYPE);
@@ -1813,7 +1911,7 @@ public interface BaseObject extends VmReflected
 				}
 			}
 		}
-		
+
 		try {
 			if (this.getClass().getMethod("baseToString").getDeclaringClass() != BaseObject.class) {
 				return this.baseToString();
@@ -1824,29 +1922,30 @@ public interface BaseObject extends VmReflected
 		} catch (NoSuchMethodException | SecurityException e) {
 			Report.exception("BASE", "baseToPrimitive(STRING)", e);
 		}
-		
+
 		/** FIXME: 5. Throw a TypeError exception. */
 		return Base.forString("[object " + this.baseClass() + "]");
 	}
-	
+
 	/** @return string */
 	@ReflectionHidden
 	@NotNull
 	default BasePrimitiveString baseToString() {
-		
+
 		return this.baseToPrimitive(ToPrimitiveHint.STRING).baseToString();
 	}
-	
+
 	/** Internal state information associated with this object.
 	 *
 	 * @return internal, this by default */
 	@ReflectionHidden
 	default Object baseValue() {
-		
+
 		return this;
 	}
-	
-	/** <pre>
+
+	/**
+	 * <pre>
 	 * 11.9.1 The Equals Operator ( == )
 	 * The production EqualityExpression : EqualityExpression == RelationalExpression is evaluated as follows:
 	 * 1. Evaluate EqualityExpression.
@@ -1926,7 +2025,7 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	@Override
 	boolean equals(Object o);
-	
+
 	/** should implement!
 	 *
 	 * @return */
@@ -1934,11 +2033,11 @@ public interface BaseObject extends VmReflected
 	int hashCode();
 	/** @return */
 	// BaseObject toNative();
-	
+
 	/** @return */
 	@Override
 	String toString();
-	
+
 	/** BaseObject
 	 *
 	 * Short cut for 'define(o,name,value.true,true,true)'
@@ -1953,18 +2052,18 @@ public interface BaseObject extends VmReflected
 	@Override
 	@ReflectionHidden
 	default ExecStateCode vmPropertyDefine(@NotNull final ExecProcess ctx, @NotNull final BaseObject name, @NotNull final BaseObject value, @NotNull final ResultHandler store) {
-		
+
 		assert value != null : "NULL java object!";
-		
+
 		if (name instanceof BasePrimitiveString) {
 			this.baseDefine((BasePrimitiveString) name, value, BaseProperty.ATTRS_MASK_WED);
 			return store.execReturn(ctx, value);
 		}
-		
+
 		this.baseDefine(name.baseToJavaString(), value, BaseProperty.ATTRS_MASK_WED);
 		return store.execReturn(ctx, value);
 	}
-	
+
 	/** [[Get]] (P) When the [[Get]] method of O is called with property name P, the following steps
 	 * are taken: <br>
 	 * 1. If O doesn’t have a property with name P, go to step 4. <br>
@@ -1981,13 +2080,13 @@ public interface BaseObject extends VmReflected
 	@Override
 	@ReflectionHidden
 	default ExecStateCode vmPropertyRead(final ExecProcess ctx, final BasePrimitiveString name, final BaseObject defaultValue, final ResultHandler store) {
-		
+
 		for (final BaseProperty property = this.baseFindProperty(name); property != null;) {
 			return property.propertyGetCtxResult(ctx, this, name, store);
 		}
 		return store.execReturn(ctx, defaultValue);
 	}
-	
+
 	/** [[Get]] (P) When the [[Get]] method of O is called with property name P, the following steps
 	 * are taken: <br>
 	 * 1. If O doesn’t have a property with name P, go to step 4. <br>
@@ -2004,7 +2103,7 @@ public interface BaseObject extends VmReflected
 	@Override
 	@ReflectionHidden
 	default ExecStateCode vmPropertyRead(final ExecProcess ctx, final String name, final BaseObject defaultValue, final ResultHandler store) {
-		
+
 		for (final BaseProperty property = this.baseFindProperty(name); property != null;) {
 			return store.execReturn(ctx, property.propertyGet(this, name));
 		}

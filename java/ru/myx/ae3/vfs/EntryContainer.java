@@ -2,6 +2,7 @@ package ru.myx.ae3.vfs;
 
 import ru.myx.ae3.base.BaseList;
 import ru.myx.ae3.base.BaseObject;
+import ru.myx.ae3.base.BaseString;
 import ru.myx.ae3.binary.TransferCopier;
 import ru.myx.ae3.common.Value;
 import ru.myx.ae3.know.Guid;
@@ -12,7 +13,7 @@ import ru.myx.ae3.reflect.ReflectionManual;
 /** @author myx */
 @ReflectionManual
 public interface EntryContainer extends Entry {
-	
+
 	/**
 	 *
 	 */
@@ -27,7 +28,10 @@ public interface EntryContainer extends Entry {
 	/** @param key
 	 * @return */
 	@ReflectionExplicit
-	Value<? extends CharSequence> getContentAsText(final String key);
+	default Value<? extends CharSequence> getContentAsText(final String key) {
+
+		return this.getContentAsText(key, BaseString.EMPTY);
+	}
 
 	/** @param key
 	 * @param defaultValue
@@ -58,6 +62,14 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	Value<? extends Entry> getContentElement(final String key, final TreeLinkType defaultMode);
+
+	/** @param key
+	 * @return */
+	@ReflectionExplicit
+	default BaseObject getContentPrimitive(final String key) {
+
+		return this.getContentPrimitive(key, BaseObject.UNDEFINED);
+	}
 
 	/** @param key
 	 * @param defaultValue
@@ -91,7 +103,7 @@ public interface EntryContainer extends Entry {
 
 	@Override
 	default boolean isContainer() {
-		
+
 		return true;
 	}
 
@@ -152,7 +164,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeBinary(final String key, final TransferCopier binary) {
-		
+
 		return this.setContentBinary(key, TreeLinkType.PUBLIC_TREE_REFERENCE, binary);
 	}
 
@@ -161,7 +173,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeBoolean(final String key, final Object primitive) {
-		
+
 		return this.setContentPrimitive(key, TreeLinkType.PUBLIC_TREE_REFERENCE, primitive);
 	}
 
@@ -170,7 +182,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeDate(final String key, final Object primitive) {
-		
+
 		return this.setContentPrimitive(key, TreeLinkType.PUBLIC_TREE_REFERENCE, primitive);
 	}
 
@@ -179,7 +191,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeHardlink(final String key, final Entry entry) {
-		
+
 		return this.setContentHardlink(key, TreeLinkType.PUBLIC_TREE_REFERENCE, entry);
 	}
 
@@ -188,7 +200,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeNumber(final String key, final Object primitive) {
-		
+
 		return this.setContentPrimitive(key, TreeLinkType.PUBLIC_TREE_REFERENCE, primitive);
 	}
 
@@ -199,7 +211,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreePrimitive(final String key, final Object primitive) {
-		
+
 		return this.setContentPrimitive(key, TreeLinkType.PUBLIC_TREE_REFERENCE, primitive);
 	}
 
@@ -208,7 +220,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeString(final String key, final Object primitive) {
-		
+
 		return this.setContentPrimitive(key, TreeLinkType.PUBLIC_TREE_REFERENCE, primitive);
 	}
 
@@ -217,7 +229,7 @@ public interface EntryContainer extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	default Value<?> setContentPublicTreeValue(final String key, final Object value) {
-		
+
 		if (value == BaseObject.UNDEFINED || value == null) {
 			return this.setContentUndefined(key);
 		}
@@ -255,14 +267,14 @@ public interface EntryContainer extends Entry {
 
 	@Override
 	default EntryContainer toContainer() {
-		
+
 		return this;
 	}
 
 	/** @return */
 	@ReflectionExplicit
 	default boolean unlinkRecursive() {
-		
+
 		String keyStart = null;
 		main : for (;;) {
 			final BaseList<Entry> children = this.getContentRange(keyStart, null, 1024, false, TreeReadType.PERSISTENT).baseValue();

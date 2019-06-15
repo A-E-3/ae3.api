@@ -44,15 +44,22 @@ public interface BaseProperty {
 
 	/** extra: property get may return dynamic results or when getter or setter requires a special
 	 * code to be run */
-	short ATTR_PROCEDURAL = 0x0010;
+	short ATTR_PROCEDURAL_GET = 0x0010;
+
+	/** extra: property get may return dynamic results or when getter or setter requires a special
+	 * code to be run */
+	short ATTR_PROCEDURAL_SET = 0x0020;
 
 	/** extra: property methods do need key */
-	short ATTR_KEY_NEEDED = 0x0020;
-
+	short ATTR_KEY_NEEDED = 0x0040;
+	
+	/** GET & SET */
+	short ATTR_PROCEDURAL = BaseProperty.ATTR_PROCEDURAL_GET | BaseProperty.ATTR_PROCEDURAL_SET;
+	
 	/**
 	 *
 	 */
-	short ATTRS_DYNAMIC_OR_PROCEDURAL = BaseProperty.ATTR_DYNAMIC | BaseProperty.ATTR_PROCEDURAL;
+	short ATTRS_DYNAMIC_OR_PROCEDURAL_SET = BaseProperty.ATTR_DYNAMIC | BaseProperty.ATTR_PROCEDURAL_SET;
 
 	/**
 	 *
@@ -93,6 +100,16 @@ public interface BaseProperty {
 	 *
 	 */
 	short ATTRS_MASK_NNN = 0;
+
+	/**
+	 *
+	 */
+	short ATTRS_MASK_NNN_NGN = BaseProperty.ATTR_PROCEDURAL_GET;
+
+	/**
+	 *
+	 */
+	short ATTRS_MASK_NNN_NSN = BaseProperty.ATTR_PROCEDURAL_GET;
 
 	/**
 	 *
@@ -180,6 +197,29 @@ public interface BaseProperty {
 		);
 	}
 
+	/** @param descriptor
+	 * @return */
+	static short propertyAttributesFromDescriptor(final BaseObject descriptor) {
+
+		final boolean writable = Base.getBoolean(descriptor, "writable", false);
+		final boolean enumerable = Base.getBoolean(descriptor, "enumerable", false);
+		final boolean dynamic = Base.getBoolean(descriptor, "configurable", false);
+
+		return (short) (0 + //
+				(writable
+					? BaseProperty.ATTR_WRITABLE
+					: 0)
+				| //
+				(enumerable
+					? BaseProperty.ATTR_ENUMERABLE
+					: 0)
+				| //
+				(dynamic
+					? BaseProperty.ATTR_DYNAMIC
+					: 0) //
+		);
+	}
+
 	/** true if and only if the type of this property descriptor may be changed and if the property
 	 * may be deleted from the corresponding object.
 	 *
@@ -205,6 +245,13 @@ public interface BaseProperty {
 	static boolean propertyIsProcedural(final short attributes) {
 
 		return (attributes & BaseProperty.ATTR_PROCEDURAL) != 0;
+	}
+
+	/** @param attributes
+	 * @return */
+	static boolean propertyIsProceduralSetter(final short attributes) {
+
+		return (attributes & BaseProperty.ATTR_PROCEDURAL_SET) != 0;
 	}
 
 	/** true if and only if the value associated with the property may be changed with an assignment

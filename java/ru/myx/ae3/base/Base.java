@@ -19,58 +19,58 @@ import ru.myx.ae3.help.Format;
 
 /** @author myx */
 public final class Base extends AbstractSAPI {
-
+	
 	private static final AbstractBaseImpl BASE_IMPL;
-
+	
 	private static final CacheDoubleImpl CACHE_DBL;
-
+	
 	private static final CacheIntegerImpl CACHE_INT;
-
+	
 	private static final BasePrimitiveNumber[] CACHE_INT_NEGATIVE;
-
+	
 	/** yes - same number, cause starts with -1 (not 0) */
 	private static final short CACHE_INT_NEGATIVE_MIN;
-
+	
 	private static final short CACHE_INT_NEGATIVE_MIN_SHORT;
-
+	
 	private static final short CACHE_INT_NEGATIVE_SIZE;
-
+	
 	private static final BasePrimitiveNumber[] CACHE_INT_POSITIVE;
-
+	
 	/** Not less than Short.MAX */
 	private static final int CACHE_INT_POSITIVE_SIZE;
-
+	
 	private static final CacheLongImpl CACHE_LNG;
-
+	
 	private static final CacheStringImpl CACHE_STR;
-
+	
 	private static final BasePrimitiveString[] CHARS = new BasePrimitiveString[Character.MAX_VALUE + 1];
-
+	
 	static final BaseProperty LENGTH_PROPERTY_STRING = new BasePropertyStringLength();
-
+	
 	static final AbstractBaseImpl.BaseObjectFactory OBJECT_FACTORY;
-
+	
 	static final Class<? extends BaseList<?>> OF_CLS_BASE_LIST;
-
+	
 	static final Class<? extends BaseMapEditable> OF_CLS_BASE_MAP;
-
+	
 	static final Constructor<? extends BaseMapEditable> OF_CNS_BASE_MAP;
-
+	
 	/**
 	 */
 	public static final BaseObject[] ZERO_BASE_OBJECT_ARRAY = new BaseObject[0];
-
+	
 	static {
-		
+
 		assert AbstractSAPI.logDebug("Base: public api, static init...");
-		
+
 		/** this block should go last */
 		{
 			BASE_IMPL = AbstractSAPI.createObject("ru.myx.ae3.base.ImplementBase");
 		}
 		{
 			assert AbstractSAPI.logDebug("Base: public api, static init: start factories...");
-			
+
 			OBJECT_FACTORY = Base.BASE_IMPL.createObjectFactory();
 			OF_CLS_BASE_LIST = Base.OBJECT_FACTORY.getClassForBaseList();
 			OF_CLS_BASE_MAP = Base.OBJECT_FACTORY.getClassForBaseMap();
@@ -82,13 +82,13 @@ public final class Base extends AbstractSAPI {
 		}
 		{
 			assert AbstractSAPI.logDebug("Base: public api, static init: create caches...");
-
+			
 			CACHE_INT = Base.BASE_IMPL.createCacheInteger();
 			CACHE_LNG = Base.BASE_IMPL.createCacheLong();
 			CACHE_DBL = Base.BASE_IMPL.createCacheDouble();
 			CACHE_STR = Base.BASE_IMPL.createCacheString();
 		}
-
+		
 		assert AbstractSAPI.logDebug("Base: public api, static init: prefill int cache...");
 		/** INT_CACHE_POSITIVE */
 		{
@@ -100,7 +100,7 @@ public final class Base extends AbstractSAPI {
 					: 4 * 64 * 1024;
 			CACHE_INT_POSITIVE = new BasePrimitiveNumber[size];
 			CACHE_INT_POSITIVE_SIZE = size;
-			
+
 			/** Excluding ONE and ZERO */
 			for (int i = Base.CACHE_INT_POSITIVE_SIZE - 1; i > 1; --i) {
 				Base.CACHE_INT_POSITIVE[i] = new PrimitiveNumberTrueInteger(i);
@@ -112,35 +112,35 @@ public final class Base extends AbstractSAPI {
 		}
 		/** INT_CACHE_NEGATIVE */
 		{
-			
+
 			final int size = (Engine.MODE_SIZE
 				? 2 * 1024
 				: Engine.MODE_SPEED
 					? 32 * 1024
 					: 8 * 1024) - 1;
-			
+
 			CACHE_INT_NEGATIVE = new BasePrimitiveNumber[size];
-			
+
 			/** yes - same number, cause starts with -1 (not 0) */
 			CACHE_INT_NEGATIVE_MIN = (short) -size;
-			
+
 			CACHE_INT_NEGATIVE_MIN_SHORT = (short) -size;
-			
+
 			CACHE_INT_NEGATIVE_SIZE = (short) size;
-			
+
 			/** than 'negatives starting with -1' excluding -1 */
 			for (int i = Base.CACHE_INT_NEGATIVE_SIZE - 1; i > 0; --i) {
 				Base.CACHE_INT_NEGATIVE[i] = new PrimitiveNumberTrueInteger(-i - 1);
 			}
 			/** Here goes MONE */
 			Base.CACHE_INT_NEGATIVE[0] = BasePrimitiveNumber.MONE;
-			
+
 			/** Just to be sure that byte range support is here. */
 			assert Math.round(Base.CACHE_INT_POSITIVE_SIZE) >= Short.MAX_VALUE : "Required for full range positive short support";
 			assert Math.round(Base.CACHE_INT_NEGATIVE_SIZE) >= 255 : "Required for full range byte support";
 			assert Math.round(Base.CACHE_INT_NEGATIVE_MIN) <= -256 : "Required for full range byte support";
 			assert Math.round(Base.CACHE_INT_NEGATIVE_MIN_SHORT) <= -256 : "Required for full range byte support";
-			
+
 			/** fill 1-char length strings */
 			for (int i = Base.CHARS.length - 1; i >= 0; --i) {
 				switch (i) {
@@ -164,9 +164,9 @@ public final class Base extends AbstractSAPI {
 						Base.CHARS[i] = new PrimitiveStringBaseNaN(String.valueOf((char) i).intern());
 				}
 			}
-			
-			assert AbstractSAPI.logDebug("Base: public api, static init: prefill double cache...");
 
+			assert AbstractSAPI.logDebug("Base: public api, static init: prefill double cache...");
+			
 			/** fill constants */
 			Base.initCachePutDouble(BasePrimitiveNumber.E);
 			Base.initCachePutDouble(BasePrimitiveNumber.LN10);
@@ -181,9 +181,9 @@ public final class Base extends AbstractSAPI {
 			Base.initCachePutDouble(BasePrimitiveNumber.PINF);
 			Base.initCachePutDouble(BasePrimitiveNumber.SQRT1_2);
 			Base.initCachePutDouble(BasePrimitiveNumber.SQRT2);
-			
+
 			assert AbstractSAPI.logDebug("Base: public api, static init: prefill string cache...");
-			
+
 			Base.initCachePutString(BaseString.EMPTY);
 			Base.initCachePutString(BaseString.STR_FALSE);
 			Base.initCachePutString(BaseString.STR_INFINITY);
@@ -198,71 +198,71 @@ public final class Base extends AbstractSAPI {
 			Base.initCachePutString(BaseString.STR_UTF8);
 			Base.initCachePutString(BaseString.STR_ONE);
 			Base.initCachePutString(BaseString.STR_ZERO);
-			
+
 			Base.initCachePutString(BaseString.STR_BOOLEAN);
 			Base.initCachePutString(BaseString.STR_FUNCTION);
 			Base.initCachePutString(BaseString.STR_NUMBER);
 			Base.initCachePutString(BaseString.STR_OBJECT);
 			Base.initCachePutString(BaseString.STR_STRING);
-			
+
 			Base.initCachePutString(BaseString.STR_LENGTH);
 			Base.initCachePutString(BaseString.STR_CALLEE);
 			Base.initCachePutString(BaseString.STR_PROTOTYPE);
 			Base.initCachePutString(BaseString.STR_CONSTRUCTOR);
-			
+
 			Base.initCachePutString(BaseString.STR_EX_GETDATA);
 		}
 		{
 			assert BaseString.STR_LENGTH == Base.forString("length") : "Should return the same instance!";
 			assert BaseString.STR_PROTOTYPE == Base.forString("prototype") : "Should return the same instance!";
 		}
-		
-		BaseString.class.getName();
-		
-		BaseObject.PROTOTYPE.getClass();
-		
-		assert AbstractSAPI.logDebug("Base: public api, static init: patch editable...");
 
+		BaseString.class.getName();
+
+		BaseObject.PROTOTYPE.getClass();
+
+		assert AbstractSAPI.logDebug("Base: public api, static init: patch editable...");
+		
 		((BaseEditable) BaseString.PROTOTYPE).setOwnProperty( //
 				BaseString.STR_LENGTH,
 				Base.LENGTH_PROPERTY_STRING,
 				BaseProperty.ATTRS_MASK_NNN);
-		
+
 		assert AbstractSAPI.logDebug("Base: public api, static init: done.");
 	}
-
+	
 	private static final int bigDecimalExponent = 324; // i.e.
-
+	
 	// abs(minDecimalExponent)
-
+	
 	private static final char infinity[] = {
 			'I', 'n', 'f', 'i', 'n', 'i', 't', 'y'
 	};
-
+	
 	private static final char notANumber[] = {
 			'N', 'a', 'N'
 	};
-
+	
 	private static final char zero[] = {
 			'0', '0', '0', '0', '0', '0', '0', '0'
 	};
-
+	
 	/** @param function
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	public static final BaseFunction bindFunction(final BaseFunction function, final BaseObject instance, final BaseObject... arguments) {
-
+		
 		return Base.BASE_IMPL.bindFunction(function, instance, arguments);
 	}
-
+	
 	/** 'object's prototype chain should not have 'check' object in it.
 	 *
 	 * @param object
 	 * @param check
 	 * @return */
 	static final boolean checkPrototypeChainDuplicates(BaseObject object, final BaseObject check) {
-
+		
 		int counter = 500;
 		for (; object != null; object = object.basePrototype()) {
 			if (object == check) {
@@ -274,29 +274,29 @@ public final class Base extends AbstractSAPI {
 		}
 		return true;
 	}
-
+	
 	/** @param o1
 	 * @param o2
 	 * @return */
 	public static final boolean compareEQU(final BaseObject o1, final BasePrimitiveString o2) {
-
+		
 		if (o1 == o2) {
 			return true;
 		}
 		if (o1 == BasePrimitiveNumber.NAN) {
 			return false;
 		}
-
+		
 		{
 			final boolean o1falseExact = o1 == null || o1 == BaseObject.UNDEFINED || o1 == BaseObject.NULL || o1 == BaseObject.FALSE || o1 == BasePrimitiveNumber.ZERO
 					|| o1 == BaseString.EMPTY;
-
+			
 			final boolean o2falseExact = o2 == null || o2 == BaseString.EMPTY;
-
+			
 			if (o1falseExact && o2falseExact) {
 				return true;
 			}
-
+			
 			if (o1falseExact) {
 				return o2 != null && o2.baseToJavaBoolean()
 					? false
@@ -308,23 +308,23 @@ public final class Base extends AbstractSAPI {
 					: true;
 			}
 		}
-
+		
 		{
 			final boolean o1trueExact = o1 == BaseObject.TRUE;
-
+			
 			if (o1trueExact) {
 				return true;
 			}
-
+			
 			if (o1trueExact) {
 				return o2 != null && o2.baseToJavaBoolean()
 					? true
 					: false;
 			}
 		}
-
+		
 		assert o1 != null && o2 != null : "should not get there ^^^^^";
-
+		
 		/** 11. If Type(x) is String, then return true if x and y are exactly the same sequence of
 		 * characters (same length and same characters in corresponding positions). Otherwise,
 		 * return false.
@@ -369,21 +369,21 @@ public final class Base extends AbstractSAPI {
 		}
 		return false;
 	}
-
+	
 	/** @param o1
 	 * @param o2
 	 * @return */
 	public static final boolean compareEQU(final BasePrimitiveString o1, final BaseObject o2) {
-
+		
 		return Base.compareEQU(o2, o1);
 	}
-
+	
 	@NotNull
 	static final CacheIntegerImpl createCacheIntegerBucket() {
-
+		
 		return Base.BASE_IMPL.createCacheInteger();
 	}
-
+	
 	/** equivalent to JS 'new Function ([arg1[, arg2[, ...argN]],] functionBody)'.
 	 *
 	 * for Java-2-JS integration calls
@@ -392,16 +392,17 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param arg
 	 * @return
-	 * @throws Exception */
+	 * @throws Exception
+	 */
 	@NotNull
 	public static final BaseFunction createFunction(final String... arg) throws Exception {
-
+		
 		if (arg == null) {
 			return BaseFunction.RETURN_UNDEFINED;
 		}
 		return Base.BASE_IMPL.createFunction(Exec.currentProcess().ri10GV, arg);
 	}
-
+	
 	/** Leaves property's name empty, key is used for 'isProcedural' call only.
 	 *
 	 * @param instance
@@ -412,20 +413,18 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	@NotNull
-	static final BasePropertyData<BasePrimitiveString> createPropertyPrimitive(final BaseObject instance,
-			final BasePrimitiveString key,
-			final BaseProperty property,
-			final short attributes) {
-
+	static final BasePropertyData<BasePrimitiveString>
+			createPropertyPrimitive(final BaseObject instance, final BasePrimitiveString key, final BaseProperty property, final short attributes) {
+		
 		return Base.BASE_IMPL.createPropertyPrimitive(instance, key, property, attributes);
 	}
-
+	
 	@NotNull
 	static final BasePropertyData<BasePrimitiveString> createPropertyPrimitive(final BasePrimitiveString key, final BaseObject value, final short attributes) {
-
+		
 		return Base.BASE_IMPL.createPropertyPrimitive(key, value, attributes);
 	}
-
+	
 	/** Leaves property's name empty, key is used for 'isProcedural' call only.
 	 *
 	 * @param instance
@@ -435,16 +434,16 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	static final BasePropertyData<String> createPropertyString(final BaseObject instance, final String key, final BaseProperty property, final short attributes) {
-
+		
 		return Base.BASE_IMPL.createPropertyString(instance, key, property, attributes);
 	}
-
+	
 	@NotNull
 	static final BasePropertyData<String> createPropertyString(final String key, final BaseObject value, final short attributes) {
-
+		
 		return Base.BASE_IMPL.createPropertyString(key, value, attributes);
 	}
-
+	
 	/** Creates default extensible unsealed string object just like new String(x) will do in the
 	 * script
 	 *
@@ -453,10 +452,10 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final BaseStringObject<?> createStringObject(final CharSequence x) {
-
+		
 		return Base.OBJECT_FACTORY.createStringObject(x.toString());
 	}
-
+	
 	/** Creates default extensible unsealed string object just like new String(x) will do in the
 	 * script
 	 *
@@ -465,10 +464,10 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final BaseStringObject<?> createStringObject(final String x) {
-
+		
 		return Base.OBJECT_FACTORY.createStringObject(x);
 	}
-
+	
 	/** This is default implementation for toPrimitive method.
 	 *
 	 * TODO: search for similar code and refactor to use this one.
@@ -478,7 +477,7 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final BasePrimitive<?> defaultToPrimitive(final BaseObject object, final ToPrimitiveHint hint) {
-
+		
 		if (hint == null || hint == ToPrimitiveHint.NUMBER) {
 			{
 				final BaseObject valueOf = object.baseGet(BaseString.STR_VALUE_OF, BaseObject.UNDEFINED);
@@ -529,25 +528,26 @@ public final class Base extends AbstractSAPI {
 		/** FIXME: 5. Throw a TypeError exception. */
 		return Base.forString("[object " + object.getClass().getName() + "]");
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forArray(final BaseObject object) {
-
+		
 		// ignore
 	}
-
+	
 	/** @param <T>
 	 * @param object
 	 * @return array or java-NULL when object is NULL */
 	@NotNull
 	public static final <T> BaseArray forArray(final List<T> object) {
-
+		
 		return Base.BASE_IMPL.javaObjectToBaseArray(object);
 	}
-
+	
 	/** TODO: return java-null for NULL argument
 	 *
 	 * @param <T>
@@ -555,47 +555,48 @@ public final class Base extends AbstractSAPI {
 	 * @return primitive */
 	@NotNull
 	public static final <T> BaseArray forArray(final T[] object) {
-
+		
 		return Base.BASE_IMPL.javaObjectToBaseArray(object);
 	}
-
+	
 	/** @param x
 	 * @return */
 	@NotNull
 	public static BasePrimitiveBoolean forBoolean(final boolean x) {
-
+		
 		return x
 			? BaseObject.TRUE
 			: BaseObject.FALSE;
 	}
-
+	
 	/** @param value
 	 * @return number */
 	@NotNull
 	public static final BasePrimitiveNumber forByte(final byte value) {
-
+		
 		return value < 0
 			? Base.CACHE_INT_NEGATIVE[-value - 1]
 			: Base.CACHE_INT_POSITIVE[value];
 	}
-
+	
 	/** @param c
 	 * @return */
 	@NotNull
 	public static final BasePrimitiveString forChar(final char c) {
-
+		
 		return Base.CHARS[c];
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param date */
+	 * @param date
+	 */
 	@Deprecated
 	public static final void forDate(final BaseDate date) {
-
+		
 		//
 	}
-
+	
 	/** Will return same objects if it is an instance of BaseDate or will create BaseWrapDate
 	 * wrapper to dynamically reflect changes in given Date object.
 	 *
@@ -603,7 +604,7 @@ public final class Base extends AbstractSAPI {
 	 * @return date or java-NULL when date is null */
 	@Nullable
 	public static final BaseDate forDate(@Nullable final Date date) {
-
+		
 		if (date == null) {
 			return null;
 		}
@@ -614,31 +615,32 @@ public final class Base extends AbstractSAPI {
 			? new BaseDate(date)
 			: new BaseWrapDate(date);
 	}
-
+	
 	/** Will simply create an instance of BaseDate
 	 *
 	 * @param date
 	 * @return date */
 	@NotNull
 	public static final BaseDate forDateMillis(final long date) {
-
+		
 		return new BaseDate(date);
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forDouble(final byte value) {
-
+		
 		//
 	}
-
+	
 	/** @param x
 	 * @return number */
 	@NotNull
 	public static final BasePrimitiveNumber forDouble(final double x) {
-
+		
 		if (x == (long) x) {
 			final int intX = (int) x;
 			if (intX == x) {
@@ -657,49 +659,52 @@ public final class Base extends AbstractSAPI {
 		}
 		return Base.CACHE_DBL.cacheGetCreate(x);
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forDouble(final int value) {
-
+		
 		//
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forDouble(final long value) {
-
+		
 		//
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forDouble(final short value) {
-
+		
 		//
 	}
-
+	
 	/** Parses double as BasePrimitiveString.baseToNumber() would.
 	 *
 	 * @param string
 	 * @return */
 	@NotNull
 	public static BasePrimitiveNumber forDouble(final String string) {
-
+		
 		return Base.forDouble(Base.parseDouble(string));
 	}
-
+	
 	/** @param x
 	 * @return number */
 	@Nullable
 	public static final BasePrimitiveNumber forDoublePrecachedOrNull(final double x) {
-
+		
 		{
 			final int value = (int) x;
 			if (value == x) {
@@ -730,29 +735,30 @@ public final class Base extends AbstractSAPI {
 		/** TODO: make .cacheGetNoCreate()? */
 		return null;
 	}
-
+	
 	/** Catch method
 	 *
-	 * @param function */
+	 * @param function
+	 */
 	@Deprecated
 	public static final void forFunction(final BaseFunction function) {
-
+		
 		//
 	}
-
+	
 	/** @param function
 	 * @return */
 	@NotNull
 	public static final BaseFunction forFunction(final ExecCallable function) {
-
+		
 		return Base.BASE_IMPL.javaNativeFunction(function);
 	}
-
+	
 	/** @param value
 	 * @return number */
 	@NotNull
 	public static final BasePrimitiveNumber forInteger(final int value) {
-
+		
 		return value >= 0
 			/** positives */
 			? value < Base.CACHE_INT_POSITIVE_SIZE
@@ -767,21 +773,22 @@ public final class Base extends AbstractSAPI {
 				/** in cache */
 				: Base.CACHE_INT.cacheGetCreate(value);
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forInteger(final short value) {
-
+		
 		//
 	}
-
+	
 	/** @param value
 	 * @return number */
 	@Nullable
 	public static final BasePrimitiveNumber forIntegerPrecachedOrNull(final int value) {
-
+		
 		return value >= 0
 			/** positives */
 			? value < Base.CACHE_INT_POSITIVE_SIZE
@@ -796,30 +803,32 @@ public final class Base extends AbstractSAPI {
 				/** TODO: make .cacheGetNoCreate()? */
 				: null;
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forLong(final byte value) {
-
+		
 		//
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forLong(final int value) {
-
+		
 		//
 	}
-
+	
 	/** @param x
 	 * @return number */
 	@NotNull
 	public static final BasePrimitiveNumber forLong(final long x) {
-
+		
 		{
 			final int intX = (int) x;
 			if (intX == x) {
@@ -828,21 +837,22 @@ public final class Base extends AbstractSAPI {
 		}
 		return Base.CACHE_LNG.cacheGetCreate(x);
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param value */
+	 * @param value
+	 */
 	@Deprecated
 	public static final void forLong(final short value) {
-
+		
 		//
 	}
-
+	
 	/** @param x
 	 * @return number */
 	@Nullable
 	public static final BasePrimitiveNumber forLongPrecachedOrNull(final long x) {
-
+		
 		{
 			final int value = (int) x;
 			if (value == x) {
@@ -864,110 +874,117 @@ public final class Base extends AbstractSAPI {
 		/** TODO: make .cacheGetNoCreate()? */
 		return null;
 	}
-
+	
 	/** @param <T>
 	 * @return */
 	@SuppressWarnings("unchecked")
 	@NotNull
 	public static final <T> T forNull() {
-
+		
 		return (T) BaseObject.NULL;
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forNumber(final Byte object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forNumber(final Double object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forNumber(final Float object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forNumber(final Integer object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forNumber(final Long object) {
-
+		
 		//
 	}
-
+	
 	/** @param value
 	 * @return number, NaN when value is null, never java-NULL. */
 	@NotNull
 	public static final BaseObject forNumber(final Number value) {
-
+		
 		return Base.BASE_IMPL.javaNumberToBaseObjectNumber(value);
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forNumber(final Short object) {
-
+		
 		//
 	}
-
+	
 	/** @param value
 	 * @return number */
 	@NotNull
 	public static final BasePrimitiveNumber forShort(final short value) {
-
+		
 		return value >= 0
 			? Base.CACHE_INT_POSITIVE[value]
 			: value >= Base.CACHE_INT_NEGATIVE_MIN_SHORT
 				? Base.CACHE_INT_NEGATIVE[-value - 1]
 				: Base.CACHE_INT.cacheGetCreate(value);
 	}
-
+	
 	/** Catch method
 	 *
-	 * @param stringValue */
+	 * @param stringValue
+	 */
 	@Deprecated
 	public static void forString(final BasePrimitiveString stringValue) {
-
+		
 		//
 	}
-
+	
 	/** @param stringValue
 	 * @return */
 	@NotNull
 	public static BasePrimitiveString forString(@Nullable final CharSequence stringValue) {
-
+		
 		if (stringValue instanceof BasePrimitiveString) {
 			return (BasePrimitiveString) stringValue;
 		}
@@ -984,50 +1001,51 @@ public final class Base extends AbstractSAPI {
 		}
 		return BaseString.STR_NULL;
 	}
-
+	
 	/** Formats double as BasePrimitiveNumber.baseToString() would.
 	 *
 	 * @param doubleValue
 	 * @return */
 	@NotNull
 	public static BasePrimitiveString forString(final double doubleValue) {
-
+		
 		/** can't use pre-cached numbers, cause, likely, it will call this method to baseToString()
 		 * implementation. */
-		return Base.forString(doubleValue == (long) doubleValue
-			? Long.toString((long) doubleValue)
-			: Double.toString(doubleValue));
+		return Base.forString(
+				doubleValue == (long) doubleValue
+					? Long.toString((long) doubleValue)
+					: Double.toString(doubleValue));
 	}
-
+	
 	/** Formats int as BasePrimitiveNumber.baseToString() would.
 	 *
 	 * @param intValue
 	 * @return */
 	@NotNull
 	public static BasePrimitiveString forString(final int intValue) {
-
+		
 		/** can't use pre-cached numbers, cause, likely, it will call this method to baseToString()
 		 * implementation. */
 		return Base.forString(Integer.toString(intValue));
 	}
-
+	
 	/** Formats long as BasePrimitiveNumber.baseToString() would.
 	 *
 	 * @param longValue
 	 * @return */
 	@NotNull
 	public static BasePrimitiveString forString(final long longValue) {
-
+		
 		/** can't use pre-cached numbers, cause, likely, it will call this method to baseToString()
 		 * implementation. */
 		return Base.forString(Long.toString(longValue));
 	}
-
+	
 	/** @param value
 	 * @return string, never java-NULL, empty string when argument is NULL */
 	@NotNull
 	public static final BasePrimitiveString forString(@Nullable final String value) {
-
+		
 		if (value == null) {
 			return BaseString.EMPTY;
 		}
@@ -1040,12 +1058,12 @@ public final class Base extends AbstractSAPI {
 				return Base.CACHE_STR.cacheGetCreate(value);
 		}
 	}
-
+	
 	/** @param value
 	 * @return string, never java-NULL, empty string when argument is NULL */
 	@Nullable
 	public static final BasePrimitiveString forStringPrecachedOrNull(@Nullable final String value) {
-
+		
 		if (value == null) {
 			return BaseString.EMPTY;
 		}
@@ -1059,149 +1077,160 @@ public final class Base extends AbstractSAPI {
 				return null;
 		}
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forThrowable(final BaseObject object) {
-
+		
 		//
 	}
-
+	
 	/** @param object
 	 * @return primitive */
 	@NotNull
 	public static final BaseAbstractException forThrowable(@NotNull final Throwable object) {
-
+		
 		return Base.BASE_IMPL.javaThrowableToBaseObject(object);
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final BaseObject object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final Boolean object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final Date object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final ExecCallable object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation.
 	 *
 	 * Use getArray
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final List<?> object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final Number object) {
-
+		
 		//
 	}
-
+	
 	/** @param object
 	 * @return primitive */
 	@NotNull
 	public static final BaseObject forUnknown(final Object object) {
-
+		
 		return Base.BASE_IMPL.javaObjectToBaseObject(object);
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation.
 	 *
 	 * Use forArray
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final Object[] object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final String object) {
-
+		
 		//
 	}
-
+	
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void forUnknown(final Throwable object) {
-
+		
 		//
 	}
-
+	
 	/** CATCH METHOD
 	 *
-	 * @param object */
+	 * @param object
+	 */
 	@Deprecated
 	public static final void fromMap(final BaseMap object) {
-
+		
 		//
 	}
-
+	
 	/** @param object
 	 * @return */
 	@NotNull
 	public static final BaseMap fromMap(final BaseObject object) {
-
+		
 		return object instanceof BaseMap
 			? (BaseMap) object
 			: BaseObject.createObject(object);
 	}
-
+	
 	/** @param map
 	 * @return */
 	@NotNull
 	public static final BaseMap fromMap(final Map<String, Object> map) {
-
+		
 		if (map instanceof BaseMap) {
 			return (BaseMap) map;
 		}
@@ -1211,7 +1240,7 @@ public final class Base extends AbstractSAPI {
 		}
 		return base;
 	}
-
+	
 	/** Allows NULL object
 	 *
 	 * @param object
@@ -1219,12 +1248,12 @@ public final class Base extends AbstractSAPI {
 	 * @param defaultValue
 	 * @return */
 	public static final BaseObject get(final BaseObject object, final BasePrimitiveString property, final BaseObject defaultValue) {
-
+		
 		return object == null
 			? defaultValue
 			: object.baseGet(property, defaultValue);
 	}
-
+	
 	/** Allows NULL object
 	 *
 	 * @param object
@@ -1232,19 +1261,19 @@ public final class Base extends AbstractSAPI {
 	 * @param defaultValue
 	 * @return */
 	public static final BaseObject get(final BaseObject object, final String property, final BaseObject defaultValue) {
-
+		
 		return object == null
 			? defaultValue
 			: object.baseGet(property, defaultValue);
 	}
-
+	
 	/** @param object
 	 * @param name
 	 * @param defaultValue
 	 * @param stop
 	 * @return */
 	public static final BaseObject get(final BaseObject object, final String name, final BaseObject defaultValue, final BaseObject stop) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1253,13 +1282,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: property.propertyGet(object, name);
 	}
-
+	
 	/** @param object
 	 * @param name
 	 * @param defaultValue
 	 * @return */
 	public static final boolean getBoolean(final BaseObject object, final String name, final boolean defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1269,13 +1298,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaBoolean();
 	}
-
+	
 	/** @param object
 	 * @param index
 	 * @param defaultValue
 	 * @return */
 	public static final double getDouble(final BaseArray object, final int index, final double defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1285,13 +1314,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToNumber().doubleValue();
 	}
-
+	
 	/** @param object
 	 * @param name
 	 * @param defaultValue
 	 * @return */
 	public static final double getDouble(final BaseObject object, final String name, final double defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1301,23 +1330,23 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToNumber().doubleValue();
 	}
-
+	
 	/** @param array
 	 * @param defaultValue
 	 * @return */
 	public static final BaseObject getFirst(final BaseArray array, final BaseObject defaultValue) {
-
+		
 		if (array == null) {
 			return defaultValue;
 		}
 		return array.baseGetFirst(defaultValue);
 	}
-
+	
 	/** @param array
 	 * @param defaultValue
 	 * @return */
 	public static final String getFirstString(final BaseArray array, final String defaultValue) {
-
+		
 		if (array == null) {
 			return defaultValue;
 		}
@@ -1326,13 +1355,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaString();
 	}
-
+	
 	/** @param object
 	 * @param index
 	 * @param defaultValue
 	 * @return */
 	public static final int getInt(final BaseArray object, final int index, final int defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1342,13 +1371,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaInteger();
 	}
-
+	
 	/** @param object
 	 * @param name
 	 * @param defaultValue
 	 * @return */
 	public static final int getInt(final BaseObject object, final String name, final int defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1358,7 +1387,7 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaInteger();
 	}
-
+	
 	/** Alias for: HasProperty(name) ? Get(name).value() : defaultValue
 	 *
 	 * @param object
@@ -1366,7 +1395,7 @@ public final class Base extends AbstractSAPI {
 	 * @param defaultValue
 	 * @return object */
 	public static final Object getJava(final BaseObject object, final String name, final Object defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1375,23 +1404,23 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: result.baseValue();
 	}
-
+	
 	/** @param array
 	 * @param defaultValue
 	 * @return */
 	public static final BaseObject getLast(final BaseArray array, final BaseObject defaultValue) {
-
+		
 		if (array == null) {
 			return defaultValue;
 		}
 		return array.baseGetLast(defaultValue);
 	}
-
+	
 	/** @param array
 	 * @param defaultValue
 	 * @return */
 	public static final String getLastString(final BaseArray array, final String defaultValue) {
-
+		
 		if (array == null) {
 			return defaultValue;
 		}
@@ -1400,13 +1429,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaString();
 	}
-
+	
 	/** @param object
 	 * @param name
 	 * @param defaultValue
 	 * @return */
 	public static final long getLong(final BaseObject object, final String name, final long defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1416,13 +1445,13 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaLong();
 	}
-
+	
 	/** @param array
 	 * @param index
 	 * @param defaultValue
 	 * @return */
 	public static final String getString(final BaseArray array, final int index, final String defaultValue) {
-
+		
 		if (array == null) {
 			return defaultValue;
 		}
@@ -1432,7 +1461,7 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaString();
 	}
-
+	
 	/** @param object1
 	 * @param name1
 	 * @param object2
@@ -1440,7 +1469,7 @@ public final class Base extends AbstractSAPI {
 	 * @param defaultValue
 	 * @return */
 	public static final String getString(final BaseObject object1, final String name1, final BaseObject object2, final String name2, final String defaultValue) {
-
+		
 		if (object1 != null) {
 			final BaseObject value = object1.baseGet(name1, BaseObject.UNDEFINED);
 			assert value != null : "NULL java object";
@@ -1457,13 +1486,13 @@ public final class Base extends AbstractSAPI {
 		}
 		return defaultValue;
 	}
-
+	
 	/** @param object
 	 * @param name
 	 * @param defaultValue
 	 * @return */
 	public static final String getString(final BaseObject object, final String name, final String defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1473,14 +1502,14 @@ public final class Base extends AbstractSAPI {
 			? defaultValue
 			: value.baseToJavaString();
 	}
-
+	
 	/** @param object
 	 * @param name1
 	 * @param name2
 	 * @param defaultValue
 	 * @return */
 	public static final String getString(final BaseObject object, final String name1, final String name2, final String defaultValue) {
-
+		
 		if (object == null) {
 			return defaultValue;
 		}
@@ -1499,14 +1528,14 @@ public final class Base extends AbstractSAPI {
 				: value.baseToJavaString();
 		}
 	}
-
+	
 	/** equivalent to: return this.hasOwnProperties || this.prototype &&
 	 * this.prototype.hasProperties
 	 *
 	 * @param object
 	 * @return */
 	public static final boolean hasKeys(final BaseObject object) {
-
+		
 		if (object == null) {
 			return false;
 		}
@@ -1516,7 +1545,7 @@ public final class Base extends AbstractSAPI {
 		final BaseObject prototype = object.basePrototype();
 		return prototype != null && Base.hasKeys(prototype);
 	}
-
+	
 	/** equivalent to: return this.hasOwnProperties || this.prototype &&
 	 * this.prototype.hasProperties
 	 *
@@ -1524,7 +1553,7 @@ public final class Base extends AbstractSAPI {
 	 * @param searchUntil
 	 * @return */
 	public static final boolean hasKeys(final BaseObject object, final BaseObject searchUntil) {
-
+		
 		if (object == null) {
 			return false;
 		}
@@ -1534,7 +1563,7 @@ public final class Base extends AbstractSAPI {
 		final BaseObject prototype = object.basePrototype();
 		return prototype != null && prototype != searchUntil && Base.hasKeys(prototype, searchUntil);
 	}
-
+	
 	/** [[HasProperty]] (P) When the [[HasProperty]] method of O is called with property name P, the
 	 * following steps are taken:<br>
 	 * 1. If O has a property with name P, return true.<br>
@@ -1546,10 +1575,10 @@ public final class Base extends AbstractSAPI {
 	 * @param name
 	 * @return boolean */
 	public static final boolean hasProperty(final BaseObject object, final BasePrimitive<?> name) {
-
+		
 		return object.baseFindProperty(name) != null;
 	}
-
+	
 	/** [[HasProperty]] (P) When the [[HasProperty]] method of O is called with property name P, the
 	 * following steps are taken:<br>
 	 * 1. If O has a property with name P, return true.<br>
@@ -1561,28 +1590,28 @@ public final class Base extends AbstractSAPI {
 	 * @param name
 	 * @return boolean */
 	public static final boolean hasProperty(final BaseObject object, final String name) {
-
+		
 		return object.baseFindProperty(name) != null;
 	}
-
+	
 	private static final void initCachePutDouble(final BasePrimitiveNumber value) {
-
+		
 		final double doubleValue = value.doubleValue();
 		assert doubleValue != value.longValue() : "Use CacheInteger or CacheLong instead!";
 		Base.CACHE_DBL.cachePutInternal(value);
 	}
-
+	
 	private static final void initCachePutString(final BasePrimitiveString value) {
-
+		
 		Base.CACHE_STR.cachePutInternal(value);
 	}
-
+	
 	/** @param iterator
 	 * @return */
 	@SuppressWarnings("unchecked")
 	@NotNull
 	public static final Iterator<BasePrimitive<?>> iteratorPrimitiveSafe(final Iterator<?> iterator) {
-
+		
 		if (!iterator.hasNext()) {
 			return BaseObject.ITERATOR_EMPTY_PRIMITIVE;
 		}
@@ -1592,13 +1621,13 @@ public final class Base extends AbstractSAPI {
 				? new IteratorTypeSafePrimitive(iterator)
 				: BaseObject.ITERATOR_EMPTY_PRIMITIVE;
 	}
-
+	
 	/** @param iterator
 	 * @return */
 	@SuppressWarnings("unchecked")
 	@NotNull
 	public static final Iterator<String> iteratorStringSafe(final Iterator<?> iterator) {
-
+		
 		if (!iterator.hasNext()) {
 			return BaseObject.ITERATOR_EMPTY;
 		}
@@ -1608,13 +1637,13 @@ public final class Base extends AbstractSAPI {
 				? new IteratorTypeSafe(iterator)
 				: BaseObject.ITERATOR_EMPTY;
 	}
-
+	
 	/** @param primary
 	 * @param secondary
 	 * @return */
 	@NotNull
 	public static final Iterator<? extends CharSequence> joinIterators(final Iterator<? extends CharSequence> primary, final Iterator<? extends CharSequence> secondary) {
-
+		
 		assert primary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
 		assert secondary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
 		if (primary == BaseObject.ITERATOR_EMPTY) {
@@ -1625,13 +1654,13 @@ public final class Base extends AbstractSAPI {
 		}
 		return new IteratorSequenceCharSequence(primary, secondary);
 	}
-
+	
 	/** @param primary
 	 * @param secondary
 	 * @return */
 	@NotNull
 	public static final Iterator<String> joinIteratorsAsString(final Iterator<String> primary, final Iterator<String> secondary) {
-
+		
 		assert primary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
 		assert secondary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
 		if (primary == BaseObject.ITERATOR_EMPTY) {
@@ -1642,14 +1671,14 @@ public final class Base extends AbstractSAPI {
 		}
 		return new IteratorSequenceString(primary, secondary);
 	}
-
+	
 	/** @param primary
 	 * @param secondary
 	 * @return */
 	@NotNull
 	public static final Iterator<? extends BasePrimitive<?>> joinIteratorsPrimitive(final Iterator<? extends BasePrimitive<?>> primary,
 			final Iterator<? extends BasePrimitive<?>> secondary) {
-
+		
 		assert primary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
 		assert secondary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
 		if (primary == BaseObject.ITERATOR_EMPTY_PRIMITIVE) {
@@ -1660,7 +1689,7 @@ public final class Base extends AbstractSAPI {
 		}
 		return new IteratorSequenceAnyPrimitive(primary, secondary);
 	}
-
+	
 	/** Never returns NULL. Should return BaseObject.ITERATOR_EMPTY at least.
 	 * <p>
 	 * Properties of the object being enumerated may be deleted during enumeration. If a property
@@ -1680,47 +1709,47 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final Iterator<String> keys(BaseObject object) {
-
+		
 		assert object != null : "Is there any good reason to return an empty iterator in case of null object?";
-
+		
 		for (;;) {
 			final Iterator<String> iterator = object.baseKeysOwn();
 			assert iterator != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY, class=" //
 					+ object.getClass().getName() + "!";
-
+			
 			final BaseObject prototype = object.basePrototype();
 			if (prototype == null) {
 				return iterator;
 			}
-
+			
 			if (iterator == BaseObject.ITERATOR_EMPTY) {
 				object = prototype;
 				continue;
 			}
 			assert iterator.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY for empty key iterator), class=" + object.getClass().getName() + "!";
-
+			
 			{
 				final BaseObject superPrototype = prototype.basePrototype();
 				if (superPrototype != null) {
 					return new IteratorHierarchy(object, iterator, prototype);
 				}
 			}
-
+			
 			{
 				final Iterator<String> another = prototype.baseKeysOwn();
 				assert another != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY, class=" //
 						+ prototype.getClass().getName() + "!";
-
+				
 				if (another == BaseObject.ITERATOR_EMPTY) {
 					return iterator;
 				}
 				assert another.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY for empty key iterator), class=" + prototype.getClass().getName() + "!";
-
+				
 				return new IteratorSequenceString(iterator, another);
 			}
 		}
 	}
-
+	
 	/** Never returns NULL. Should return BaseObject.ITERATOR_EMPTY at least.
 	 * <p>
 	 * Properties of the object being enumerated may be deleted during enumeration. If a property
@@ -1741,46 +1770,46 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final Iterator<String> keys(BaseObject object, final BaseObject searchUntil) {
-
+		
 		assert object != null : "Is there any good reason to return an empty iterator in case of null object?";
 		for (;;) {
 			final Iterator<String> iterator = object.baseKeysOwn();
 			assert iterator != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY, class=" //
 					+ object.getClass().getName() + "!";
-
+			
 			final BaseObject prototype = object.basePrototype();
 			if (prototype == null || prototype == searchUntil) {
 				return iterator;
 			}
-
+			
 			if (iterator == BaseObject.ITERATOR_EMPTY) {
 				object = prototype;
 				continue;
 			}
 			assert iterator.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY for empty key iterator), class=" + object.getClass().getName() + "!";
-
+			
 			{
 				final BaseObject superPrototype = prototype.basePrototype();
 				if (superPrototype != null && superPrototype != searchUntil) {
 					return new IteratorHierarchyUntil(iterator, prototype, searchUntil);
 				}
 			}
-
+			
 			{
 				final Iterator<String> another = prototype.baseKeysOwn();
 				assert another != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY, class=" //
 						+ prototype.getClass().getName() + "!";
-
+				
 				if (another == BaseObject.ITERATOR_EMPTY) {
 					return iterator;
 				}
 				assert another.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY for empty key iterator), class=" + prototype.getClass().getName() + "!";
-
+				
 				return new IteratorSequenceString(iterator, another);
 			}
 		}
 	}
-
+	
 	/** Never returns NULL. Should return BaseObject.ITERATOR_EMPTY at least.
 	 * <p>
 	 * Properties of the object being enumerated may be deleted during enumeration. If a property
@@ -1800,47 +1829,47 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final Iterator<? extends CharSequence> keysAll(BaseObject object) {
-
+		
 		assert object != null : "Is there any good reason to return an empty iterator in case of null object?";
-
+		
 		for (;;) {
 			final Iterator<? extends CharSequence> iterator = object.baseKeysOwnAll();
 			assert iterator != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY, class=" //
 					+ object.getClass().getName() + "!";
-
+			
 			final BaseObject prototype = object.basePrototype();
 			if (prototype == null) {
 				return iterator;
 			}
-
+			
 			if (iterator == BaseObject.ITERATOR_EMPTY) {
 				object = prototype;
 				continue;
 			}
 			assert iterator.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY for empty key iterator), class=" + object.getClass().getName() + "!";
-
+			
 			{
 				final BaseObject superPrototype = prototype.basePrototype();
 				if (superPrototype != null) {
 					return new IteratorHierarchyAll(iterator, prototype);
 				}
 			}
-
+			
 			{
 				final Iterator<? extends CharSequence> another = prototype.baseKeysOwnAll();
 				assert another != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY, class=" //
 						+ prototype.getClass().getName() + "!";
-
+				
 				if (another == BaseObject.ITERATOR_EMPTY) {
 					return iterator;
 				}
 				assert another.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY for empty key iterator), class=" + prototype.getClass().getName() + "!";
-
+				
 				return new IteratorSequenceCharSequence(iterator, another);
 			}
 		}
 	}
-
+	
 	/** Never returns NULL. Should return BaseObject.ITERATOR_EMPTY_PRIMITIVE at least.
 	 * <p>
 	 * Properties of the object being enumerated may be deleted during enumeration. If a property
@@ -1860,47 +1889,47 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final Iterator<? extends BasePrimitive<?>> keysPrimitive(BaseObject baseObject) {
-
+		
 		assert baseObject != null : "Is there any good reason to return an empty iterator in case of null object?";
-
+		
 		for (;;) {
 			final Iterator<? extends BasePrimitive<?>> iterator = baseObject.baseKeysOwnPrimitive();
 			assert iterator != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY_PRIMITIVE, class=" //
 					+ baseObject.getClass().getName() + "!";
-
+			
 			final BaseObject prototype = baseObject.basePrototype();
 			if (prototype == null) {
 				return iterator;
 			}
-
+			
 			if (iterator == BaseObject.ITERATOR_EMPTY_PRIMITIVE) {
 				baseObject = prototype;
 				continue;
 			}
 			assert iterator.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY_PRIMITIVE for empty key iterator), class=" + baseObject.getClass().getName() + "!";
-
+			
 			{
 				final BaseObject superPrototype = prototype.basePrototype();
 				if (superPrototype != null) {
 					return new IteratorHierarchyPrimitive(iterator, prototype);
 				}
 			}
-
+			
 			{
 				final Iterator<? extends BasePrimitive<?>> another = prototype.baseKeysOwnPrimitive();
 				assert another != null : "NULL iterator: use BaseObject.ITERATOR_EMPTY_PRIMITIVE, class=" //
 						+ prototype.getClass().getName() + "!";
-
+				
 				if (another == BaseObject.ITERATOR_EMPTY_PRIMITIVE) {
 					return iterator;
 				}
 				assert another.hasNext() : "Should not be empty (use BaseObject.ITERATOR_EMPTY_PRIMITIVE for empty key iterator), class=" + prototype.getClass().getName() + "!";
-
+				
 				return new IteratorSequenceAnyPrimitive(iterator, another);
 			}
 		}
 	}
-
+	
 	/** An array of object's own property entries, each entry in form of array of length 2 (key,
 	 * value)
 	 *
@@ -1908,7 +1937,7 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static BaseArrayDynamic<Object> objectEntriesArray(final BaseObject object) {
-
+		
 		final BaseList<Object> result = BaseObject.createArray();
 		for (final Iterator<? extends BasePrimitive<?>> iterator = object.baseKeysOwnPrimitive(); iterator.hasNext();) {
 			final BasePrimitive<?> key = iterator.next();
@@ -1919,42 +1948,42 @@ public final class Base extends AbstractSAPI {
 		}
 		return result;
 	}
-
+	
 	/** An array of object's own property names
 	 *
 	 * @param object
 	 * @return */
 	@NotNull
 	public static BaseArrayDynamic<Object> objectKeysArray(final BaseObject object) {
-
+		
 		final BaseList<Object> result = BaseObject.createArray();
 		for (final Iterator<? extends BasePrimitive<?>> iterator = object.baseKeysOwnPrimitive(); iterator.hasNext();) {
 			result.baseDefaultPush(iterator.next());
 		}
 		return result;
 	}
-
+	
 	/** An array of object's own property values
 	 *
 	 * @param object
 	 * @return */
 	@NotNull
 	public static BaseArrayDynamic<Object> objectValuesArray(final BaseObject object) {
-
+		
 		final BaseList<Object> result = BaseObject.createArray();
 		for (final Iterator<? extends BasePrimitive<?>> iterator = object.baseKeysOwnPrimitive(); iterator.hasNext();) {
 			result.baseDefaultPush(object.baseGet(iterator.next(), null));
 		}
 		return result;
 	}
-
+	
 	/** @param s
 	 * @return */
 	static double parseDouble(final String s) {
-
+		
 		boolean isNegative = false;
 		boolean signSeen = false;
-
+		
 		final String in = s.trim(); // don't fool around with white space.
 		// throws NullPointerException if null
 		final int l = in.length();
@@ -1974,20 +2003,20 @@ public final class Base extends AbstractSAPI {
 				//$FALL-THROUGH$
 			default :
 		}
-
+		
 		// Check for NaN and Infinity strings
 		c = in.charAt(i);
 		if (c == 'N' || c == 'I') { // possible NaN or infinity
 			boolean potentialNaN = false;
 			char targetChars[] = null; // char array of "NaN" or "Infinity"
-
+			
 			if (c == 'N') {
 				targetChars = Base.notANumber;
 				potentialNaN = true;
 			} else {
 				targetChars = Base.infinity;
 			}
-
+			
 			// compare Input string to "NaN" or "Infinity"
 			int j = 0;
 			while (i < l && j < targetChars.length) {
@@ -2000,7 +2029,7 @@ public final class Base extends AbstractSAPI {
 					return Double.NaN;
 				}
 			}
-
+			
 			// For the candidate string to be a NaN or infinity,
 			// all characters in input string and target char[]
 			// must be matched ==> j must equal targetChars.length
@@ -2017,7 +2046,7 @@ public final class Base extends AbstractSAPI {
 				// break parseNumber;
 				return Double.NaN;
 			}
-
+			
 		} else //
 		if (c == '0') { // check for hexadecimal number
 			if (l > i + 1) {
@@ -2030,7 +2059,7 @@ public final class Base extends AbstractSAPI {
 				}
 			}
 		} // look for and process decimal floating-point string
-
+		
 		int decExp;
 		char[] digits = new char[l];
 		int nDigits = 0;
@@ -2065,7 +2094,7 @@ public final class Base extends AbstractSAPI {
 				case '.' :
 					if (decSeen) {
 						// already saw one ., this is the 2nd.
-
+						
 						// throw new NumberFormatException( "multiple points" );
 						return Double.NaN;
 					}
@@ -2094,15 +2123,15 @@ public final class Base extends AbstractSAPI {
 				// we saw NO DIGITS AT ALL,
 				// not even a crummy 0!
 				// this is not allowed.
-
+				
 				// break parseNumber; // go throw exception
-
+				
 				return Double.NaN;
 			}
 			digits = Base.zero;
 			nDigits = 1;
 		}
-
+		
 		/* Our initial exponent is decPt, adjusted by the number of discarded zeros. Or, if there
 		 * was no decPt, then its just nDigits adjusted by discarded trailing zeros. */
 		if (decSeen) {
@@ -2110,7 +2139,7 @@ public final class Base extends AbstractSAPI {
 		} else {
 			decExp = nDigits + nTrailZero;
 		}
-
+		
 		/* Look for 'e' or 'E' and an optionally signed integer. */
 		if (i < l && ((c = in.charAt(i)) == 'e' || c == 'E')) {
 			int expSign = 1;
@@ -2172,7 +2201,7 @@ public final class Base extends AbstractSAPI {
 				// for expVal > (MAX+N), where N >= abs(decExp)
 				decExp = decExp + expSign * expVal;
 			}
-
+			
 			// if we saw something not a digit ( or end of string )
 			// after the [Ee][+-], without seeing any digits at all
 			// this is certainly an error. If we saw some digits,
@@ -2189,7 +2218,7 @@ public final class Base extends AbstractSAPI {
 			// break parseNumber; // go throw exception
 			return Double.NaN;
 		}
-
+		
 		// return new FloatingDecimal( isNegative, decExp, digits, nDigits,
 		// false ).doubleValue();
 		try {
@@ -2198,14 +2227,14 @@ public final class Base extends AbstractSAPI {
 			return Double.NaN;
 		}
 	}
-
+	
 	/** @param s
 	 * @param radix
 	 * @return */
 	static double parseLong(final String s, final int radix) {
-
+		
 		final int max = s.length();
-
+		
 		if (max <= 0) {
 			return Double.NEGATIVE_INFINITY;
 		}
@@ -2255,8 +2284,9 @@ public final class Base extends AbstractSAPI {
 			return -result;
 		}
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 8.6.2.2 [[Put]] (P, V, Strict)
 	 * For brevity, the changes caused by [[Put]] are described below in a self contained manner. But [[Put]]
 	 * must not be able to cause and state transitions that wouldn‘t be allowed by [[SetOwnProperty]].
@@ -2307,7 +2337,7 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	public static final boolean put(final BaseObject object, final BasePrimitiveString name, final BaseObject value, final short attributes) {
-
+		
 		{
 			/** 1. Call the [[GetOwnProperty]] method of O with name P. */
 			final BaseProperty property = object.baseGetOwnProperty(name);
@@ -2332,15 +2362,15 @@ public final class Base extends AbstractSAPI {
 				/** 3. Call the [[GetProperty]] method of O with name P. */
 				final BaseProperty property = prototype.baseFindProperty(name);
 				/** 4. If Result(3) is a ProceduralDescription, then<br>
-				*/
-				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL) != 0) {
+				 */
+				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL_SET) != 0) {
 					/** a. Get the [[Setter]] component of Result(3).<br>
 					 * b. If Result(4a) is undefined, then <br>
 					 * i. If Strict is true, then throw TypeError.<br>
 					 * ii. Else return false. <br>
 					 * e. Call Result(4a) as a method on O with argument V. <br>
 					 * f. Return true.<br>
-					*/
+					 */
 					return property.propertySet(object, name, value, attributes);
 				}
 			}
@@ -2355,11 +2385,12 @@ public final class Base extends AbstractSAPI {
 		 * b. [[Writeable]]: true, <br>
 		 * c. [[Enumerable]]: true, <br>
 		 * d. [[Dynamic]]: true. <br>
-		*/
+		 */
 		return object.baseDefine(name, value, attributes);
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 8.6.2.2 [[Put]] (P, V, Strict)
 	 * For brevity, the changes caused by [[Put]] are described below in a self contained manner. But [[Put]]
 	 * must not be able to cause and state transitions that wouldn‘t be allowed by [[SetOwnProperty]].
@@ -2410,12 +2441,12 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	public static final boolean put(final BaseObject object, final CharSequence name, final BaseObject value, final short attributes) {
-
+		
 		return name instanceof BasePrimitiveString
 			? Base.put(object, (BasePrimitiveString) name, value, attributes)
 			: Base.put(object, name.toString(), value, attributes);
 	}
-
+	
 	/** Short cut for 'put(o,name,value.true,true,true)'
 	 *
 	 * @param object
@@ -2423,11 +2454,12 @@ public final class Base extends AbstractSAPI {
 	 * @param value
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final BaseObject value) {
-
+		
 		return Base.put(object, name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 8.6.2.2 [[Put]] (P, V, Strict)
 	 * For brevity, the changes caused by [[Put]] are described below in a self contained manner. But [[Put]]
 	 * must not be able to cause and state transitions that wouldn‘t be allowed by [[SetOwnProperty]].
@@ -2478,7 +2510,7 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final BaseObject value, final short attributes) {
-
+		
 		{
 			/** 1. Call the [[GetOwnProperty]] method of O with name P. */
 			final BaseProperty property = object.baseGetOwnProperty(name);
@@ -2503,15 +2535,15 @@ public final class Base extends AbstractSAPI {
 				/** 3. Call the [[GetProperty]] method of O with name P. */
 				final BaseProperty property = prototype.baseFindProperty(name);
 				/** 4. If Result(3) is a ProceduralDescription, then<br>
-				*/
-				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL) != 0) {
+				 */
+				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL_SET) != 0) {
 					/** a. Get the [[Setter]] component of Result(3).<br>
 					 * b. If Result(4a) is undefined, then <br>
 					 * i. If Strict is true, then throw TypeError.<br>
 					 * ii. Else return false. <br>
 					 * e. Call Result(4a) as a method on O with argument V. <br>
 					 * f. Return true.<br>
-					*/
+					 */
 					return property.propertySet(object, name, value, attributes);
 				}
 			}
@@ -2526,14 +2558,18 @@ public final class Base extends AbstractSAPI {
 		 * b. [[Writeable]]: true, <br>
 		 * c. [[Enumerable]]: true, <br>
 		 * d. [[Dynamic]]: true. <br>
-		*/
+		 */
 		return object.baseDefine(name, value, attributes);
 	}
-
-	/** <pre>
-	 * put(name, value
-	 * 	? BaseObject.TRUE
-	 * 	: BaseObject.FALSE, BaseProperty.ATTRS_MASK_WED);
+	
+	/**
+	 * <pre>
+	 * put(
+	 * 		name,
+	 * 		value
+	 * 			? BaseObject.TRUE
+	 * 			: BaseObject.FALSE,
+	 * 		BaseProperty.ATTRS_MASK_WED);
 	 * </pre>
 	 *
 	 * @param object
@@ -2541,7 +2577,7 @@ public final class Base extends AbstractSAPI {
 	 * @param value
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final boolean value) {
-
+		
 		return Base.put(
 				object, //
 				name,
@@ -2550,8 +2586,9 @@ public final class Base extends AbstractSAPI {
 					: BaseObject.FALSE,
 				BaseProperty.ATTRS_MASK_WED);
 	}
-
-	/** <p>
+	
+	/**
+	 * <p>
 	 * <b> Alias for: put(name, value, BaseProperty.ATTRS_MASK_WED) </b>
 	 * </p>
 	 *
@@ -2560,11 +2597,12 @@ public final class Base extends AbstractSAPI {
 	 * @param value
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final double value) {
-
+		
 		return Base.put(object, name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 8.6.2.2 [[Put]] (P, V, Strict)
 	 * For brevity, the changes caused by [[Put]] are described below in a self contained manner. But [[Put]]
 	 * must not be able to cause and state transitions that wouldn‘t be allowed by [[SetOwnProperty]].
@@ -2615,7 +2653,7 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final double value, final short attributes) {
-
+		
 		{
 			/** 1. Call the [[GetOwnProperty]] method of O with name P. */
 			final BaseProperty property = object.baseGetOwnProperty(name);
@@ -2640,15 +2678,15 @@ public final class Base extends AbstractSAPI {
 				/** 3. Call the [[GetProperty]] method of O with name P. */
 				final BaseProperty property = prototype.baseFindProperty(name);
 				/** 4. If Result(3) is a ProceduralDescription, then<br>
-				*/
-				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL) != 0) {
+				 */
+				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL_SET) != 0) {
 					/** a. Get the [[Setter]] component of Result(3).<br>
 					 * b. If Result(4a) is undefined, then <br>
 					 * i. If Strict is true, then throw TypeError.<br>
 					 * ii. Else return false. <br>
 					 * e. Call Result(4a) as a method on O with argument V. <br>
 					 * f. Return true.<br>
-					*/
+					 */
 					return property.propertySet(object, name, Base.forDouble(value), attributes);
 				}
 			}
@@ -2663,11 +2701,12 @@ public final class Base extends AbstractSAPI {
 		 * b. [[Writeable]]: true, <br>
 		 * c. [[Enumerable]]: true, <br>
 		 * d. [[Dynamic]]: true. <br>
-		*/
+		 */
 		return object.baseDefine(name, value, attributes);
 	}
-
-	/** <p>
+	
+	/**
+	 * <p>
 	 * <b> Alias for: put(name, value, BaseProperty.ATTRS_MASK_WED) </b>
 	 * </p>
 	 *
@@ -2676,11 +2715,12 @@ public final class Base extends AbstractSAPI {
 	 * @param value
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final long value) {
-
+		
 		return Base.put(object, name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 8.6.2.2 [[Put]] (P, V, Strict)
 	 * For brevity, the changes caused by [[Put]] are described below in a self contained manner. But [[Put]]
 	 * must not be able to cause and state transitions that wouldn‘t be allowed by [[SetOwnProperty]].
@@ -2731,7 +2771,7 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final long value, final short attributes) {
-
+		
 		{
 			/** 1. Call the [[GetOwnProperty]] method of O with name P. */
 			final BaseProperty property = object.baseGetOwnProperty(name);
@@ -2756,15 +2796,15 @@ public final class Base extends AbstractSAPI {
 				/** 3. Call the [[GetProperty]] method of O with name P. */
 				final BaseProperty property = prototype.baseFindProperty(name);
 				/** 4. If Result(3) is a ProceduralDescription, then<br>
-				*/
-				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL) != 0) {
+				 */
+				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL_SET) != 0) {
 					/** a. Get the [[Setter]] component of Result(3).<br>
 					 * b. If Result(4a) is undefined, then <br>
 					 * i. If Strict is true, then throw TypeError.<br>
 					 * ii. Else return false. <br>
 					 * e. Call Result(4a) as a method on O with argument V. <br>
 					 * f. Return true.<br>
-					*/
+					 */
 					return property.propertySet(object, name, Base.forLong(value), attributes);
 				}
 			}
@@ -2779,11 +2819,12 @@ public final class Base extends AbstractSAPI {
 		 * b. [[Writeable]]: true, <br>
 		 * c. [[Enumerable]]: true, <br>
 		 * d. [[Dynamic]]: true. <br>
-		*/
+		 */
 		return object.baseDefine(name, value, attributes);
 	}
-
-	/** <p>
+	
+	/**
+	 * <p>
 	 * <b> Alias for: put(name, value, BaseProperty.ATTRS_MASK_WED) </b>
 	 * </p>
 	 *
@@ -2792,11 +2833,12 @@ public final class Base extends AbstractSAPI {
 	 * @param value
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final String value) {
-
+		
 		return Base.put(object, name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 8.6.2.2 [[Put]] (P, V, Strict)
 	 *
 	 * For brevity, the changes caused by [[Put]] are described below in a self contained manner. But [[Put]]
@@ -2848,7 +2890,7 @@ public final class Base extends AbstractSAPI {
 	 * @param attributes
 	 * @return */
 	public static final boolean put(final BaseObject object, final String name, final String value, final short attributes) {
-
+		
 		{
 			/** 1. Call the [[GetOwnProperty]] method of O with name P. */
 			final BaseProperty property = object.baseGetOwnProperty(name);
@@ -2873,15 +2915,15 @@ public final class Base extends AbstractSAPI {
 				/** 3. Call the [[GetProperty]] method of O with name P. */
 				final BaseProperty property = prototype.baseFindProperty(name);
 				/** 4. If Result(3) is a ProceduralDescription, then<br>
-				*/
-				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL) != 0) {
+				 */
+				if (property != null && (property.propertyAttributes(name) & BaseProperty.ATTR_PROCEDURAL_SET) != 0) {
 					/** a. Get the [[Setter]] component of Result(3).<br>
 					 * b. If Result(4a) is undefined, then <br>
 					 * i. If Strict is true, then throw TypeError.<br>
 					 * ii. Else return false. <br>
 					 * e. Call Result(4a) as a method on O with argument V. <br>
 					 * f. Return true.<br>
-					*/
+					 */
 					return property.propertySet(object, name, Base.forString(value), attributes);
 				}
 			}
@@ -2896,10 +2938,10 @@ public final class Base extends AbstractSAPI {
 		 * b. [[Writeable]]: true, <br>
 		 * c. [[Enumerable]]: true, <br>
 		 * d. [[Dynamic]]: true. <br>
-		*/
+		 */
 		return object.baseDefine(name, value, attributes);
 	}
-
+	
 	/** Puts all elements like:<br>
 	 * <code>
 	 * for(String key : value){
@@ -2911,9 +2953,10 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param target
 	 *
-	 * @param source */
+	 * @param source
+	 */
 	public static final void putAll(final BaseObject target, final BaseObject source) {
-
+		
 		if (source == null || source.baseIsPrimitive()) {
 			return;
 		}
@@ -2922,7 +2965,7 @@ public final class Base extends AbstractSAPI {
 			Base.put(target, key, source.baseGet(key, BaseObject.UNDEFINED), BaseProperty.ATTRS_MASK_WED);
 		}
 	}
-
+	
 	/** <code>
 		return !object.baseIsExtensible()
 				? object
@@ -2936,20 +2979,21 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final BaseObject seal(final BaseObject object) {
-
+		
 		return !object.baseIsExtensible()
 			? object
 			: Base.BASE_IMPL.seal(object);
 	}
-
+	
 	/** Parses ECMA date universally, like Date.parse()
 	 *
 	 *
 	 * @param s
 	 * @return
-	 * @throws ParseException */
+	 * @throws ParseException
+	 */
 	public static final long toDateMillis(final String s) throws ParseException {
-
+		
 		final String format;
 		switch (s.length()) {
 			// 2012-10-09T16:56:32.032
@@ -2975,21 +3019,21 @@ public final class Base extends AbstractSAPI {
 			default :
 				return Format.Ecma.dateParse(s);
 		}
-
+		
 		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		simpleDateFormat.setTimeZone(Engine.TIMEZONE_GMT);
 		return simpleDateFormat.parse(s).getTime();
 	}
-
+	
 	/** Parses double as BasePrimitiveString.baseToNumber() would.
 	 *
 	 * @param string
 	 * @return */
 	public static double toDouble(final String string) {
-
+		
 		return Base.parseDouble(string);
 	}
-
+	
 	/** Formats a doubleValue to a fixed-precision string as Number.prototype.toFixed would.
 	 *
 	 * @param doubleValue
@@ -2997,48 +3041,48 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	@NotNull
 	public static final String toFixed(final double doubleValue, final int digits) {
-
+		
 		return NumberFormatter.formatFixed(doubleValue, digits);
 	}
-
+	
 	/** Parses int32 as BasePrimitiveString.baseToInt32() would.
 	 *
 	 * @param string
 	 * @return */
 	public static int toInt32(final String string) {
-
+		
 		return (int) (long) Base.parseDouble(string);
 	}
-
+	
 	/** Parses long as BasePrimitiveString.baseToInteger() would.
 	 *
 	 * @param string
 	 * @return */
 	public static long toLong(final String string) {
-
+		
 		return (long) Base.parseDouble(string);
 	}
-
+	
 	/** Formats double as BasePrimitiveNumber.baseToString() would.
 	 *
 	 * @param number
 	 * @return */
 	@NotNull
 	public static String toString(final double number) {
-
+		
 		return number == (long) number
 			? Long.toString((long) number)
 			: Double.toString(number);
 	}
-
+	
 	/** Formats double as BasePrimitiveNumber.baseToString() would.
 	 *
 	 * @param number
 	 * @return */
 	@NotNull
 	public static String toString(final long number) {
-
+		
 		return Long.toString(number);
 	}
-
+	
 }
