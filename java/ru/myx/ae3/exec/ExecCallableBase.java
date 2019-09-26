@@ -59,5 +59,14 @@ public interface ExecCallableBase extends ExecCallable {
 				ExecCallable.ForStore.UseNativeJ2 {
 		//
 	}
+
+	/** @author myx */
+	@ReflectionDisable
+	public static interface NativeJA
+			extends //
+				ExecCallable.Arguments.ExactlyX,
+				ExecCallable.ForStore.UseNativeJA {
+		//
+	}
 	//
 }

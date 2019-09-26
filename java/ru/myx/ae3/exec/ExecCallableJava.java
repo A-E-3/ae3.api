@@ -5,7 +5,7 @@ import ru.myx.ae3.reflect.ReflectionDisable;
 /** @author myx */
 @ReflectionDisable
 public interface ExecCallableJava extends ExecCallable {
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	public static interface JavaIntJ
@@ -17,7 +17,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseIntJ {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface JavaIntJ0
@@ -30,7 +30,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseIntJ0 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface JavaIntJ1
@@ -43,7 +43,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseIntJ1 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface JavaIntJ2
@@ -56,7 +56,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseIntJ2 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	public static interface JavaLongJ
@@ -68,7 +68,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseLongJ {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface JavaLongJ0
@@ -81,7 +81,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseLongJ0 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface JavaLongJ1
@@ -94,7 +94,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseLongJ1 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface JavaStringJ0
@@ -107,7 +107,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForVoid.UseStringJ0 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeE
@@ -118,7 +118,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeE {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeE0
@@ -130,7 +130,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeE0 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeE1
@@ -142,7 +142,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeE1 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeE2
@@ -154,7 +154,19 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeE2 {
 		//
 	}
-	
+
+	/** @author myx */
+	@ReflectionDisable
+	interface NativeEA
+			extends //
+				ExecCallable.Arguments.ExactlyX,
+				ExecCallable.ForString.UseNativeEA,
+				ExecCallable.ForNumbers.UseNativeEA,
+				ExecCallable.ForVoid.UseNativeEA,
+				ExecCallable.ForNative.UseNativeEA {
+		//
+	}
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeEX
@@ -166,7 +178,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeEX {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeJ
@@ -178,7 +190,7 @@ public interface ExecCallableJava extends ExecCallable {
 		//
 	}
 	//
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeJ0
@@ -190,7 +202,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeJ0 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeJ1
@@ -202,7 +214,7 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNative.UseNativeJ1 {
 		//
 	}
-	
+
 	/** @author myx */
 	@ReflectionDisable
 	interface NativeJ2
@@ -212,6 +224,18 @@ public interface ExecCallableJava extends ExecCallable {
 				ExecCallable.ForNumbers.UseNativeJ2,
 				ExecCallable.ForVoid.UseNativeJ2,
 				ExecCallable.ForNative.UseNativeJ2 {
+		//
+	}
+
+	/** @author myx */
+	@ReflectionDisable
+	interface NativeJA
+			extends //
+				ExecCallable.Arguments.ExactlyX,
+				ExecCallable.ForString.UseNativeJA,
+				ExecCallable.ForNumbers.UseNativeJA,
+				ExecCallable.ForVoid.UseNativeJA,
+				ExecCallable.ForNative.UseNativeJA {
 		//
 	}
 	//

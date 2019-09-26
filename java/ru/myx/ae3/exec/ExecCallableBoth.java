@@ -333,5 +333,18 @@ public interface ExecCallableBoth extends ExecCallableJava, ExecCallableBase {
 				ExecCallable.ForNative.UseNativeJ2 {
 		//
 	}
+
+	/** @author myx */
+	@ReflectionDisable
+	interface NativeJA
+			extends //
+				ExecCallable.Arguments.ExactlyX,
+				ExecCallable.ForStore.UseNativeJA,
+				ExecCallable.ForString.UseNativeJA,
+				ExecCallable.ForNumbers.UseNativeJA,
+				ExecCallable.ForVoid.UseNativeJA,
+				ExecCallable.ForNative.UseNativeJA {
+		//
+	}
 	//
 }
