@@ -20,8 +20,8 @@ import javax.script.Bindings;
 import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.BaseArray;
 import ru.myx.ae3.base.BaseDate;
-import ru.myx.ae3.base.BaseObjectNoOwnProperties;
 import ru.myx.ae3.base.BaseObject;
+import ru.myx.ae3.base.BaseObjectNoOwnProperties;
 import ru.myx.ae3.base.BasePrimitiveNumber;
 import ru.myx.ae3.base.BaseString;
 import ru.myx.ae3.binary.Transfer;
@@ -31,6 +31,7 @@ import ru.myx.ae3.binary.TransferCopier;
 import ru.myx.ae3.binary.TransferTarget;
 import ru.myx.ae3.common.Describable;
 import ru.myx.ae3.common.Value;
+import ru.myx.ae3.help.Format;
 import ru.myx.ae3.reflect.Reflect;
 
 /** @author myx */
@@ -1826,8 +1827,11 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 
 	@Override
 	public Object baseDescribe() {
-		
-		return "[object Guid(" + this.toString() + ")]";
+
+		if (this.isPrimitive()) {
+			return "Guid(" + Format.Describe.toEcmaSource(this.getInlineBaseValue(), "") + ')';
+		}
+		return "Guid('b64','" + this.toBase64() + "')";
 	}
 
 	@Override
@@ -2251,6 +2255,9 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	@Override
 	public String toString() {
 		
-		return "Guid('" + this.toBase64() + "')";
+		if (this.isPrimitive()) {
+			return "Guid(" + Format.Describe.toEcmaSource(this.getInlineBaseValue(), "") + ')';
+		}
+		return "Guid('b64','" + this.toBase64() + "')";
 	}
 }

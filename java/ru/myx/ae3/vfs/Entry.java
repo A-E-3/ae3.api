@@ -64,16 +64,6 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	@ReflectionExplicit
 	Value<Boolean> doRename(String newKey);
 	
-	/** Unlinks given entry. Equivalent to:
-	 *
-	 * <pre>
-	 * entry.getParent().toContainer().setContentUndefined(entry.getKey())
-	 * </pre>
-	 *
-	 * @return */
-	@ReflectionExplicit
-	Value<Boolean> doUnlink();
-	
 	/** Tries to return binary content for any possible type of entry.
 	 *
 	 * If entry is character - the UTF-8 character set is used.
@@ -150,6 +140,27 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	@ReflectionExplicit
 	Entry getParent();
 	
+	/** Works when isPrimitive() method returns TRUE.
+	 *
+	 * Value is always immediately available, so return type is Object.
+	 *
+	 * @return */
+	@ReflectionHidden
+	default Object getPrimitiveValue() {
+		
+		return null;
+	}
+
+	/** Version for scripting
+	 *
+	 * @param ctx
+	 * @return */
+	@ReflectionExplicit
+	default BaseObject getPrimitiveValue(final ExecProcess ctx) {
+
+		return BaseObject.UNDEFINED;
+	}
+	
 	/** Tries to return text content for any possible type of entry.
 	 *
 	 * If entry is binary - the UTF-8 character set is used.
@@ -200,7 +211,7 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 		}
 		throw new UnsupportedOperationException("Can't produce text content, entryClass: " + this.getClass().getSimpleName());
 	}
-	
+
 	/** Returns the 'value' of the entry. For primitive entries (isPrimitive() returns true) the
 	 * value is it's primitive value. For binary entries the value returned is 'isBinary' value.
 	 *
@@ -212,7 +223,19 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	 *
 	 * @return */
 	@ReflectionExplicit
-	Object getValue();
+	default Object getValue() {
+
+		if (this.isPrimitive()) {
+			return this.getPrimitiveValue();
+		}
+		if (this.isCharacter()) {
+			return this.getTextContent();
+		}
+		if (this.isBinary()) {
+			return this.getBinaryContent();
+		}
+		throw new UnsupportedOperationException("Entry doesn't have meaningful value: " + this);
+	}
 	
 	/** Indicates whether this Entry is exist and has binary content.
 	 *
@@ -323,9 +346,10 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 			if (mode == null) {
 				return null;
 			}
-			throw new IllegalArgumentException((current.isExist()
-				? "Not a container: "
-				: "Doesn't exist: ") + current.getLocation());
+			throw new IllegalArgumentException(
+					(current.isExist()
+						? "Not a container: "
+						: "Doesn't exist: ") + current.getLocation());
 		}
 		for (final StringTokenizer tokenizer = new StringTokenizer(path, "/"); tokenizer.hasMoreTokens();) {
 			final String part = tokenizer.nextToken();

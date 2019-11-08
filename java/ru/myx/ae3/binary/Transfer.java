@@ -30,25 +30,126 @@ import ru.myx.ae3.report.Report;
 import ru.myx.ae3.vfs.Entry;
 import ru.myx.ae3.vfs.EntryBinary;
 import ru.myx.ae3.vfs.EntryCharacter;
-import ru.myx.util.EmptyInputStream;
-import ru.myx.util.EmptyReader;
+import ru.myx.io.EmptyInputStream;
+import ru.myx.io.EmptyReader;
 
-/**
- * @author barachta
+/** @author barachta
  *
- * myx - barachta 
- *         "typecomment": Window>Preferences>Java>Templates. To enable and
- *         disable the creation of type comments go to
- *         Window>Preferences>Java>Code Generation.
- */
+ *         myx - barachta "typecomment": Window>Preferences>Java>Templates. To enable and disable
+ *         the creation of type comments go to Window>Preferences>Java>Code Generation. */
 @ReflectionManual
 public final class Transfer extends AbstractSAPI {
 
+	/** @author myx */
+	@SuppressWarnings("serial")
+	public static class TransferOperationException extends RuntimeException {
+
+		/** @param message
+		 * @param parent */
+		public TransferOperationException(final String message, final Throwable parent) {
+
+			super(message, parent);
+		}
+	}
+
+	/** Default large buffer size.<br>
+	 * Source: 'ae2.tune.buffer_large' <br>
+	 * Default: 64k <br>
+	 * Min: 4k <br>
+	 * Max: 128k */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final int BUFFER_LARGE;
+
+	/** 128ki */
+	static final int BUFFER_LARGE_MAX = 128 * 1024;
+
+	/** 4ki */
+	static final int BUFFER_LARGE_MIN = 4096;
+
+	/** Default maximal buffer size for validation use. <br>
+	 * Source: 'ae2.tune.buffer_max' <br>
+	 * Default: 128k <br>
+	 * Min: 32k <br>
+	 * Max: 1M */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final int BUFFER_MAX;
+
+	/** 1Mi */
+	static final int BUFFER_MAX_MAX = 1024 * 1024;
+
+	/** 32ki */
+	static final int BUFFER_MAX_MIN = 32768;
+
+	/** Default medium buffer size. Should be good for 'initial buffer size' when resulting size is
+	 * unknown. <br>
+	 * Source: 'ae2.tune.buffer_medium' <br>
+	 * Default: 16k <br>
+	 * Min: 1k <br>
+	 * Max: 64k */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final int BUFFER_MEDIUM;
+
+	/** 64ki */
+	static final int BUFFER_MEDIUM_MAX = 65536;
+
+	/** 1ki */
+	static final int BUFFER_MEDIUM_MIN = 1024;
+
+	/** Default small buffer size. <br>
+	 * Source: 'ae2.tune.buffer_small' <br>
+	 * Default: 2048 <br>
+	 * Min: 128 <br>
+	 * Max: 4096 */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final int BUFFER_SMALL;
+
+	/** 4ki */
+	static final int BUFFER_SMALL_MAX = 4096;
+
+	/** 128 */
+	static final int BUFFER_SMALL_MIN = 128;
+
 	/**
 	 *
-	 * @param binary
-	 * @return
 	 */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
+
+	/**
+	 *
+	 */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final Reader EMPTY_READER = EmptyReader.INSTANCE;
+
+	/**
+	 *
+	 */
+	@ReflectionExplicit
+	@ReflectionEnumerable
+	public static final InputStream EMPTY_STREAM = EmptyInputStream.INSTANCE;
+
+	private static final AbstractTransferImpl IMPL;
+
+	static {
+		/** this block should go last */
+		{
+			IMPL = AbstractSAPI.createObject("ru.myx.ae3.binary.ImplementBinary");
+
+			BUFFER_SMALL = Transfer.IMPL.getBufferSmall();
+			BUFFER_MEDIUM = Transfer.IMPL.getBufferMedium();
+			BUFFER_LARGE = Transfer.IMPL.getBufferLarge();
+			BUFFER_MAX = Transfer.IMPL.getBufferMax();
+		}
+	}
+
+	/** @param binary
+	 * @return */
 	@ReflectionExplicit
 	public static final long binarySize(final Object binary) {
 
@@ -70,25 +171,21 @@ public final class Transfer extends AbstractSAPI {
 				return 0;
 			}
 			if (entry.isCharacter()) {
-				/**
-				 * TODO: EntryCharacter implement BodyAccessCharacter<code>
+				/** TODO: EntryCharacter implement BodyAccessCharacter<code>
 				assert entry instanceof BodyAccessCharacter : "Supposed to be an instance of BodyAccessCharacter, class: "
 						+ entry.getClass().getName();
 				return ((BodyAccessCharacter) entry).getCharacterContentLength();
-				</code>
-				 */
+				</code> */
 				assert entry instanceof EntryCharacter //
 				: "Supposed to be an instance of EntryCharacter, class: " + entry.getClass().getName();
 				return ((EntryCharacter) entry).getCharacterContentLength();
 			}
 			if (entry.isBinary()) {
-				/**
-				 * TODO: EntryBinary implement BodyAccessBinary<code>
+				/** TODO: EntryBinary implement BodyAccessBinary<code>
 				assert entry instanceof BodyAccessBinary : "Supposed to be an instance of BodyAccessBinary, class: "
 						+ entry.getClass().getName();
 				return ((BodyAccessBinary) entry).getBinaryContentLength();
-				</code>
-				 */
+				</code> */
 				assert entry instanceof EntryBinary //
 				: "Supposed to be an instance of EntryBinary, class: " + entry.getClass().getName();
 				return ((EntryBinary) entry).getBinaryContentLength();
@@ -123,13 +220,10 @@ public final class Transfer extends AbstractSAPI {
 		return binary.toString().length();
 	}
 
-	/**
-	 *
-	 * @param stream1
+	/** @param stream1
 	 * @param stream2
 	 * @return
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int compareStreams(final InputStream stream1, final InputStream stream2) throws IOException {
 
@@ -189,9 +283,7 @@ public final class Transfer extends AbstractSAPI {
 		}
 	}
 
-	/**
-	 *
-	 * @param srcBinary
+	/** @param srcBinary
 	 * @param srcOffset
 	 * @param dstBytes
 	 * @param dstOffset
@@ -199,8 +291,7 @@ public final class Transfer extends AbstractSAPI {
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int copyBytes(final Object srcBinary, final long srcOffset, final byte[] dstBytes, final int dstOffset, final int length)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException {
@@ -223,14 +314,11 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.createCopierFromBinary(srcBinary).copy(srcOffset, dstBytes, dstOffset, length);
 	}
 
-	/**
-	 * When buffer size is greater than BUFFER_MAX - creates file-based buffer,
-	 * use wrapBuffer to be sure that your bytes are definitely in memory.
-	 * Copies bytes.
+	/** When buffer size is greater than BUFFER_MAX - creates file-based buffer, use wrapBuffer to
+	 * be sure that your bytes are definitely in memory. Copies bytes.
 	 *
 	 * @param bytes
-	 * @return buffer
-	 */
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer createBuffer(final byte[] bytes) {
 
@@ -243,16 +331,13 @@ public final class Transfer extends AbstractSAPI {
 			: Transfer.IMPL.createBuffer(bytes, 0, length);
 	}
 
-	/**
-	 * When requested length is greater than BUFFER_MAX - creates file-based
-	 * buffer, use wrapBuffer to be sure that your bytes are definitely in
-	 * memory. Copies bytes.
+	/** When requested length is greater than BUFFER_MAX - creates file-based buffer, use wrapBuffer
+	 * to be sure that your bytes are definitely in memory. Copies bytes.
 	 *
 	 * @param bytes
 	 * @param offset
 	 * @param length
-	 * @return buffer
-	 */
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer createBuffer(final byte[] bytes, final int offset, final int length) {
 
@@ -262,58 +347,33 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.IMPL.createBuffer(bytes, offset, length);
 	}
 
-	/**
-	 * @param file
-	 * @return buffer
-	 */
+	/** @param file
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer createBuffer(final File file) {
 
 		return Transfer.IMPL.createBuffer(file);
 	}
 
-	/**
-	 * @param file
+	/** @param file
 	 * @param skip
 	 * @param length
-	 * @return buffer
-	 */
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer createBuffer(final File file, final long skip, final long length) {
 
 		return Transfer.IMPL.createBuffer(file, skip, length);
 	}
 
-	/**
-	 *
-	 * @author myx
-	 *
-	 */
-	@SuppressWarnings("serial")
-	public static class TransferOperationException extends RuntimeException {
-
-		/**
-		 *
-		 * @param message
-		 * @param parent
-		 */
-		public TransferOperationException(final String message, final Throwable parent) {
-			super(message, parent);
-		}
-	}
-
-	/**
-	 * Wraps input stream. Since the general contract of a buffer class requires
-	 * that contents of a buffer were immediately available this InputStream are
-	 * read into collector or any special holder. An exception that may rise
-	 * while reading an InputStream is throwed from this method.
+	/** Wraps input stream. Since the general contract of a buffer class requires that contents of a
+	 * buffer were immediately available this InputStream are read into collector or any special
+	 * holder. An exception that may rise while reading an InputStream is throwed from this method.
 	 *
 	 * In any case InputStream will be closed on exit from this method!
 	 *
 	 * @param stream
 	 * @return buffer
-	 * @throws TransferOperationException
-	 */
+	 * @throws TransferOperationException */
 	@ReflectionExplicit
 	public static final TransferBuffer createBuffer(final InputStream stream) throws TransferOperationException {
 
@@ -340,11 +400,8 @@ public final class Transfer extends AbstractSAPI {
 		}
 	}
 
-	/**
-	 *
-	 * @param base64
-	 * @return buffer
-	 */
+	/** @param base64
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer createBufferFromBase64(final CharSequence base64) {
 
@@ -354,13 +411,11 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.IMPL.createBufferFromBase64(base64);
 	}
 
-	/**
-	 * @param binary
+	/** @param binary
 	 * @return
 	 * @throws TransferOperationException
 	 * @throws IllegalArgumentException
-	 *             - not a binary
-	 */
+	 *             - not a binary */
 	@ReflectionExplicit
 	public static final TransferBuffer createBufferFromBinary(final Object binary) throws TransferOperationException, IllegalArgumentException {
 
@@ -420,14 +475,12 @@ public final class Transfer extends AbstractSAPI {
 		throw new IllegalArgumentException("Not a binary: " + binary);
 	}
 
-	/**
-	 * Creates buffer representing given string using UTF-8 charset encoding.
+	/** Creates buffer representing given string using UTF-8 charset encoding.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param string
-	 * @return buffer
-	 */
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer createBufferUtf8(final CharSequence string) {
 
@@ -437,14 +490,12 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.wrapBuffer(string.toString().getBytes(Engine.CHARSET_UTF8));
 	}
 
-	/**
-	 * Creates buffer representing given string using UTF-8 charset encoding.
+	/** Creates buffer representing given string using UTF-8 charset encoding.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param string
-	 * @return buffer
-	 */
+	 * @return buffer */
 	public static final TransferBuffer createBufferUtf8(final String string) {
 
 		if (string == null || string.isEmpty()) {
@@ -453,24 +504,20 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.wrapBuffer(string.getBytes(Engine.CHARSET_UTF8));
 	}
 
-	/**
-	 * Creates new collector.
+	/** Creates new collector.
 	 *
-	 * @return collector
-	 */
+	 * @return collector */
 	@ReflectionExplicit
 	public static final TransferCollector createCollector() {
 
 		return Transfer.IMPL.createCollector();
 	}
 
-	/**
-	 * Clones byte buffer unless it is larger than BUFFER_MAX. Creates temporary
-	 * file-based solution otherwise.
+	/** Clones byte buffer unless it is larger than BUFFER_MAX. Creates temporary file-based
+	 * solution otherwise.
 	 *
 	 * @param bytes
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopier(final byte[] bytes) {
 
@@ -483,15 +530,13 @@ public final class Transfer extends AbstractSAPI {
 			: Transfer.IMPL.createCopier(bytes, 0, length);
 	}
 
-	/**
-	 * Clones byte buffer unless it is larger than BUFFER_MAX. Creates temporary
-	 * file-based solution otherwise.
+	/** Clones byte buffer unless it is larger than BUFFER_MAX. Creates temporary file-based
+	 * solution otherwise.
 	 *
 	 * @param bytes
 	 * @param offset
 	 * @param length
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopier(final byte[] bytes, final int offset, final int length) {
 
@@ -501,15 +546,13 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.IMPL.createCopier(bytes, offset, length);
 	}
 
-	/**
-	 * Creates copier representing given string using given charset encoding.
+	/** Creates copier representing given string using given charset encoding.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param string
 	 * @param charset
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopier(final CharSequence string, final Charset charset) {
 
@@ -519,45 +562,29 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.wrapCopier(string.toString().getBytes(charset));
 	}
 
-	/**
-	 * @param file
-	 * @return copier
-	 */
+	/** @param file
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopier(final File file) {
 
 		return Transfer.IMPL.createCopier(file);
 	}
 
-	/**
-	 * @param path
-	 * @return copier
-	 */
-	@ReflectionExplicit
-	public static final TransferCopier createCopier(final Path path) {
-
-		return Transfer.IMPL.createCopier(path);
-	}
-
-	/**
-	 * @param file
+	/** @param file
 	 * @param skip
 	 * @param length
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopier(final File file, final long skip, final long length) {
 
 		return Transfer.IMPL.createCopier(file, skip, length);
 	}
 
-	/**
-	 * TODO: move to sys / ImplementBinary
+	/** TODO: move to sys / ImplementBinary
 	 *
 	 * @param stream
 	 * @return copier
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final TransferCopier createCopier(final InputStream stream) throws IOException {
 
@@ -574,24 +601,28 @@ public final class Transfer extends AbstractSAPI {
 					out.absorbArray(buffer, 0, i);
 				}
 			}
-			/**
-			 * collector is closed buy try ^^^
-			 */
+			/** collector is closed buy try ^^^ */
 			return collector.toCloneFactory();
 		} finally {
 			stream.close();
 		}
 	}
 
-	/**
-	 * Creates copier representing given string using given charset encoding.
+	/** @param path
+	 * @return copier */
+	@ReflectionExplicit
+	public static final TransferCopier createCopier(final Path path) {
+
+		return Transfer.IMPL.createCopier(path);
+	}
+
+	/** Creates copier representing given string using given charset encoding.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param string
 	 * @param charset
-	 * @return copier
-	 */
+	 * @return copier */
 	public static final TransferCopier createCopier(final String string, final Charset charset) {
 
 		if (string == null || string.length() == 0) {
@@ -600,14 +631,12 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.wrapCopier(string.getBytes(charset));
 	}
 
-	/**
-	 * Creates copier representing by decoding a Base64 encoded string.
+	/** Creates copier representing by decoding a Base64 encoded string.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param base64
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopierFromBase64(final CharSequence base64) {
 
@@ -617,13 +646,11 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.IMPL.createCopierFromBase64(base64);
 	}
 
-	/**
-	 * @param binary
+	/** @param binary
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 *             - not a binary
-	 */
+	 *             - not a binary */
 	@ReflectionExplicit
 	public static final TransferCopier createCopierFromBinary(final Object binary) throws IOException, IllegalArgumentException {
 
@@ -684,14 +711,12 @@ public final class Transfer extends AbstractSAPI {
 		throw new IllegalArgumentException("Not a binary: " + binary);
 	}
 
-	/**
-	 * Creates copier representing given string using UTF-8 charset encoding.
+	/** Creates copier representing given string using UTF-8 charset encoding.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param string
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier createCopierUtf8(final CharSequence string) {
 
@@ -701,14 +726,12 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.wrapCopier(string.toString().getBytes(Engine.CHARSET_UTF8));
 	}
 
-	/**
-	 * Creates copier representing given string using UTF-8 charset encoding.
+	/** Creates copier representing given string using UTF-8 charset encoding.
 	 *
 	 * TODO: use Collector and CharacterDecoder for long strings!
 	 *
 	 * @param string
-	 * @return copier
-	 */
+	 * @return copier */
 	public static final TransferCopier createCopierUtf8(final String string) {
 
 		if (string == null || string.isEmpty()) {
@@ -717,26 +740,22 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.wrapCopier(string.getBytes(Engine.CHARSET_UTF8));
 	}
 
-	/**
-	 * Creates writable transfer description.
+	/** Creates writable transfer description.
 	 *
 	 * @param name
 	 * @param priority
-	 * @return description
-	 */
+	 * @return description */
 	@ReflectionExplicit
 	public static final TransferDescription createDescription(final String name, final int priority) {
 
 		return Transfer.IMPL.createDescription(name, priority);
 	}
 
-	/**
-	 * @param in
+	/** @param in
 	 * @param out
 	 * @param close
 	 * @return byte count
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int fromStream(final InputStream in, final TransferTarget out, final boolean close) throws IOException {
 
@@ -769,26 +788,22 @@ public final class Transfer extends AbstractSAPI {
 		}
 	}
 
-	/**
-	 * 2 bytes
+	/** 2 bytes
 	 *
 	 * @param srcBytes
 	 * @param srcOffset
-	 * @return
-	 */
+	 * @return */
 	@ReflectionExplicit
 	public static final float readFloat(final byte[] srcBytes, final int srcOffset) {
 
 		return Float.intBitsToFloat(Transfer.readInt(srcBytes, srcOffset));
 	}
 
-	/**
-	 * 4 bytes
+	/** 4 bytes
 	 *
 	 * @param srcBytes
 	 * @param srcOffset
-	 * @return
-	 */
+	 * @return */
 	@ReflectionExplicit
 	public static final int readInt(final byte[] srcBytes, final int srcOffset) {
 
@@ -796,26 +811,22 @@ public final class Transfer extends AbstractSAPI {
 				+ ((srcBytes[srcOffset + 3] & 0xff) << 0);
 	}
 
-	/**
-	 * 3 bytes
+	/** 3 bytes
 	 *
 	 * @param srcBytes
 	 * @param srcOffset
-	 * @return
-	 */
+	 * @return */
 	@ReflectionExplicit
 	public static final int readInt24(final byte[] srcBytes, final int srcOffset) {
 
 		return ((srcBytes[srcOffset + 1] & 0xff) << 16) + ((srcBytes[srcOffset + 2] & 0xff) << 8) + ((srcBytes[srcOffset + 3] & 0xff) << 0);
 	}
 
-	/**
-	 * 8 bytes
+	/** 8 bytes
 	 *
 	 * @param srcBytes
 	 * @param srcOffset
-	 * @return
-	 */
+	 * @return */
 	@ReflectionExplicit
 	public static final long readLong(final byte[] srcBytes, final int srcOffset) {
 
@@ -823,54 +834,45 @@ public final class Transfer extends AbstractSAPI {
 				+ ((srcBytes[srcOffset + 0] & 0xffL) << 56) //
 				+ ((srcBytes[srcOffset + 1] & 0xffL) << 48) //
 				+ ((srcBytes[srcOffset + 2] & 0xffL) << 40) //
-				+ ((srcBytes[srcOffset + 3] & 0xffL) << 32)
-				+ (((srcBytes[srcOffset + 4] & 0xff) << 24) //
+				+ ((srcBytes[srcOffset + 3] & 0xffL) << 32) + (((srcBytes[srcOffset + 4] & 0xff) << 24) //
 						+ ((srcBytes[srcOffset + 5] & 0xff) << 16) //
 						+ ((srcBytes[srcOffset + 6] & 0xff) << 8) //
 						+ ((srcBytes[srcOffset + 7] & 0xff) << 0) //
 				);
 	}
 
-	/**
-	 * 2 bytes
+	/** 2 bytes
 	 *
 	 * @param srcBytes
 	 * @param srcOffset
-	 * @return
-	 */
+	 * @return */
 	@ReflectionExplicit
 	public static final short readShort(final byte[] srcBytes, final int srcOffset) {
 
 		return (short) (((srcBytes[srcOffset + 0] & 0xff) << 8) + ((srcBytes[srcOffset + 1] & 0xff) << 0));
 	}
 
-	/**
-	 * @param oneByte
-	 * @return buffer
-	 */
+	/** @param oneByte
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer singletonBuffer(final byte oneByte) {
 
 		return Transfer.IMPL.singletonBuffer(oneByte);
 	}
 
-	/**
-	 * @param oneByte
-	 * @return copier
-	 */
+	/** @param oneByte
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier singletonCopier(final byte oneByte) {
 
 		return Transfer.IMPL.singletonCopier(oneByte);
 	}
 
-	/**
-	 * @param in
+	/** @param in
 	 * @param out
 	 * @param close
 	 * @return byte count
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int toStream(final InputStream in, final OutputStream out, final boolean close) throws IOException {
 
@@ -901,12 +903,10 @@ public final class Transfer extends AbstractSAPI {
 		}
 	}
 
-	/**
-	 * @param buf
+	/** @param buf
 	 * @param out
 	 * @return byte count
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int toStream(final TransferBuffer buf, final DataOutput out) throws IOException {
 
@@ -945,13 +945,11 @@ public final class Transfer extends AbstractSAPI {
 		}
 	}
 
-	/**
-	 * @param buf
+	/** @param buf
 	 * @param out
 	 * @param close
 	 * @return byte count
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int toStream(final TransferBuffer buf, final OutputStream out, final boolean close) throws IOException {
 
@@ -1000,39 +998,33 @@ public final class Transfer extends AbstractSAPI {
 		}
 	}
 
-	/**
-	 * @param binary
+	/** @param binary
 	 * @param out
 	 * @return byte count
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int toStream(final TransferCopier binary, final DataOutput out) throws IOException {
 
 		return Transfer.toStream(binary.nextCopy(), out);
 	}
 
-	/**
-	 * @param binary
+	/** @param binary
 	 * @param out
 	 * @param close
 	 * @return byte count
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int toStream(final TransferCopier binary, final OutputStream out, final boolean close) throws IOException {
 
 		return Transfer.toStream(binary.nextCopy(), out, close);
 	}
 
-	/**
-	 * @param digest
+	/** @param digest
 	 * @param binary
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final MessageDigest updateMessageDigest(final MessageDigest digest, final Object binary)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException {
@@ -1051,8 +1043,7 @@ public final class Transfer extends AbstractSAPI {
 		return digest;
 	}
 
-	/**
-	 * @param digest
+	/** @param digest
 	 * @param binary
 	 * @param offset
 	 * @param length
@@ -1060,8 +1051,7 @@ public final class Transfer extends AbstractSAPI {
 	 * @throws IOException
 	 * @throws IllegalArgumentException
 	 * @throws ConcurrentModificationException
-	 * @throws DigestException
-	 */
+	 * @throws DigestException */
 	@ReflectionExplicit
 	public static final MessageDigest updateMessageDigest(final MessageDigest digest, final Object binary, final long offset, final long length)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException, DigestException {
@@ -1083,10 +1073,8 @@ public final class Transfer extends AbstractSAPI {
 		return digest;
 	}
 
-	/**
-	 * @param bytes
-	 * @return buffer
-	 */
+	/** @param bytes
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer wrapBuffer(final byte[] bytes) {
 
@@ -1099,12 +1087,10 @@ public final class Transfer extends AbstractSAPI {
 			: Transfer.IMPL.wrapBuffer(bytes, 0, length);
 	}
 
-	/**
-	 * @param bytes
+	/** @param bytes
 	 * @param offset
 	 * @param length
-	 * @return buffer
-	 */
+	 * @return buffer */
 	@ReflectionExplicit
 	public static final TransferBuffer wrapBuffer(final byte[] bytes, final int offset, final int length) {
 
@@ -1113,10 +1099,8 @@ public final class Transfer extends AbstractSAPI {
 			: Transfer.IMPL.wrapBuffer(bytes, offset, length);
 	}
 
-	/**
-	 * @param bytes
-	 * @return copier
-	 */
+	/** @param bytes
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier wrapCopier(final byte[] bytes) {
 
@@ -1129,12 +1113,10 @@ public final class Transfer extends AbstractSAPI {
 			: Transfer.IMPL.wrapCopier(bytes, 0, length);
 	}
 
-	/**
-	 * @param bytes
+	/** @param bytes
 	 * @param offset
 	 * @param length
-	 * @return copier
-	 */
+	 * @return copier */
 	@ReflectionExplicit
 	public static final TransferCopier wrapCopier(final byte[] bytes, final int offset, final int length) {
 
@@ -1143,16 +1125,13 @@ public final class Transfer extends AbstractSAPI {
 			: Transfer.IMPL.wrapCopier(bytes, offset, length);
 	}
 
-	/**
-	 *
-	 * @param value
+	/** @param value
 	 * @param dstBytes
 	 * @param dstOffset
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeBoolean(final boolean value, final byte[] dstBytes, final int dstOffset)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException {
@@ -1163,16 +1142,13 @@ public final class Transfer extends AbstractSAPI {
 		return 1;
 	}
 
-	/**
-	 *
-	 * @param value
+	/** @param value
 	 * @param dstBytes
 	 * @param dstOffset
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeByte(final int value, final byte[] dstBytes, final int dstOffset) throws ConcurrentModificationException, IllegalArgumentException, IOException {
 
@@ -1180,16 +1156,35 @@ public final class Transfer extends AbstractSAPI {
 		return 1;
 	}
 
-	/**
-	 *
-	 * @param value
+	/** @param value
+	 * @param exactLength
+	 * @param dstBytes
+	 * @param dstOffset
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @throws IOException */
+	@ReflectionExplicit
+	public static final int writeBytesExact(final byte[] value, final int exactLength, final byte[] dstBytes, final int dstOffset) throws IllegalArgumentException, IOException {
+		
+		if (value == null) {
+			throw new IllegalArgumentException("source bytes is NULL!");
+		}
+
+		if (value.length != exactLength) {
+			throw new IllegalArgumentException("Exact length doesn't match: valueLength: " + value.length + ", expectLength: " + exactLength);
+		}
+		
+		System.arraycopy(value, 0, dstBytes, dstOffset, exactLength);
+		return exactLength;
+	}
+
+	/** @param value
 	 * @param dstBytes
 	 * @param dstOffset
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeFloat(final float value, final byte[] dstBytes, final int dstOffset)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException {
@@ -1197,16 +1192,13 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.writeInt(Float.floatToIntBits(value), dstBytes, dstOffset);
 	}
 
-	/**
-	 *
-	 * @param value
+	/** @param value
 	 * @param dstBytes
 	 * @param dstOffset
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeInt(final int value, final byte[] dstBytes, final int dstOffset) throws ConcurrentModificationException, IllegalArgumentException, IOException {
 
@@ -1217,16 +1209,13 @@ public final class Transfer extends AbstractSAPI {
 		return 4;
 	}
 
-	/**
-	 *
-	 * @param value
+	/** @param value
 	 * @param dstBytes
 	 * @param dstOffset
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeInt24(final int value, final byte[] dstBytes, final int dstOffset) throws ConcurrentModificationException, IllegalArgumentException, IOException {
 
@@ -1236,8 +1225,7 @@ public final class Transfer extends AbstractSAPI {
 		return 3;
 	}
 
-	/**
-	 * 8 bytes
+	/** 8 bytes
 	 *
 	 * @param value
 	 * @param dstBytes
@@ -1245,8 +1233,7 @@ public final class Transfer extends AbstractSAPI {
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeLong(final long value, final byte[] dstBytes, final int dstOffset) throws ConcurrentModificationException, IllegalArgumentException, IOException {
 
@@ -1261,8 +1248,7 @@ public final class Transfer extends AbstractSAPI {
 		return 8;
 	}
 
-	/**
-	 * 2 bytes
+	/** 2 bytes
 	 *
 	 * @param value
 	 * @param dstBytes
@@ -1270,8 +1256,7 @@ public final class Transfer extends AbstractSAPI {
 	 * @return
 	 * @throws IOException
 	 * @throws IllegalArgumentException
-	 * @throws ConcurrentModificationException
-	 */
+	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	public static final int writeShort(final int value, final byte[] dstBytes, final int dstOffset) throws ConcurrentModificationException, IllegalArgumentException, IOException {
 
@@ -1279,18 +1264,32 @@ public final class Transfer extends AbstractSAPI {
 		dstBytes[dstOffset + 1] = (byte) (value >> 0 & 0xFF);
 		return 2;
 	}
+	
+	/** @param string
+	 * @param dstBytes
+	 * @param dstOffset
+	 * @return */
+	@ReflectionExplicit
+	public static final int writeStringZeroEndUtf8(final CharSequence string, final byte[] dstBytes, final int dstOffset) {
 
-	/**
-	 *
-	 * @param byteBuffer
+		if (string == null || string.length() == 0) {
+			dstBytes[dstOffset + 0] = 0;
+			return 1;
+		}
+		final byte[] bytes = string.toString().getBytes(Engine.CHARSET_UTF8);
+		System.arraycopy(bytes, 0, dstBytes, dstOffset, bytes.length);
+		dstBytes[dstOffset + bytes.length] = 0;
+		return bytes.length + 1;
+	}
+
+	/** @param byteBuffer
 	 * @param offset
 	 * @param xorBinary
 	 * @param length
 	 * @return
 	 * @throws ConcurrentModificationException
 	 * @throws IllegalArgumentException
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int xorBytes(final byte[] byteBuffer, final int offset, final Object xorBinary, final int length)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException {
@@ -1313,9 +1312,7 @@ public final class Transfer extends AbstractSAPI {
 		return limit;
 	}
 
-	/**
-	 *
-	 * @param srcBinary
+	/** @param srcBinary
 	 * @param srcOffset
 	 * @param xorBinary
 	 * @param dstBytes
@@ -1324,8 +1321,7 @@ public final class Transfer extends AbstractSAPI {
 	 * @return
 	 * @throws ConcurrentModificationException
 	 * @throws IllegalArgumentException
-	 * @throws IOException
-	 */
+	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int xorBytes(final Object srcBinary, final long srcOffset, final Object xorBinary, final byte[] dstBytes, final int dstOffset, final int length)
 			throws ConcurrentModificationException, IllegalArgumentException, IOException {
@@ -1353,128 +1349,6 @@ public final class Transfer extends AbstractSAPI {
 		}
 
 		return limit;
-	}
-
-	/**
-	 * Default large buffer size.<br>
-	 * Source: 'ae2.tune.buffer_large' <br>
-	 * Default: 64k <br>
-	 * Min: 4k <br>
-	 * Max: 128k
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final int BUFFER_LARGE;
-
-	/**
-	 * 128ki
-	 */
-	static final int BUFFER_LARGE_MAX = 128 * 1024;
-
-	/**
-	 * 4ki
-	 */
-	static final int BUFFER_LARGE_MIN = 4096;
-
-	/**
-	 * Default maximal buffer size for validation use. <br>
-	 * Source: 'ae2.tune.buffer_max' <br>
-	 * Default: 128k <br>
-	 * Min: 32k <br>
-	 * Max: 1M
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final int BUFFER_MAX;
-
-	/**
-	 * 1Mi
-	 */
-	static final int BUFFER_MAX_MAX = 1024 * 1024;
-
-	/**
-	 * 32ki
-	 */
-	static final int BUFFER_MAX_MIN = 32768;
-
-	/**
-	 * Default medium buffer size. Should be good for 'initial buffer size' when
-	 * resulting size is unknown. <br>
-	 * Source: 'ae2.tune.buffer_medium' <br>
-	 * Default: 16k <br>
-	 * Min: 1k <br>
-	 * Max: 64k
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final int BUFFER_MEDIUM;
-
-	/**
-	 * 64ki
-	 */
-	static final int BUFFER_MEDIUM_MAX = 65536;
-
-	/**
-	 * 1ki
-	 */
-	static final int BUFFER_MEDIUM_MIN = 1024;
-
-	/**
-	 * Default small buffer size. <br>
-	 * Source: 'ae2.tune.buffer_small' <br>
-	 * Default: 2048 <br>
-	 * Min: 128 <br>
-	 * Max: 4096
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final int BUFFER_SMALL;
-
-	/**
-	 * 4ki
-	 */
-	static final int BUFFER_SMALL_MAX = 4096;
-
-	/**
-	 * 128
-	 */
-	static final int BUFFER_SMALL_MIN = 128;
-
-	/**
-	 *
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
-
-	/**
-	 *
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final Reader EMPTY_READER = EmptyReader.INSTANCE;
-
-	/**
-	 *
-	 */
-	@ReflectionExplicit
-	@ReflectionEnumerable
-	public static final InputStream EMPTY_STREAM = EmptyInputStream.INSTANCE;
-
-	private static final AbstractTransferImpl IMPL;
-
-	static {
-		/**
-		 * this block should go last
-		 */
-		{
-			IMPL = AbstractSAPI.createObject("ru.myx.ae3.binary.ImplementBinary");
-
-			BUFFER_SMALL = Transfer.IMPL.getBufferSmall();
-			BUFFER_MEDIUM = Transfer.IMPL.getBufferMedium();
-			BUFFER_LARGE = Transfer.IMPL.getBufferLarge();
-			BUFFER_MAX = Transfer.IMPL.getBufferMax();
-		}
 	}
 
 	private Transfer() {

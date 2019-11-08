@@ -5,21 +5,14 @@ package ru.myx.ae3.exec;
 
 import ru.myx.ae3.base.BaseObjectNominal;
 
-/**
- * @author myx
- */
+/** @author myx */
 public interface Instruction extends BaseObjectNominal {
-	
-	
-	/**
-	 *
-	 * @param name
+
+	/** @param name
 	 * @param length
-	 * @return
-	 */
+	 * @return */
 	static String pad(final String name, final int length) {
-		
-		
+
 		int add = length - name.length();
 		if (add < 0) {
 			return name.substring(0, length);
@@ -35,19 +28,14 @@ public interface Instruction extends BaseObjectNominal {
 		return builder.toString();
 	}
 
-	/**
-	 * @param constant
-	 * @return
-	 */
+	/** @param constant
+	 * @return */
 	static String padCONSTANT(final int constant) {
-		
-		
+
 		return Instruction.pad(String.valueOf(constant), 10);
 	}
 
-	/**
-	 *
-	 * {A|X|V|Z}{A|B|C|E|F|I|M|T}XXXX_{I|T|D|N|U}(A|I|S)*
+	/** {A|X|V|Z}{A|B|C|E|F|I|M|T}XXXX_{I|T|D|N|U}(A|I|S)*
 	 *
 	 * 1st part:
 	 * <ul>
@@ -73,22 +61,20 @@ public interface Instruction extends BaseObjectNominal {
 	 *
 	 * 3rd part:
 	 * <ul>
-	 * <li>F - floating temp result. The result may be a 'context direct' type
-	 * instance as the result of calculations implementation.</li>
-	 * <li>I - integer temp result. The result may be a 'context direct' type
-	 * instance as the result of calculations implementation.</li>
-	 * <li>T - temp/ctx result. The result may be a 'context direct' type
-	 * instance as the result of calculations implementation.</li>
-	 * <li>P - pass-through result. The result may be a 'context direct' type
-	 * instance because instruction doesn't alter the result).</li>
-	 * <li>D - stack result optimization. The result may be a 'stack storage
-	 * compatible wrapped value' (either as the result of calculations
-	 * implementation, either because the conversion of 'T'-type result to
-	 * 'S'-type result is enforced)</li>
-	 * <li>N - native result. The result is guaranteed to be normal native base
-	 * object or primitive (either as the result of calculations implementation,
-	 * either because the conversion of 'T'-type or 'S'-type result to 'N'-type
-	 * result is enforced)</li>
+	 * <li>F - floating temp result. The result may be a 'context direct' type instance as the
+	 * result of calculations implementation.</li>
+	 * <li>I - integer temp result. The result may be a 'context direct' type instance as the result
+	 * of calculations implementation.</li>
+	 * <li>T - temp/ctx result. The result may be a 'context direct' type instance as the result of
+	 * calculations implementation.</li>
+	 * <li>P - pass-through result. The result may be a 'context direct' type instance because
+	 * instruction doesn't alter the result).</li>
+	 * <li>D - stack result optimization. The result may be a 'stack storage compatible wrapped
+	 * value' (either as the result of calculations implementation, either because the conversion of
+	 * 'T'-type result to 'S'-type result is enforced)</li>
+	 * <li>N - native result. The result is guaranteed to be normal native base object or primitive
+	 * (either as the result of calculations implementation, either because the conversion of
+	 * 'T'-type or 'S'-type result to 'N'-type result is enforced)</li>
 	 * <li>U - 'no result' optimization</li>
 	 * </ul>
 	 *
@@ -101,85 +87,46 @@ public interface Instruction extends BaseObjectNominal {
 	 * </ul>
 	 *
 	 * @param name
-	 * @return
-	 */
+	 * @return */
 	static String padOPCODE(final String name) {
-		
-		
+
 		return Instruction.pad(name, 12);
 	}
 
-	/**
-	 * @param state
-	 * @return
-	 */
-	static String padSTATE(final ExecStateCode state) {
-		
-		
-		return Instruction.pad(String.valueOf(state), 5);
-	}
-
-	/**
-	 * null - instruction finished normally.
+	/** null - instruction finished normally.
 	 *
 	 * @param process
 	 * @return state code
-	 * @throws Exception
-	 */
+	 * @throws Exception */
 	ExecStateCode execCall(final ExecProcess process) throws Exception;
 
-	/**
-	 * @return
-	 */
+	/** @return */
 	default int getConstant() {
-		
-		
+
 		return 0;
 	}
 
-	/**
-	 * The number of arguments needed in stack to fill in arguments.
+	/** The number of arguments needed in stack to fill in arguments.
 	 *
-	 * @return int
-	 */
+	 * @return int */
 	int getOperandCount();
 
-	/**
-	 * The number of results this instruction will push into the stack.
+	/** The number of results this instruction will push into the stack.
 	 *
-	 * @return int
-	 */
+	 * @return int */
 	int getResultCount();
 
-	/**
-	 * Only for good code dumps. Doesn't affect execution and compilation at
-	 * all.
+	/** Only for good code dumps. Doesn't affect execution and compilation at all.
 	 *
-	 * @return
-	 */
+	 * @return */
 	default boolean isRelativeAddressInConstant() {
-		
-		
+
 		return false;
 	}
 
-	/**
-	 * return true when RR is saved to stack but could be replaced by
-	 * NoStackPush with target set to RR register. False by default.
+	/** String of code to be materializable.
 	 *
-	 * @return boolean
-	 */
-	default boolean isStackPush() {
-		
-		
-		return false;
-	}
-
-	/**
-	 * String of code to be materializable.
-	 *
-	 * @return string
-	 */
+	 * @return string */
 	String toCode();
 
 }

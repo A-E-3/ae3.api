@@ -11,13 +11,13 @@ import ru.myx.ae3.reflect.ReflectionManual;
 /** @author myx */
 @ReflectionManual
 public interface EntryPrimitive extends Entry {
-
+	
 	/**
 	 *
 	 */
 	@ReflectionExplicit
 	static BaseObject PROTOTYPE = Reflect.classToBasePrototype(EntryPrimitive.class);
-
+	
 	/** Works when isPrimitive() method returns TRUE.
 	 *
 	 * Value is always immediately available, so return type is Guid.
@@ -25,31 +25,33 @@ public interface EntryPrimitive extends Entry {
 	 * @return */
 	@ReflectionExplicit
 	Guid getPrimitiveGuid();
-
+	
 	/** Works when isPrimitive() method returns TRUE.
 	 *
 	 * Value is always immediately available, so return type is Object.
 	 *
 	 * @return */
+	@Override
 	@ReflectionHidden
 	Object getPrimitiveValue();
-
+	
 	/** Version for scripting
 	 *
 	 * @param ctx
 	 * @return */
+	@Override
 	@ReflectionExplicit
 	BaseObject getPrimitiveValue(final ExecProcess ctx);
-
+	
 	@Override
 	default boolean isPrimitive() {
-
+		
 		return true;
 	}
-
+	
 	@Override
 	default EntryPrimitive toPrimitive() {
-
+		
 		return this;
 	}
 }
