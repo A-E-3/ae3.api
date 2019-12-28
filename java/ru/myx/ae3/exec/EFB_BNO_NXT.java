@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.BaseObject;
 
@@ -17,14 +16,14 @@ final class EFB_BNO_NXT extends ResultHandlerBasic implements ResultHandler.UseR
 	}
 
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx) {
+	public final ExecStateCode execReturn(final ExecProcess ctx) {
 		
 		
 		return ctx.execOutput(ctx.ra0RB);
 	}
 
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx, @NotNull final BaseObject value) {
+	public final ExecStateCode execReturn(final ExecProcess ctx, final BaseObject value) {
 		
 		
 		final ExecStateCode code = ctx.execOutput(value);

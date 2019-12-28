@@ -1,7 +1,6 @@
 package ru.myx.ae3.e4.vm;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseObject;
@@ -23,7 +22,7 @@ public interface VmReflected {
 	 * @param store
 	 * @return */
 	@ReflectionHidden
-	ExecStateCode vmPropertyDefine(@NotNull ExecProcess ctx, @NotNull BaseObject name, @NotNull BaseObject value, @NotNull ResultHandler store);
+	ExecStateCode vmPropertyDefine(ExecProcess ctx, BaseObject name, BaseObject value, ResultHandler store);
 	
 	/** @param ctx
 	 * @param index
@@ -32,11 +31,11 @@ public interface VmReflected {
 	 * @param store
 	 * @return */
 	@ReflectionHidden
-	default ExecStateCode vmPropertyDefine(@NotNull final ExecProcess ctx,
+	default ExecStateCode vmPropertyDefine(final ExecProcess ctx,
 			final int index,
-			@Nullable final BaseObject originalIfKnown,
-			@NotNull final BaseObject value,
-			@NotNull final ResultHandler store) {
+			final BaseObject originalIfKnown,
+			final BaseObject value,
+			final ResultHandler store) {
 		
 		/** FIXME: unwanted recursion possible! */
 		if (originalIfKnown != null) {

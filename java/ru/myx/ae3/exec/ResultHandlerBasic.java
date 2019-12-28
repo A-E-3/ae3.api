@@ -1,6 +1,6 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.reflect.ReflectionDisable;
 
@@ -38,8 +38,7 @@ public abstract class ResultHandlerBasic implements ResultHandler {
 		 *
 		 * @throws IllegalStateException
 		 */
-		@Nullable
-		default ResultHandlerBasic replaceEffectsOnly() {
+			default ResultHandlerBasic replaceEffectsOnly() {
 			
 			
 			throw new IllegalStateException(this + " doesn't not support OUTPUT");
@@ -105,7 +104,6 @@ public abstract class ResultHandlerBasic implements ResultHandler {
 	 *
 	 * @throws IllegalStateException
 	 */
-	@Nullable
 	public ResultHandlerBasic replaceDoOutput() throws IllegalStateException {
 		
 		

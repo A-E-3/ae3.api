@@ -4,12 +4,16 @@
  * myx - barachta */
 package ru.myx.ae3.binary;
 
+import java.io.Closeable;
 import java.io.DataOutput;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
@@ -146,6 +150,41 @@ public final class Transfer extends AbstractSAPI {
 			BUFFER_LARGE = Transfer.IMPL.getBufferLarge();
 			BUFFER_MAX = Transfer.IMPL.getBufferMax();
 		}
+	}
+
+	private static ReferenceQueue<Closeable> DEFER_CLOSE_QUEUE = new ReferenceQueue<>();
+
+	static {
+		new Thread("DEFER-CLOSE-THREAD") {
+
+			{
+				this.setDaemon(true);
+			}
+
+			@Override
+			public void run() {
+
+				for (;;) {
+					Reference<? extends Closeable> reference;
+					try {
+						reference = Transfer.DEFER_CLOSE_QUEUE.remove();
+					} catch (final InterruptedException e) {
+						System.err.println("Transfer " + this + " exits (interrupted).");
+						return;
+					}
+					if (reference == null) {
+						System.err.println("Transfer " + this + " exits (exhausted).");
+						return;
+					}
+					try (final Closeable closeable = reference.get()) {
+						//
+					} catch (final Throwable t) {
+						Report.exception("DEFER-CLOSE-THREAD", "Close fail", t);
+					}
+				}
+			}
+
+		}.start();
 	}
 
 	/** @param binary
@@ -751,6 +790,21 @@ public final class Transfer extends AbstractSAPI {
 		return Transfer.IMPL.createDescription(name, priority);
 	}
 
+	/** Must only be called from place of instantiations of closeable objects that are relying on
+	 * this particular facility to make sure resources are actually released.
+	 *
+	 * Use try-with-resource whenever is possible (instead of deferClose facility).
+	 *
+	 * @param <T>
+	 * @param closeable
+	 * @return */
+	@SuppressWarnings("unused")
+	public static <T extends Closeable> T deferClose(final T closeable) {
+
+		new WeakReference<Closeable>(closeable, Transfer.DEFER_CLOSE_QUEUE);
+		return closeable;
+	}
+
 	/** @param in
 	 * @param out
 	 * @param close
@@ -1165,7 +1219,7 @@ public final class Transfer extends AbstractSAPI {
 	 * @throws IOException */
 	@ReflectionExplicit
 	public static final int writeBytesExact(final byte[] value, final int exactLength, final byte[] dstBytes, final int dstOffset) throws IllegalArgumentException, IOException {
-		
+
 		if (value == null) {
 			throw new IllegalArgumentException("source bytes is NULL!");
 		}
@@ -1173,7 +1227,7 @@ public final class Transfer extends AbstractSAPI {
 		if (value.length != exactLength) {
 			throw new IllegalArgumentException("Exact length doesn't match: valueLength: " + value.length + ", expectLength: " + exactLength);
 		}
-		
+
 		System.arraycopy(value, 0, dstBytes, dstOffset, exactLength);
 		return exactLength;
 	}
@@ -1264,7 +1318,7 @@ public final class Transfer extends AbstractSAPI {
 		dstBytes[dstOffset + 1] = (byte) (value >> 0 & 0xFF);
 		return 2;
 	}
-	
+
 	/** @param string
 	 * @param dstBytes
 	 * @param dstOffset

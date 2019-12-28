@@ -13,7 +13,7 @@ final class PrimitiveNumberOne extends PrimitiveNumberIntegerAbstract {
 	
 	private static final long serialVersionUID = 6777998057139262710L;
 	
-	private static final Long ONE = new Long(1L);
+	private static final Long ONE = Long.valueOf(1L);
 	
 	@Override
 	public final BasePrimitiveString baseToString() {

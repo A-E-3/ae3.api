@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.common.Value;
@@ -33,7 +32,6 @@ interface ExecValueStack<T> extends BaseObject, Value<T> {
 	 * @return
 	 */
 	// @Override
-	@NotNull
 	@ReflectionHidden
 	BaseObject toNative();
 	

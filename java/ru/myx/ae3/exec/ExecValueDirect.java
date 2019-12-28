@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.reflect.ReflectionHidden;
@@ -29,7 +28,6 @@ interface ExecValueDirect<T> extends ExecValueStack<T> {
 	 * @param ctx
 	 * @return
 	 */
-	@NotNull
 	@ReflectionHidden
 	BaseObject toDetached(final ExecProcess ctx);
 	

@@ -14,7 +14,7 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 final class PrimitiveNumberZero extends PrimitiveNumberIntegerAbstract {
 	
 	
-	private static final Number NUMBER_ZERO = new Integer(0);
+	private static final Number NUMBER_ZERO = Integer.valueOf(0);
 	
 	private static final long serialVersionUID = -8109008218110410060L;
 	

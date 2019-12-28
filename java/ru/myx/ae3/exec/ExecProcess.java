@@ -13,8 +13,7 @@ import static ru.myx.ae3.exec.ExecStateCode.RETURN;
 import java.io.PrintStream;
 import java.util.Iterator;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseAbstractException;
@@ -116,8 +115,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *
 	 * @param suspected
 	 * @return */
-	@NotNull
-	public static final BaseObject vmEnsureNative(@NotNull final BaseObject suspected) {
+	public static final BaseObject vmEnsureNative(final BaseObject suspected) {
 
 		return suspected instanceof ExecValueStack
 			? ((ExecValueStack<?>) suspected).toNative()
@@ -162,7 +160,6 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	private final ExecProcess parent;
 
 	/** ACCUMULATOR / EXECUTION RESULT / Object */
-	@NotNull
 	public BaseObject ra0RB;
 
 	/** ACCUMULATOR / EXECUTION RESULT / Integer */
@@ -172,20 +169,17 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	public double ra2RD;
 
 	/** ACCUMULATOR / EXECUTION RESULT / Character */
-	@Nullable
 	public CharSequence ra3RS;
 
 	/** Call 'this' (instance) */
 	public BaseObject rb4CT;
 
 	/** Call callee */
-	@Nullable
 	public BaseFunction rb5CC;
 	/** Call arguments */
 	public BaseArray rb6CA;
 
 	/** LOCAL FRAME CONTEXT VALUES */
-	@NotNull
 	public BaseObject rb7FV;
 
 	/**
@@ -242,7 +236,6 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	Object ri13IV;
 
 	/** named arguments mapper */
-	@Nullable
 	NamedToIndexMapper riCallNameMapper;
 
 	/**
@@ -665,7 +658,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * @param arguments
 	 *            NULL value is special, it causes system to ignore arguments totally regardless of
 	 *            actual arguments passed. */
-	public final void contextExecFARGS(@Nullable final BasePrimitiveString calleeName, @NotNull final BasePrimitiveString[] arguments) {
+	public final void contextExecFARGS(final BasePrimitiveString calleeName, final BasePrimitiveString[] arguments) {
 
 		if (arguments == null) {
 			return;
@@ -742,7 +735,6 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	}
 
 	/** @return value of internal 'arguments' register */
-	@NotNull
 	public final BaseArray contextGetArguments() {
 
 		final BaseArray arguments = this.rb6CA;

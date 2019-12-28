@@ -49,7 +49,7 @@ public interface ObjectFactory<S, T> {
 			final ObjectTarget<S> result = (ObjectTarget<S>) ObjectTarget.NUL_TARGET;
 			return result;
 		}
-		return new ObjectTarget<S>() {
+		return new ObjectTarget<>() {
 			
 			@Override
 			public boolean absorb(final S object) throws FlowOperationException {
@@ -99,7 +99,7 @@ public interface ObjectFactory<S, T> {
 			final ObjectSource<T> result = (ObjectSource<T>) ObjectSource.NUL_SOURCE;
 			return result;
 		}
-		return new ObjectSource<T>() {
+		return new ObjectSource<>() {
 
 			@Override
 			public T next() {

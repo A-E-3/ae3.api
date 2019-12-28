@@ -5,8 +5,7 @@ import static ru.myx.ae3.exec.ExecStateCode.REPEAT;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseArray;
@@ -32,13 +31,11 @@ public interface ExecCallableFull extends ExecCallableBoth.ExecStore, BaseFuncti
 	 * @return object
 	 * @throws Exception */
 	@ReflectionHidden
-	@Nullable
-	ExecStateCode execCallImpl(@NotNull final ExecProcess context) throws Exception;
+	ExecStateCode execCallImpl(final ExecProcess context) throws Exception;
 
 	@Override
 	@ReflectionHidden
-	@Nullable
-	default ExecStateCode execCallPrepare(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final ResultHandler store, final boolean inline) {
+	default ExecStateCode execCallPrepare(final ExecProcess ctx, final BaseObject instance, final ResultHandler store, final boolean inline) {
 		
 		if (0 < this.execArgumentsMinimal()) {
 			return ctx.vmRaise("Function requires minimum of " + this.execArgumentsMinimal() + " arguments, got " + 0 + " in this call!");
@@ -96,12 +93,11 @@ public interface ExecCallableFull extends ExecCallableBoth.ExecStore, BaseFuncti
 
 	@Override
 	@ReflectionHidden
-	@Nullable
-	default ExecStateCode execCallPrepare(@NotNull final ExecProcess ctx,
-			@Nullable final BaseObject instance,
-			@NotNull final ResultHandler store,
+	default ExecStateCode execCallPrepare(final ExecProcess ctx,
+			final BaseObject instance,
+			final ResultHandler store,
 			final boolean inline,
-			@NotNull final BaseArray arguments) {
+			final BaseArray arguments) {
 		
 		if (arguments.length() < this.execArgumentsMinimal()) {
 			return ctx.vmRaise("Function requires minimum of " + this.execArgumentsMinimal() + " arguments, got " + arguments.length() + " in this call!");
@@ -156,12 +152,11 @@ public interface ExecCallableFull extends ExecCallableBoth.ExecStore, BaseFuncti
 
 	@Override
 	@ReflectionHidden
-	@Nullable
-	default ExecStateCode execCallPrepare(@NotNull final ExecProcess ctx,
-			@Nullable final BaseObject instance,
-			@NotNull final ResultHandler store,
+	default ExecStateCode execCallPrepare(final ExecProcess ctx,
+			final BaseObject instance,
+			final ResultHandler store,
 			final boolean inline,
-			@NotNull final BaseObject argument) {
+			final BaseObject argument) {
 		
 		if (1 < this.execArgumentsMinimal()) {
 			return ctx.vmRaise("Function requires minimum of " + this.execArgumentsMinimal() + " arguments, got " + 1 + " in this call!");
@@ -218,13 +213,12 @@ public interface ExecCallableFull extends ExecCallableBoth.ExecStore, BaseFuncti
 
 	@Override
 	@ReflectionHidden
-	@Nullable
-	default ExecStateCode execCallPrepare(@NotNull final ExecProcess ctx,
-			@Nullable final BaseObject instance,
-			@NotNull final ResultHandler store,
+	default ExecStateCode execCallPrepare(final ExecProcess ctx,
+			final BaseObject instance,
+			final ResultHandler store,
 			final boolean inline,
-			@NotNull final BaseObject argument1,
-			@NotNull final BaseObject argument2) {
+			final BaseObject argument1,
+			final BaseObject argument2) {
 		
 		if (2 < this.execArgumentsMinimal()) {
 			return ctx.vmRaise("Function requires minimum of " + this.execArgumentsMinimal() + " arguments, got " + 2 + " in this call!");

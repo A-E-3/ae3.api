@@ -21,7 +21,7 @@ final class PrimitiveNumberTrueLong extends BasePrimitiveNumber {
 		assert value != 0 : "Must not be zero";
 		assert value != 1 : "Must not be one";
 		assert value != (int) value : "Must not be an int32: immutable";
-		this.number = new Long(value);
+		this.number = Long.valueOf(value);
 	}
 
 	/**

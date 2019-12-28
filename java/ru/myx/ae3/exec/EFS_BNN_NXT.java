@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.BaseObject;
 
@@ -17,7 +16,7 @@ final class EFS_BNN_NXT extends ResultHandlerDirect implements ResultHandler.Use
 	}
 
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx, @NotNull final BaseObject value) {
+	public final ExecStateCode execReturn(final ExecProcess ctx, final BaseObject value) {
 		
 		
 		ctx.ra0RB = value;
@@ -25,28 +24,28 @@ final class EFS_BNN_NXT extends ResultHandlerDirect implements ResultHandler.Use
 	}
 
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final double value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final double value) {
 		
 		
 		return ctx.vmSetResultVmStackNumeric(value);
 	}
 
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final int value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final int value) {
 		
 		
 		return ctx.vmSetResultVmStackNumeric(value);
 	}
 
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final long value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final long value) {
 		
 		
 		return ctx.vmSetResultVmStackNumeric(value);
 	}
 
 	@Override
-	public final ExecStateCode execReturnString(@NotNull final ExecProcess ctx, final String value) {
+	public final ExecStateCode execReturnString(final ExecProcess ctx, final String value) {
 		
 		
 		return ctx.vmSetResultVmStackString(value);

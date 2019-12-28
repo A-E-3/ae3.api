@@ -14,7 +14,7 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 final class PrimitiveNumberNan extends BasePrimitiveNumber {
 	
 	
-	private static final Double NaN = new Double(Double.NaN);
+	private static final Double NaN = Double.valueOf(Double.NaN);
 	
 	private static final long serialVersionUID = 5560896981483738379L;
 	

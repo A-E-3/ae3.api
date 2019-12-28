@@ -50,7 +50,7 @@ public class Act extends AbstractSAPI {
 	}
 
 	/** Executes java.lang.Runnable, returns NULL */
-	public static final Function<Runnable, Void> FUNCTION_RUN_RUNNABLE = new Function<Runnable, Void>() {
+	public static final Function<Runnable, Void> FUNCTION_RUN_RUNNABLE = new Function<>() {
 
 		@Override
 		public final Void apply(final Runnable arg) {
@@ -67,7 +67,7 @@ public class Act extends AbstractSAPI {
 	};
 
 	/** Executes java.util.concurrent.Callable, returns NULL */
-	public static final Function<Callable<?>, Object> FUNCTION_RUN_CALLABLE = new Function<Callable<?>, Object>() {
+	public static final Function<Callable<?>, Object> FUNCTION_RUN_CALLABLE = new Function<>() {
 
 		@Override
 		public final Object apply(final Callable<?> arg) {
@@ -87,7 +87,7 @@ public class Act extends AbstractSAPI {
 	};
 
 	/** Closes java.io.Closeable, returns NULL */
-	public static final Function<Closeable, Void> FUNCTION_CLOSE_CLOSEABLE = new Function<Closeable, Void>() {
+	public static final Function<Closeable, Void> FUNCTION_CLOSE_CLOSEABLE = new Function<>() {
 
 		@Override
 		public final Void apply(final Closeable arg) {
@@ -108,7 +108,7 @@ public class Act extends AbstractSAPI {
 	};
 
 	/** Closes java.io.Flushable, returns NULL */
-	public static final Function<Flushable, Void> FUNCTION_FLUSH_FLUSHABLE = new Function<Flushable, Void>() {
+	public static final Function<Flushable, Void> FUNCTION_FLUSH_FLUSHABLE = new Function<>() {
 
 		@Override
 		public final Void apply(final Flushable arg) {
@@ -129,7 +129,7 @@ public class Act extends AbstractSAPI {
 	};
 
 	/** Executes BaseFunction, returns NULL */
-	public static final Function<BaseFunction, Void> FUNCTION_RUN_BASE_FUNCTION = new Function<BaseFunction, Void>() {
+	public static final Function<BaseFunction, Void> FUNCTION_RUN_BASE_FUNCTION = new Function<>() {
 
 		@Override
 		public Void apply(final BaseFunction arg) {
@@ -147,7 +147,7 @@ public class Act extends AbstractSAPI {
 	};
 
 	/** Executes synchronize/notifyAll on a given object */
-	public static final Function<Object, Void> FUNCTION_NOTIFY_ALL = new Function<Object, Void>() {
+	public static final Function<Object, Void> FUNCTION_NOTIFY_ALL = new Function<>() {
 
 		@Override
 		public final Void apply(final Object arg) {

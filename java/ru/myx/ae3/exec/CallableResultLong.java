@@ -1,7 +1,6 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseArray;
@@ -297,7 +296,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default int callIJ1(final BaseObject instance, final BaseObject argument) {
 			
 			return (int) this.callLE0(Exec.currentProcess(), instance);
 		}
@@ -310,7 +309,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default int callIJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return (int) this.callLE0(Exec.currentProcess(), instance);
 		}
@@ -323,7 +322,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default int callIJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return (int) this.callLE0(Exec.currentProcess(), instance);
 		}
@@ -514,9 +513,8 @@ interface CallableResultLong {
 	interface CRLE0FNJ0 extends CallableResultLong.CRLJ0FNJ0 {
 		
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJ0(@NotNull final BaseObject instance) {
+		default BaseObject callNJ0(final BaseObject instance) {
 			
 			return Base.forLong(this.callLE0(Exec.currentProcess(), instance));
 		}
@@ -528,9 +526,8 @@ interface CallableResultLong {
 	interface CRLE0FNJ1 extends CallableResultLong.CRLE1FNJ1 {
 		
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 			
 			return Base.forLong(this.callLE0(Exec.currentProcess(), instance));
 		}
@@ -542,9 +539,8 @@ interface CallableResultLong {
 	interface CRLE0FNJ2 extends CallableResultLong.CRLE2FNJ2 {
 		
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return Base.forLong(this.callLE0(Exec.currentProcess(), instance));
 		}
@@ -556,9 +552,8 @@ interface CallableResultLong {
 	interface CRLE0FNJA extends CallableResultLong.CRLEAFNJA {
 		
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return Base.forLong(this.callLE0(Exec.currentProcess(), instance));
 		}
@@ -1030,7 +1025,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ0(@NotNull final BaseObject instance) {
+		default int callIJ0(final BaseObject instance) {
 			
 			return (int) this.callLE1(Exec.currentProcess(), instance, BaseObject.UNDEFINED);
 		}
@@ -1042,7 +1037,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default int callIJ1(final BaseObject instance, final BaseObject argument) {
 			
 			return (int) this.callLE1(Exec.currentProcess(), instance, argument);
 		}
@@ -1055,7 +1050,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default int callIJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return (int) this.callLE1(Exec.currentProcess(), instance, argument1);
 		}
@@ -1067,7 +1062,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default int callIJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return (int) this.callLE1(//
 					Exec.currentProcess(),
@@ -1261,7 +1256,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default BaseObject callNEX(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseArray arguments) {
+		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 			
 			return Base.forLong(this.callLE1(ctx, instance, arguments.baseGetFirst(BaseObject.UNDEFINED)));
 		}
@@ -1621,7 +1616,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default int callIJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return (int) this.callLE2(Exec.currentProcess(), instance, argument1, argument2);
 		}
@@ -1776,9 +1771,8 @@ interface CallableResultLong {
 	interface CRLE2FNJ2 extends CallableResultLong.CRLJ2FNJ2 {
 		
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return Base.forLong(this.callLE2(Exec.currentProcess(), instance, argument1, argument2));
 		}
@@ -1878,7 +1872,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default int callIJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return (int) this.callLEA(Exec.currentProcess(), instance, arguments);
 		}
@@ -1926,9 +1920,8 @@ interface CallableResultLong {
 	interface CRLEAFNJA extends CallableResultLong.CRLJAFNJA {
 		
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return Base.forLong(this.callLEA(Exec.currentProcess(), instance, arguments));
 		}
@@ -2456,7 +2449,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default int callIJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return (int) this.callLJ0(instance);
 		}
@@ -2650,7 +2643,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default BaseObject callNJ0(@NotNull final BaseObject instance) {
+		default BaseObject callNJ0(final BaseObject instance) {
 			
 			return Base.forLong(this.callLJ0(instance));
 		}
@@ -2663,7 +2656,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default BaseObject callNJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 			
 			return Base.forLong(this.callLJ0(instance));
 		}
@@ -2676,7 +2669,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default BaseObject callNJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return Base.forLong(this.callLJ0(instance));
 		}
@@ -2689,7 +2682,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default BaseObject callNJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return Base.forLong(this.callLJ0(instance));
 		}
@@ -3189,7 +3182,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ0(@NotNull final BaseObject instance) {
+		default int callIJ0(final BaseObject instance) {
 			
 			return (int) this.callLJ1(instance, BaseObject.UNDEFINED);
 		}
@@ -3215,7 +3208,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default int callIJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 			
 			return (int) this.callLJ1(instance, argument1);
 		}
@@ -3228,7 +3221,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default int callIJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default int callIJA(final BaseObject instance, final BaseObject... arguments) {
 			
 			return (int) this.callLJ1(//
 					instance,
@@ -3327,7 +3320,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		long callLJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument);
+		long callLJ1(final BaseObject instance, final BaseObject argument);
 	}
 
 	/** @author myx */
@@ -3423,7 +3416,7 @@ interface CallableResultLong {
 		
 		@Override
 		@ReflectionHidden
-		default BaseObject callNEX(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseArray arguments) {
+		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 			
 			return Base.forLong(this.callLJ1(instance, arguments.baseGetFirst(BaseObject.UNDEFINED)));
 		}

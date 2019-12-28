@@ -23,7 +23,7 @@ final class PrimitiveNumberTrueInteger extends PrimitiveNumberIntegerAbstract {
 	PrimitiveNumberTrueInteger(final int value) {
 		assert value != 0 : "Must not be zero";
 		assert value != 1 : "Must not be one";
-		this.number = new Integer(value);
+		this.number = Integer.valueOf(value);
 	}
 
 	/**

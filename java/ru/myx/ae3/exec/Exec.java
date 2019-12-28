@@ -35,7 +35,7 @@ public class Exec extends AbstractSAPI {
 	public static void callAsyncForkUnrelated(final ExecProcess ctxParent, final String ctxTitle, final BaseFunction callee, final BaseObject instance, final ResultHandler store) {
 		
 		final ExecProcess ctx = Exec.createProcess(ctxParent, ctxTitle);
-		Act.launch(ctx, new Function<Object, Object>() {
+		Act.launch(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -106,7 +106,7 @@ public class Exec extends AbstractSAPI {
 			final BaseObject argument) {
 		
 		final ExecProcess ctx = Exec.createProcess(ctxParent, ctxTitle);
-		Act.launch(ctx, new Function<Object, Object>() {
+		Act.launch(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -180,7 +180,7 @@ public class Exec extends AbstractSAPI {
 			final BaseObject argument2) {
 		
 		final ExecProcess ctx = Exec.createProcess(ctxParent, ctxTitle);
-		Act.launch(ctx, new Function<Object, Object>() {
+		Act.launch(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -209,7 +209,7 @@ public class Exec extends AbstractSAPI {
 	 * @param store */
 	public static void callAsyncUnrelated(final ExecProcess ctx, final BaseFunction callee, final BaseObject instance, final ResultHandler store) {
 		
-		Act.launch(ctx, new Function<Object, Object>() {
+		Act.launch(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -266,7 +266,7 @@ public class Exec extends AbstractSAPI {
 	 * @param argument */
 	public static void callAsyncUnrelated(final ExecProcess ctx, final BaseFunction callee, final BaseObject instance, final ResultHandler store, final BaseObject argument) {
 		
-		Act.launch(ctx, new Function<Object, Object>() {
+		Act.launch(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -330,7 +330,7 @@ public class Exec extends AbstractSAPI {
 			final BaseObject argument1,
 			final BaseObject argument2) {
 		
-		Act.launch(ctx, new Function<Object, Object>() {
+		Act.launch(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -360,7 +360,7 @@ public class Exec extends AbstractSAPI {
 	 * @param store */
 	public static void callDelayedUnrelated(final ExecProcess ctx, final long delay, final BaseFunction callee, final BaseObject instance, final ResultHandler store) {
 		
-		Act.later(ctx, new Function<Object, Object>() {
+		Act.later(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -429,7 +429,7 @@ public class Exec extends AbstractSAPI {
 			final ResultHandler store,
 			final BaseObject argument) {
 		
-		Act.later(ctx, new Function<Object, Object>() {
+		Act.later(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {
@@ -501,7 +501,7 @@ public class Exec extends AbstractSAPI {
 			final BaseObject argument1,
 			final BaseObject argument2) {
 		
-		Act.later(ctx, new Function<Object, Object>() {
+		Act.later(ctx, new Function<>() {
 
 			@Override
 			public Object apply(final Object v) {

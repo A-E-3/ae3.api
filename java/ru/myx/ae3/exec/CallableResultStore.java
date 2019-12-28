@@ -1,7 +1,6 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.base.BaseArray;
 import ru.myx.ae3.base.BaseObject;
@@ -367,7 +366,6 @@ interface CallableResultStore {
 	interface CREE0FNE0 extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -387,7 +385,6 @@ interface CallableResultStore {
 	interface CREE0FNE1 extends CallableResultStore.CREE1FNE1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -408,7 +405,6 @@ interface CallableResultStore {
 	interface CREE0FNE2 extends CallableResultStore.CREE2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -429,7 +425,6 @@ interface CallableResultStore {
 	interface CREE0FNEA extends CallableResultStore.CREEXFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -450,7 +445,6 @@ interface CallableResultStore {
 	interface CREE0FNEX extends CallableResultStore.CREEXFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -471,9 +465,8 @@ interface CallableResultStore {
 	interface CREE0FSE0 extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
-		default String callSE0(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance) {
+			@ReflectionHidden
+		default String callSE0(final ExecProcess ctx, final BaseObject instance) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
 			try {
@@ -491,8 +484,7 @@ interface CallableResultStore {
 	interface CREE0FSE1 extends CallableResultStore.CREE1FSE1 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -512,8 +504,7 @@ interface CallableResultStore {
 	interface CREE0FSE2 extends CallableResultStore.CREE2FSE2 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -532,8 +523,7 @@ interface CallableResultStore {
 	interface CREE0FSEA extends CallableResultStore.CREEXFSEA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -552,8 +542,7 @@ interface CallableResultStore {
 	interface CREE0FSEX extends CallableResultStore.CREEXFSEX {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -1120,7 +1109,6 @@ interface CallableResultStore {
 	interface CREE1FNE0 extends CallableResultStore.CREE0FNE0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -1141,7 +1129,6 @@ interface CallableResultStore {
 	interface CREE1FNE1 extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -1162,7 +1149,6 @@ interface CallableResultStore {
 	interface CREE1FNE2 extends CallableResultStore.CREE2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -1183,7 +1169,6 @@ interface CallableResultStore {
 	interface CREE1FNEA extends CallableResultStore.CREEXFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -1211,7 +1196,6 @@ interface CallableResultStore {
 	interface CREE1FNEX extends CallableResultStore.CREEXFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -1232,8 +1216,7 @@ interface CallableResultStore {
 	interface CREE1FSE0 extends CallableResultStore.CREE0FSE0 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE0(final ExecProcess ctx, final BaseObject instance) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -1253,8 +1236,7 @@ interface CallableResultStore {
 	interface CREE1FSE1 extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -1274,8 +1256,7 @@ interface CallableResultStore {
 	interface CREE1FSE2 extends CallableResultStore.CREE2FSE2 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -1295,8 +1276,7 @@ interface CallableResultStore {
 	interface CREE1FSEA extends CallableResultStore.CREEXFSEA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -1323,8 +1303,7 @@ interface CallableResultStore {
 	interface CREE1FSEX extends CallableResultStore.CREEXFSEX {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -1935,7 +1914,6 @@ interface CallableResultStore {
 	interface CREE2FNE0 extends CallableResultStore.CREE0FNE0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -1956,7 +1934,6 @@ interface CallableResultStore {
 	interface CREE2FNE1 extends CallableResultStore.CREE1FNE1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -1976,7 +1953,6 @@ interface CallableResultStore {
 	interface CREE2FNE2 extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -1996,7 +1972,6 @@ interface CallableResultStore {
 	interface CREE2FNEA extends CallableResultStore.CREEXFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -2027,7 +2002,6 @@ interface CallableResultStore {
 	interface CREE2FNEX extends CallableResultStore.CREEXFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -2054,8 +2028,7 @@ interface CallableResultStore {
 	interface CREE2FSE0 extends CallableResultStore.CREE0FSE0 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE0(final ExecProcess ctx, final BaseObject instance) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2074,8 +2047,7 @@ interface CallableResultStore {
 	interface CREE2FSE1 extends CallableResultStore.CREE1FSE1 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2093,8 +2065,7 @@ interface CallableResultStore {
 	interface CREE2FSE2 extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2112,8 +2083,7 @@ interface CallableResultStore {
 	interface CREE2FSEA extends CallableResultStore.CREEXFSEA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2772,7 +2742,6 @@ interface CallableResultStore {
 	interface CREEXFNE0 extends CallableResultStore.CREE0FNE0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -2799,7 +2768,6 @@ interface CallableResultStore {
 	interface CREEXFNE1 extends CallableResultStore.CREE1FNE1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -2826,7 +2794,6 @@ interface CallableResultStore {
 	interface CREEXFNE2 extends CallableResultStore.CREE2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -2853,7 +2820,6 @@ interface CallableResultStore {
 	interface CREEXFNEA extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -2880,7 +2846,6 @@ interface CallableResultStore {
 	interface CREEXFNEX extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -2907,8 +2872,7 @@ interface CallableResultStore {
 	interface CREEXFSE0 extends CallableResultStore.CREE0FSE0 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE0(final ExecProcess ctx, final BaseObject instance) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2933,8 +2897,7 @@ interface CallableResultStore {
 	interface CREEXFSE1 extends CallableResultStore.CREE1FSE1 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2959,8 +2922,7 @@ interface CallableResultStore {
 	interface CREEXFSE2 extends CallableResultStore.CREE2FSE2 {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -2985,8 +2947,7 @@ interface CallableResultStore {
 	interface CREEXFSEA extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;
@@ -3011,8 +2972,7 @@ interface CallableResultStore {
 	interface CREEXFSEX extends CallableResultStore.CREAAFAAA {
 
 		@Override
-		@Nullable
-		@ReflectionHidden
+			@ReflectionHidden
 		default String callSEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			final CharSequence ra3RS = ctx.ra3RS;

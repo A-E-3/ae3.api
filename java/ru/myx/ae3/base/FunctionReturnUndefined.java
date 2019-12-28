@@ -1,6 +1,5 @@
 package ru.myx.ae3.base;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.exec.ExecProcess;
 import ru.myx.ae3.exec.ExecStateCode;
@@ -312,7 +311,7 @@ final class FunctionReturnUndefined extends BaseFunctionAbstract {
 	
 	@Override
 	@ReflectionHidden
-	public String callSJ0(@NotNull final BaseObject instance) {
+	public String callSJ0(final BaseObject instance) {
 		
 		
 		return null;

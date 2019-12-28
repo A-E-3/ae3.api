@@ -2,7 +2,6 @@ package ru.myx.ae3.exec;
 
 import static ru.myx.ae3.exec.ExecStateCode.CONTINUE;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseObject;
@@ -20,14 +19,14 @@ final class EFB_BNN_CTN extends ResultHandlerBasic implements ResultHandler.UseR
 	}
 	
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx) {
+	public final ExecStateCode execReturn(final ExecProcess ctx) {
 		
 		
 		return CONTINUE;
 	}
 	
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx, @NotNull final BaseObject value) {
+	public final ExecStateCode execReturn(final ExecProcess ctx, final BaseObject value) {
 		
 		
 		ctx.ra0RB = value;
@@ -35,7 +34,7 @@ final class EFB_BNN_CTN extends ResultHandlerBasic implements ResultHandler.UseR
 	}
 	
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final double value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final double value) {
 		
 		
 		ctx.ra0RB = Base.forDouble(value);
@@ -43,7 +42,7 @@ final class EFB_BNN_CTN extends ResultHandlerBasic implements ResultHandler.UseR
 	}
 	
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final int value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final int value) {
 		
 		
 		ctx.ra0RB = Base.forInteger(value);
@@ -51,7 +50,7 @@ final class EFB_BNN_CTN extends ResultHandlerBasic implements ResultHandler.UseR
 	}
 	
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final long value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final long value) {
 		
 		
 		ctx.ra0RB = Base.forLong(value);
@@ -59,7 +58,7 @@ final class EFB_BNN_CTN extends ResultHandlerBasic implements ResultHandler.UseR
 	}
 	
 	@Override
-	public final ExecStateCode execReturnString(@NotNull final ExecProcess ctx, final String value) {
+	public final ExecStateCode execReturnString(final ExecProcess ctx, final String value) {
 		
 		
 		ctx.ra0RB = Base.forString(value);

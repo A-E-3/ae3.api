@@ -14,7 +14,7 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 final class PrimitiveNumberNegativeInfinity extends BasePrimitiveNumber {
 	
 	
-	private static final Double NINF = new Double(Double.NEGATIVE_INFINITY);
+	private static final Double NINF = Double.valueOf(Double.NEGATIVE_INFINITY);
 	
 	private static final long serialVersionUID = -9153570506351843678L;
 	

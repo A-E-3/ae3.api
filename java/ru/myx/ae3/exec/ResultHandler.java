@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseObject;
@@ -181,7 +180,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default BaseObject execReadNative(@NotNull final ExecProcess ctx) {
+		default BaseObject execReadNative(final ExecProcess ctx) {
 			
 			
 			return ctx.ra0RB;
@@ -194,7 +193,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default long execReadLong(@NotNull final ExecProcess ctx) {
+		default long execReadLong(final ExecProcess ctx) {
 			
 			
 			return ctx.ra0RB.baseToJavaLong();
@@ -207,7 +206,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default int execReadInt(@NotNull final ExecProcess ctx) {
+		default int execReadInt(final ExecProcess ctx) {
 			
 			
 			return ctx.ra0RB.baseToJavaInteger();
@@ -220,7 +219,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default String execReadString(@NotNull final ExecProcess ctx) {
+		default String execReadString(final ExecProcess ctx) {
 			
 			
 			return ctx.ra0RB.baseToJavaString();
@@ -233,7 +232,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default double execReadDouble(@NotNull final ExecProcess ctx) {
+		default double execReadDouble(final ExecProcess ctx) {
 			
 			
 			return ctx.ra0RB.baseToPrimitive(ToPrimitiveHint.NUMBER).doubleValue();
@@ -272,7 +271,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default BaseObject execReadNative(@NotNull final ExecProcess ctx) {
+		default BaseObject execReadNative(final ExecProcess ctx) {
 			
 			
 			return Base.forLong(ctx.ra1RL);
@@ -285,7 +284,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default long execReadLong(@NotNull final ExecProcess ctx) {
+		default long execReadLong(final ExecProcess ctx) {
 			
 			
 			return ctx.ra1RL;
@@ -298,7 +297,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default int execReadInt(@NotNull final ExecProcess ctx) {
+		default int execReadInt(final ExecProcess ctx) {
 			
 			
 			return (int) ctx.ra1RL;
@@ -311,7 +310,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default String execReadString(@NotNull final ExecProcess ctx) {
+		default String execReadString(final ExecProcess ctx) {
 			
 			
 			return Base.toString(ctx.ra1RL);
@@ -324,7 +323,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default double execReadDouble(@NotNull final ExecProcess ctx) {
+		default double execReadDouble(final ExecProcess ctx) {
 			
 			
 			return ctx.ra1RL;
@@ -355,7 +354,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default BaseObject execReadNative(@NotNull final ExecProcess ctx) {
+		default BaseObject execReadNative(final ExecProcess ctx) {
 			
 			
 			return Base.forDouble(ctx.ra2RD);
@@ -376,7 +375,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default long execReadLong(@NotNull final ExecProcess ctx) {
+		default long execReadLong(final ExecProcess ctx) {
 			
 			
 			return (long) ctx.ra2RD;
@@ -389,7 +388,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default int execReadInt(@NotNull final ExecProcess ctx) {
+		default int execReadInt(final ExecProcess ctx) {
 			
 			
 			return (int) (long) ctx.ra2RD;
@@ -402,7 +401,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default String execReadString(@NotNull final ExecProcess ctx) {
+		default String execReadString(final ExecProcess ctx) {
 			
 			
 			return Base.toString(ctx.ra2RD);
@@ -415,7 +414,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default double execReadDouble(@NotNull final ExecProcess ctx) {
+		default double execReadDouble(final ExecProcess ctx) {
 			
 			
 			return ctx.ra2RD;
@@ -446,7 +445,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default BaseObject execReadNative(@NotNull final ExecProcess ctx) {
+		default BaseObject execReadNative(final ExecProcess ctx) {
 			
 			
 			return Base.forString(ctx.ra3RS);
@@ -467,7 +466,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default long execReadLong(@NotNull final ExecProcess ctx) {
+		default long execReadLong(final ExecProcess ctx) {
 			
 			
 			return Base.toLong(ctx.ra3RS.toString());
@@ -480,7 +479,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default int execReadInt(@NotNull final ExecProcess ctx) {
+		default int execReadInt(final ExecProcess ctx) {
 			
 			
 			return Base.toInt32(ctx.ra3RS.toString());
@@ -493,7 +492,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default String execReadString(@NotNull final ExecProcess ctx) {
+		default String execReadString(final ExecProcess ctx) {
 			
 			
 			return ctx.ra3RS.toString();
@@ -506,7 +505,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default double execReadDouble(@NotNull final ExecProcess ctx) {
+		default double execReadDouble(final ExecProcess ctx) {
 			
 			
 			return Base.toDouble(ctx.ra3RS.toString());
@@ -538,7 +537,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default BaseObject execReadNative(@NotNull final ExecProcess ctx) {
+		default BaseObject execReadNative(final ExecProcess ctx) {
 			
 			
 			return BaseObject.UNDEFINED;
@@ -559,7 +558,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default long execReadLong(@NotNull final ExecProcess ctx) {
+		default long execReadLong(final ExecProcess ctx) {
 			
 			
 			return 0;
@@ -572,7 +571,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default int execReadInt(@NotNull final ExecProcess ctx) {
+		default int execReadInt(final ExecProcess ctx) {
 			
 			
 			return 0;
@@ -585,7 +584,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default String execReadString(@NotNull final ExecProcess ctx) {
+		default String execReadString(final ExecProcess ctx) {
 			
 			
 			return BaseObject.UNDEFINED.baseToJavaString();
@@ -598,7 +597,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default double execReadDouble(@NotNull final ExecProcess ctx) {
+		default double execReadDouble(final ExecProcess ctx) {
 			
 			
 			return Double.NaN;
@@ -623,7 +622,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default BaseObject execReadNative(@NotNull final ExecProcess ctx) {
+		default BaseObject execReadNative(final ExecProcess ctx) {
 			
 			
 			return ctx.riCallResultHandler.execReadNative(ctx);
@@ -652,7 +651,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default long execReadLong(@NotNull final ExecProcess ctx) {
+		default long execReadLong(final ExecProcess ctx) {
 			
 			
 			return ctx.riCallResultHandler.execReadLong(ctx);
@@ -665,7 +664,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default int execReadInt(@NotNull final ExecProcess ctx) {
+		default int execReadInt(final ExecProcess ctx) {
 			
 			
 			return ctx.riCallResultHandler.execReadInt(ctx);
@@ -678,7 +677,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default String execReadString(@NotNull final ExecProcess ctx) {
+		default String execReadString(final ExecProcess ctx) {
 			
 			
 			return ctx.riCallResultHandler.execReadString(ctx);
@@ -691,7 +690,7 @@ public interface ResultHandler {
 		 */
 		@Override
 		@ReflectionHidden
-		default double execReadDouble(@NotNull final ExecProcess ctx) {
+		default double execReadDouble(final ExecProcess ctx) {
 			
 			
 			return ctx.riCallResultHandler.execReadDouble(ctx);
@@ -896,7 +895,7 @@ public interface ResultHandler {
 	 * @param ctx
 	 * @return
 	 */
-	default ExecStateCode execReturn(@NotNull final ExecProcess ctx) {
+	default ExecStateCode execReturn(final ExecProcess ctx) {
 		
 		
 		return null;
@@ -908,7 +907,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturn(@NotNull final ExecProcess ctx, @NotNull final BaseObject value) {
+	default ExecStateCode execReturn(final ExecProcess ctx, final BaseObject value) {
 		
 		
 		ctx.ra0RB = value;
@@ -925,7 +924,7 @@ public interface ResultHandler {
 	 * @throws Throwable
 	 */
 	@Deprecated
-	default Void execReturnObject(@NotNull final ExecProcess ctx, @NotNull final BaseObject value) throws Throwable {
+	default Void execReturnObject(final ExecProcess ctx, final BaseObject value) throws Throwable {
 		
 		
 		return null;
@@ -937,7 +936,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnObject(@NotNull final ExecProcess ctx, @NotNull final Object value) {
+	default ExecStateCode execReturnObject(final ExecProcess ctx, final Object value) {
 		
 		
 		return this.execReturn(ctx, Base.forUnknown(value));
@@ -949,7 +948,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnBoolean(@NotNull final ExecProcess ctx, final boolean value) {
+	default ExecStateCode execReturnBoolean(final ExecProcess ctx, final boolean value) {
 		
 		
 		return this.execReturn(ctx, value
@@ -963,7 +962,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnUndefined(@NotNull final ExecProcess ctx) {
+	default ExecStateCode execReturnUndefined(final ExecProcess ctx) {
 		
 		
 		return this.execReturn(ctx, BaseObject.UNDEFINED);
@@ -975,7 +974,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnNull(@NotNull final ExecProcess ctx) {
+	default ExecStateCode execReturnNull(final ExecProcess ctx) {
 		
 		
 		return this.execReturn(ctx, BaseObject.NULL);
@@ -987,7 +986,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnFalse(@NotNull final ExecProcess ctx) {
+	default ExecStateCode execReturnFalse(final ExecProcess ctx) {
 		
 		
 		return this.execReturn(ctx, BaseObject.FALSE);
@@ -999,7 +998,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnTrue(@NotNull final ExecProcess ctx) {
+	default ExecStateCode execReturnTrue(final ExecProcess ctx) {
 		
 		
 		return this.execReturn(ctx, BaseObject.TRUE);
@@ -1011,7 +1010,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnChar(@NotNull final ExecProcess ctx, final char value) {
+	default ExecStateCode execReturnChar(final ExecProcess ctx, final char value) {
 		
 		
 		return this.execReturn(ctx, Base.forChar(value));
@@ -1023,7 +1022,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final short value) {
+	default ExecStateCode execReturnNumeric(final ExecProcess ctx, final short value) {
 		
 		
 		return this.execReturn(ctx, Base.forShort(value));
@@ -1035,7 +1034,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final int value) {
+	default ExecStateCode execReturnNumeric(final ExecProcess ctx, final int value) {
 		
 		
 		return this.execReturn(ctx, Base.forInteger(value));
@@ -1047,7 +1046,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final long value) {
+	default ExecStateCode execReturnNumeric(final ExecProcess ctx, final long value) {
 		
 		
 		return this.execReturn(ctx, Base.forLong(value));
@@ -1059,7 +1058,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final double value) {
+	default ExecStateCode execReturnNumeric(final ExecProcess ctx, final double value) {
 		
 		
 		return this.execReturn(ctx, Base.forDouble(value));
@@ -1071,7 +1070,7 @@ public interface ResultHandler {
 	 * @param value
 	 * @return
 	 */
-	default ExecStateCode execReturnString(@NotNull final ExecProcess ctx, final String value) {
+	default ExecStateCode execReturnString(final ExecProcess ctx, final String value) {
 		
 		
 		return this.execReturn(ctx, Base.forString(value));
@@ -1086,7 +1085,6 @@ public interface ResultHandler {
 	 *
 	 * @return
 	 */
-	@NotNull
 	@ReflectionHidden
 	default ResultHandlerDirect execToCallDirectHandler(final ExecProcess ctx) {
 		
@@ -1111,7 +1109,7 @@ public interface ResultHandler {
 	 * @return
 	 */
 	@ReflectionHidden
-	BaseObject execReadNative(@NotNull final ExecProcess ctx);
+	BaseObject execReadNative(final ExecProcess ctx);
 	
 	/**
 	 *
@@ -1119,7 +1117,7 @@ public interface ResultHandler {
 	 * @return
 	 */
 	@ReflectionHidden
-	long execReadLong(@NotNull final ExecProcess ctx);
+	long execReadLong(final ExecProcess ctx);
 	
 	/**
 	 *
@@ -1127,7 +1125,7 @@ public interface ResultHandler {
 	 * @return
 	 */
 	@ReflectionHidden
-	int execReadInt(@NotNull final ExecProcess ctx);
+	int execReadInt(final ExecProcess ctx);
 	
 	/**
 	 *
@@ -1135,7 +1133,7 @@ public interface ResultHandler {
 	 * @return
 	 */
 	@ReflectionHidden
-	String execReadString(@NotNull final ExecProcess ctx);
+	String execReadString(final ExecProcess ctx);
 	
 	/**
 	 *
@@ -1143,13 +1141,12 @@ public interface ResultHandler {
 	 * @return
 	 */
 	@ReflectionHidden
-	double execReadDouble(@NotNull final ExecProcess ctx);
+	double execReadDouble(final ExecProcess ctx);
 	
 	/**
 	 *
 	 * @return
 	 */
-	@NotNull
 	@ReflectionHidden
 	DirectTransport execDirectTransportType();
 }

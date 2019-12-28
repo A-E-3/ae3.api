@@ -11,7 +11,7 @@ public interface Abortable {
 	/**
 	 *
 	 */
-	Function<Abortable, Void> ABORT_FUNCTION = new Function<Abortable, Void>() {
+	Function<Abortable, Void> ABORT_FUNCTION = new Function<>() {
 		
 		@Override
 		public Void apply(final Abortable arg) {

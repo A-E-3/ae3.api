@@ -191,7 +191,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -250,7 +250,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -309,7 +309,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -367,7 +367,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -740,7 +740,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Integer( (int) this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Integer.valueOf( (int) this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -800,7 +800,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Integer( (int) this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Integer.valueOf( (int) this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -861,7 +861,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Integer( (int) this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Integer.valueOf( (int) this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -916,7 +916,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -972,7 +972,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -1033,7 +1033,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -1095,7 +1095,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Long( this.getJavaPrimitiveNumberInteger( bytes ) );
+			return Long.valueOf( this.getJavaPrimitiveNumberInteger( bytes ) );
 		}
 		
 		
@@ -1152,7 +1152,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Double( this.getJavaPrimitiveNumberDouble( bytes ) );
+			return Double.valueOf( this.getJavaPrimitiveNumberDouble( bytes ) );
 		}
 		
 		
@@ -1201,7 +1201,7 @@ enum GuidType {
 		final Number getJavaObject(
 				final byte[] bytes) {
 		
-			return new Double( this.getJavaPrimitiveNumberDouble( bytes ) );
+			return Double.valueOf( this.getJavaPrimitiveNumberDouble( bytes ) );
 		}
 		
 		

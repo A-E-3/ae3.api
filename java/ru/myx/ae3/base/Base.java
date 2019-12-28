@@ -8,8 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.AbstractSAPI;
 import ru.myx.ae3.Engine;
@@ -378,7 +377,6 @@ public final class Base extends AbstractSAPI {
 		return Base.compareEQU(o2, o1);
 	}
 	
-	@NotNull
 	static final CacheIntegerImpl createCacheIntegerBucket() {
 		
 		return Base.BASE_IMPL.createCacheInteger();
@@ -394,7 +392,6 @@ public final class Base extends AbstractSAPI {
 	 * @return
 	 * @throws Exception
 	 */
-	@NotNull
 	public static final BaseFunction createFunction(final String... arg) throws Exception {
 		
 		if (arg == null) {
@@ -412,14 +409,12 @@ public final class Base extends AbstractSAPI {
 	 * @param property
 	 * @param attributes
 	 * @return */
-	@NotNull
 	static final BasePropertyData<BasePrimitiveString>
 			createPropertyPrimitive(final BaseObject instance, final BasePrimitiveString key, final BaseProperty property, final short attributes) {
 		
 		return Base.BASE_IMPL.createPropertyPrimitive(instance, key, property, attributes);
 	}
 	
-	@NotNull
 	static final BasePropertyData<BasePrimitiveString> createPropertyPrimitive(final BasePrimitiveString key, final BaseObject value, final short attributes) {
 		
 		return Base.BASE_IMPL.createPropertyPrimitive(key, value, attributes);
@@ -432,13 +427,11 @@ public final class Base extends AbstractSAPI {
 	 * @param property
 	 * @param attributes
 	 * @return */
-	@NotNull
 	static final BasePropertyData<String> createPropertyString(final BaseObject instance, final String key, final BaseProperty property, final short attributes) {
 		
 		return Base.BASE_IMPL.createPropertyString(instance, key, property, attributes);
 	}
 	
-	@NotNull
 	static final BasePropertyData<String> createPropertyString(final String key, final BaseObject value, final short attributes) {
 		
 		return Base.BASE_IMPL.createPropertyString(key, value, attributes);
@@ -450,7 +443,6 @@ public final class Base extends AbstractSAPI {
 	 * @param x
 	 *
 	 * @return */
-	@NotNull
 	public static final BaseStringObject<?> createStringObject(final CharSequence x) {
 		
 		return Base.OBJECT_FACTORY.createStringObject(x.toString());
@@ -462,7 +454,6 @@ public final class Base extends AbstractSAPI {
 	 * @param x
 	 *
 	 * @return */
-	@NotNull
 	public static final BaseStringObject<?> createStringObject(final String x) {
 		
 		return Base.OBJECT_FACTORY.createStringObject(x);
@@ -475,7 +466,6 @@ public final class Base extends AbstractSAPI {
 	 * @param object
 	 * @param hint
 	 * @return */
-	@NotNull
 	public static final BasePrimitive<?> defaultToPrimitive(final BaseObject object, final ToPrimitiveHint hint) {
 		
 		if (hint == null || hint == ToPrimitiveHint.NUMBER) {
@@ -542,7 +532,6 @@ public final class Base extends AbstractSAPI {
 	/** @param <T>
 	 * @param object
 	 * @return array or java-NULL when object is NULL */
-	@NotNull
 	public static final <T> BaseArray forArray(final List<T> object) {
 		
 		return Base.BASE_IMPL.javaObjectToBaseArray(object);
@@ -553,7 +542,6 @@ public final class Base extends AbstractSAPI {
 	 * @param <T>
 	 * @param object
 	 * @return primitive */
-	@NotNull
 	public static final <T> BaseArray forArray(final T[] object) {
 		
 		return Base.BASE_IMPL.javaObjectToBaseArray(object);
@@ -561,7 +549,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param x
 	 * @return */
-	@NotNull
 	public static BasePrimitiveBoolean forBoolean(final boolean x) {
 		
 		return x
@@ -571,7 +558,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return number */
-	@NotNull
 	public static final BasePrimitiveNumber forByte(final byte value) {
 		
 		return value < 0
@@ -581,7 +567,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param c
 	 * @return */
-	@NotNull
 	public static final BasePrimitiveString forChar(final char c) {
 		
 		return Base.CHARS[c];
@@ -602,8 +587,7 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param date
 	 * @return date or java-NULL when date is null */
-	@Nullable
-	public static final BaseDate forDate(@Nullable final Date date) {
+	public static final BaseDate forDate(final Date date) {
 		
 		if (date == null) {
 			return null;
@@ -620,7 +604,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param date
 	 * @return date */
-	@NotNull
 	public static final BaseDate forDateMillis(final long date) {
 		
 		return new BaseDate(date);
@@ -638,7 +621,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param x
 	 * @return number */
-	@NotNull
 	public static final BasePrimitiveNumber forDouble(final double x) {
 		
 		if (x == (long) x) {
@@ -694,7 +676,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param string
 	 * @return */
-	@NotNull
 	public static BasePrimitiveNumber forDouble(final String string) {
 		
 		return Base.forDouble(Base.parseDouble(string));
@@ -702,7 +683,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param x
 	 * @return number */
-	@Nullable
 	public static final BasePrimitiveNumber forDoublePrecachedOrNull(final double x) {
 		
 		{
@@ -748,7 +728,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param function
 	 * @return */
-	@NotNull
 	public static final BaseFunction forFunction(final ExecCallable function) {
 		
 		return Base.BASE_IMPL.javaNativeFunction(function);
@@ -756,7 +735,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return number */
-	@NotNull
 	public static final BasePrimitiveNumber forInteger(final int value) {
 		
 		return value >= 0
@@ -786,7 +764,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return number */
-	@Nullable
 	public static final BasePrimitiveNumber forIntegerPrecachedOrNull(final int value) {
 		
 		return value >= 0
@@ -826,7 +803,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param x
 	 * @return number */
-	@NotNull
 	public static final BasePrimitiveNumber forLong(final long x) {
 		
 		{
@@ -850,7 +826,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param x
 	 * @return number */
-	@Nullable
 	public static final BasePrimitiveNumber forLongPrecachedOrNull(final long x) {
 		
 		{
@@ -878,7 +853,6 @@ public final class Base extends AbstractSAPI {
 	/** @param <T>
 	 * @return */
 	@SuppressWarnings("unchecked")
-	@NotNull
 	public static final <T> T forNull() {
 		
 		return (T) BaseObject.NULL;
@@ -941,7 +915,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return number, NaN when value is null, never java-NULL. */
-	@NotNull
 	public static final BaseObject forNumber(final Number value) {
 		
 		return Base.BASE_IMPL.javaNumberToBaseObjectNumber(value);
@@ -960,7 +933,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return number */
-	@NotNull
 	public static final BasePrimitiveNumber forShort(final short value) {
 		
 		return value >= 0
@@ -982,8 +954,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param stringValue
 	 * @return */
-	@NotNull
-	public static BasePrimitiveString forString(@Nullable final CharSequence stringValue) {
+	public static BasePrimitiveString forString(final CharSequence stringValue) {
 		
 		if (stringValue instanceof BasePrimitiveString) {
 			return (BasePrimitiveString) stringValue;
@@ -1006,7 +977,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param doubleValue
 	 * @return */
-	@NotNull
 	public static BasePrimitiveString forString(final double doubleValue) {
 		
 		/** can't use pre-cached numbers, cause, likely, it will call this method to baseToString()
@@ -1021,7 +991,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param intValue
 	 * @return */
-	@NotNull
 	public static BasePrimitiveString forString(final int intValue) {
 		
 		/** can't use pre-cached numbers, cause, likely, it will call this method to baseToString()
@@ -1033,7 +1002,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param longValue
 	 * @return */
-	@NotNull
 	public static BasePrimitiveString forString(final long longValue) {
 		
 		/** can't use pre-cached numbers, cause, likely, it will call this method to baseToString()
@@ -1043,8 +1011,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return string, never java-NULL, empty string when argument is NULL */
-	@NotNull
-	public static final BasePrimitiveString forString(@Nullable final String value) {
+	public static final BasePrimitiveString forString(final String value) {
 		
 		if (value == null) {
 			return BaseString.EMPTY;
@@ -1061,8 +1028,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param value
 	 * @return string, never java-NULL, empty string when argument is NULL */
-	@Nullable
-	public static final BasePrimitiveString forStringPrecachedOrNull(@Nullable final String value) {
+	public static final BasePrimitiveString forStringPrecachedOrNull(final String value) {
 		
 		if (value == null) {
 			return BaseString.EMPTY;
@@ -1091,8 +1057,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param object
 	 * @return primitive */
-	@NotNull
-	public static final BaseAbstractException forThrowable(@NotNull final Throwable object) {
+	public static final BaseAbstractException forThrowable(final Throwable object) {
 		
 		return Base.BASE_IMPL.javaThrowableToBaseObject(object);
 	}
@@ -1166,7 +1131,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param object
 	 * @return primitive */
-	@NotNull
 	public static final BaseObject forUnknown(final Object object) {
 		
 		return Base.BASE_IMPL.javaObjectToBaseObject(object);
@@ -1218,7 +1182,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param object
 	 * @return */
-	@NotNull
 	public static final BaseMap fromMap(final BaseObject object) {
 		
 		return object instanceof BaseMap
@@ -1228,7 +1191,6 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param map
 	 * @return */
-	@NotNull
 	public static final BaseMap fromMap(final Map<String, Object> map) {
 		
 		if (map instanceof BaseMap) {
@@ -1609,7 +1571,6 @@ public final class Base extends AbstractSAPI {
 	/** @param iterator
 	 * @return */
 	@SuppressWarnings("unchecked")
-	@NotNull
 	public static final Iterator<BasePrimitive<?>> iteratorPrimitiveSafe(final Iterator<?> iterator) {
 		
 		if (!iterator.hasNext()) {
@@ -1625,7 +1586,6 @@ public final class Base extends AbstractSAPI {
 	/** @param iterator
 	 * @return */
 	@SuppressWarnings("unchecked")
-	@NotNull
 	public static final Iterator<String> iteratorStringSafe(final Iterator<?> iterator) {
 		
 		if (!iterator.hasNext()) {
@@ -1641,7 +1601,6 @@ public final class Base extends AbstractSAPI {
 	/** @param primary
 	 * @param secondary
 	 * @return */
-	@NotNull
 	public static final Iterator<? extends CharSequence> joinIterators(final Iterator<? extends CharSequence> primary, final Iterator<? extends CharSequence> secondary) {
 		
 		assert primary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
@@ -1658,7 +1617,6 @@ public final class Base extends AbstractSAPI {
 	/** @param primary
 	 * @param secondary
 	 * @return */
-	@NotNull
 	public static final Iterator<String> joinIteratorsAsString(final Iterator<String> primary, final Iterator<String> secondary) {
 		
 		assert primary != null : "Iterator is null, use BaseObject.ITERATOR_EMPTY!";
@@ -1675,7 +1633,6 @@ public final class Base extends AbstractSAPI {
 	/** @param primary
 	 * @param secondary
 	 * @return */
-	@NotNull
 	public static final Iterator<? extends BasePrimitive<?>> joinIteratorsPrimitive(final Iterator<? extends BasePrimitive<?>> primary,
 			final Iterator<? extends BasePrimitive<?>> secondary) {
 		
@@ -1707,7 +1664,6 @@ public final class Base extends AbstractSAPI {
 	 * @param object
 	 *
 	 * @return */
-	@NotNull
 	public static final Iterator<String> keys(BaseObject object) {
 		
 		assert object != null : "Is there any good reason to return an empty iterator in case of null object?";
@@ -1768,7 +1724,6 @@ public final class Base extends AbstractSAPI {
 	 * @param searchUntil
 	 *
 	 * @return */
-	@NotNull
 	public static final Iterator<String> keys(BaseObject object, final BaseObject searchUntil) {
 		
 		assert object != null : "Is there any good reason to return an empty iterator in case of null object?";
@@ -1827,7 +1782,6 @@ public final class Base extends AbstractSAPI {
 	 * @param object
 	 *
 	 * @return */
-	@NotNull
 	public static final Iterator<? extends CharSequence> keysAll(BaseObject object) {
 		
 		assert object != null : "Is there any good reason to return an empty iterator in case of null object?";
@@ -1887,7 +1841,6 @@ public final class Base extends AbstractSAPI {
 	 * @param baseObject
 	 *
 	 * @return */
-	@NotNull
 	public static final Iterator<? extends BasePrimitive<?>> keysPrimitive(BaseObject baseObject) {
 		
 		assert baseObject != null : "Is there any good reason to return an empty iterator in case of null object?";
@@ -1935,7 +1888,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param object
 	 * @return */
-	@NotNull
 	public static BaseArrayDynamic<Object> objectEntriesArray(final BaseObject object) {
 		
 		final BaseList<Object> result = BaseObject.createArray();
@@ -1953,7 +1905,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param object
 	 * @return */
-	@NotNull
 	public static BaseArrayDynamic<Object> objectKeysArray(final BaseObject object) {
 		
 		final BaseList<Object> result = BaseObject.createArray();
@@ -1967,7 +1918,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param object
 	 * @return */
-	@NotNull
 	public static BaseArrayDynamic<Object> objectValuesArray(final BaseObject object) {
 		
 		final BaseList<Object> result = BaseObject.createArray();
@@ -2977,7 +2927,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param object
 	 * @return */
-	@NotNull
 	public static final BaseObject seal(final BaseObject object) {
 		
 		return !object.baseIsExtensible()
@@ -3039,7 +2988,6 @@ public final class Base extends AbstractSAPI {
 	 * @param doubleValue
 	 * @param digits
 	 * @return */
-	@NotNull
 	public static final String toFixed(final double doubleValue, final int digits) {
 		
 		return NumberFormatter.formatFixed(doubleValue, digits);
@@ -3067,7 +3015,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param number
 	 * @return */
-	@NotNull
 	public static String toString(final double number) {
 		
 		return number == (long) number
@@ -3079,7 +3026,6 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param number
 	 * @return */
-	@NotNull
 	public static String toString(final long number) {
 		
 		return Long.toString(number);

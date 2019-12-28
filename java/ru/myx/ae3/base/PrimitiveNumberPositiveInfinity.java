@@ -14,7 +14,7 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 final class PrimitiveNumberPositiveInfinity extends BasePrimitiveNumber {
 	
 	
-	private static final Double PINF = new Double(Double.POSITIVE_INFINITY);
+	private static final Double PINF = Double.valueOf(Double.POSITIVE_INFINITY);
 	
 	private static final long serialVersionUID = -4973022645901280586L;
 	

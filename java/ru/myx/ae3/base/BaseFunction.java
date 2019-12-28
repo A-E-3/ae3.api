@@ -1,6 +1,6 @@
 package ru.myx.ae3.base;
 
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.exec.ExecCallable;
 import ru.myx.ae3.reflect.ReflectionDisable;
@@ -78,7 +78,6 @@ public interface BaseFunction extends BaseObject, ExecCallable {
 	 *
 	 * @return */
 	
-	@Nullable
 	default BaseObject baseConstructPrototype() {
 
 		final BaseFunction constructor = this.baseConstruct();

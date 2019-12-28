@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 /**
  *
@@ -16,6 +15,6 @@ public interface ResultHandlerFinalizer extends ResultHandler.UseRB {
 	 * 0RB.
 	 */
 	@Override
-	ExecStateCode execReturn(@NotNull final ExecProcess ctx);
+	ExecStateCode execReturn(final ExecProcess ctx);
 
 }

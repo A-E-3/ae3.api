@@ -188,7 +188,7 @@ public class StatusInfo {
 	 * @param value
 	 */
 	public void put(final String name, final double value) {
-		this.put( name, new Double( value ) );
+		this.put( name, Double.valueOf( value ) );
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public class StatusInfo {
 	 * @param value
 	 */
 	public void put(final String name, final float value) {
-		this.put( name, new Float( value ) );
+		this.put( name, Float.valueOf( value ) );
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public class StatusInfo {
 	 * @param value
 	 */
 	public void put(final String name, final int value) {
-		this.put( name, new Integer( value ) );
+		this.put( name, Integer.valueOf( value ) );
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public class StatusInfo {
 	 * @param value
 	 */
 	public void put(final String name, final long value) {
-		this.put( name, new Long( value ) );
+		this.put( name, Long.valueOf( value ) );
 	}
 	
 	/**

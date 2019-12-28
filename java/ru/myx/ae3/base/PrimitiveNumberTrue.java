@@ -20,7 +20,7 @@ final class PrimitiveNumberTrue extends BasePrimitiveNumber {
 	PrimitiveNumberTrue(final double value) {
 		assert value != 0.0 : "Must not be zero";
 		assert value != (int) value : "Must not be an integer!";
-		this.number = new Double(value);
+		this.number = Double.valueOf(value);
 	}
 
 	/**

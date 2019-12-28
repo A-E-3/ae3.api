@@ -1,7 +1,6 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseArray;
@@ -353,7 +352,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ0(@NotNull final BaseObject instance) {
+		default long callLJ0(final BaseObject instance) {
 
 			return Base.toLong(this.callSE0(Exec.currentProcess(), instance));
 		}
@@ -365,7 +364,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default long callLJ1(final BaseObject instance, final BaseObject argument) {
 
 			return Base.toLong(this.callSE0(Exec.currentProcess(), instance));
 		}
@@ -377,7 +376,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default long callLJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			return Base.toLong(this.callSE0(Exec.currentProcess(), instance));
 		}
@@ -389,7 +388,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default long callLJA(final BaseObject instance, final BaseObject... arguments) {
 
 			return Base.toLong(this.callSE0(Exec.currentProcess(), instance));
 		}
@@ -400,7 +399,6 @@ interface CallableResultString {
 	interface CRSE0FNE0 extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -413,7 +411,6 @@ interface CallableResultString {
 	interface CRSE0FNE1 extends CallableResultString.CRSE1FNE1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -426,7 +423,6 @@ interface CallableResultString {
 	interface CRSE0FNE2 extends CallableResultString.CRSE2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -439,7 +435,6 @@ interface CallableResultString {
 	interface CRSE0FNEA extends CallableResultString.CRSEAFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -452,7 +447,6 @@ interface CallableResultString {
 	interface CRSE0FNEX extends CallableResultString.CRSEXFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -465,7 +459,6 @@ interface CallableResultString {
 	interface CRSE0FNJ0 extends CallableResultString.CRSJ0FNJ0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ0(final BaseObject instance) {
 
@@ -478,7 +471,6 @@ interface CallableResultString {
 	interface CRSE0FNJ1 extends CallableResultString.CRSE1FNJ1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 
@@ -491,7 +483,6 @@ interface CallableResultString {
 	interface CRSE0FNJ2 extends CallableResultString.CRSJ0FNJ2, CallableResultString.CRSE2FNJ2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -504,7 +495,6 @@ interface CallableResultString {
 	interface CRSE0FNJA extends CallableResultString.CRSJ0FNJA, CallableResultString.CRSEAFNJA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 
@@ -1076,7 +1066,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ0(@NotNull final BaseObject instance) {
+		default long callLJ0(final BaseObject instance) {
 
 			return Base.toLong(this.callSE1(Exec.currentProcess(), instance, BaseObject.UNDEFINED));
 		}
@@ -1088,7 +1078,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default long callLJ1(final BaseObject instance, final BaseObject argument) {
 
 			return Base.toLong(this.callSE1(Exec.currentProcess(), instance, argument));
 		}
@@ -1100,7 +1090,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default long callLJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			return Base.toLong(this.callSE1(Exec.currentProcess(), instance, argument1));
 		}
@@ -1112,7 +1102,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default long callLJA(final BaseObject instance, final BaseObject... arguments) {
 
 			return Base.toLong(this.callSE1(Exec.currentProcess(), instance, arguments.length == 0
 				? BaseObject.UNDEFINED
@@ -1125,7 +1115,6 @@ interface CallableResultString {
 	interface CRSE1FNE0 extends CallableResultString.CRSE0FNE0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -1138,7 +1127,6 @@ interface CallableResultString {
 	interface CRSE1FNE1 extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -1151,7 +1139,6 @@ interface CallableResultString {
 	interface CRSE1FNE2 extends CallableResultString.CRSE2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -1164,7 +1151,6 @@ interface CallableResultString {
 	interface CRSE1FNEA extends CallableResultString.CRSEAFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -1179,7 +1165,6 @@ interface CallableResultString {
 	interface CRSE1FNEX extends CallableResultString.CRSEXFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -1192,7 +1177,6 @@ interface CallableResultString {
 	interface CRSE1FNJ0 extends CallableResultString.CRSE0FNJ0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ0(final BaseObject instance) {
 
@@ -1205,7 +1189,6 @@ interface CallableResultString {
 	interface CRSE1FNJ1 extends CallableResultString.CRSJ1FNJ1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 
@@ -1218,7 +1201,6 @@ interface CallableResultString {
 	interface CRSE1FNJ2 extends CallableResultString.CRSE2FNJ2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -1231,7 +1213,6 @@ interface CallableResultString {
 	interface CRSE1FNJA extends CallableResultString.CRSEAFNJA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 
@@ -1539,7 +1520,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default long callLJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			return Base.toLong(this.callSE2(Exec.currentProcess(), instance, argument1, argument2));
 		}
@@ -1550,7 +1531,6 @@ interface CallableResultString {
 	interface CRSE2FNE2 extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -1563,7 +1543,6 @@ interface CallableResultString {
 	interface CRSE2FNJ2 extends CallableResultString.CRSJ2FNJ2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -1766,7 +1745,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default long callLJA(final BaseObject instance, final BaseObject... arguments) {
 
 			return Base.toLong(this.callSEA(Exec.currentProcess(), instance, arguments));
 		}
@@ -1777,7 +1756,6 @@ interface CallableResultString {
 	interface CRSEAFNEA extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -1790,7 +1768,6 @@ interface CallableResultString {
 	interface CRSEAFNJA extends CallableResultString.CRSJAFNJA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 
@@ -1867,7 +1844,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default int callIEX(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseArray arguments) {
+		default int callIEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			return Base.toInt32(this.callSEX(ctx, instance, arguments));
 		}
@@ -1879,7 +1856,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLEX(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseArray arguments) {
+		default long callLEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			return Base.toLong(this.callSEX(ctx, instance, arguments));
 		}
@@ -1890,7 +1867,6 @@ interface CallableResultString {
 	interface CRSEXFNEX extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -2357,7 +2333,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ1(@NotNull final BaseObject instance, @NotNull final BaseObject argument) {
+		default long callLJ1(final BaseObject instance, final BaseObject argument) {
 
 			return Base.toLong(this.callSJ0(instance));
 		}
@@ -2369,7 +2345,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default long callLJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			return Base.toLong(this.callSJ0(instance));
 		}
@@ -2381,7 +2357,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default long callLJA(final BaseObject instance, final BaseObject... arguments) {
 
 			return Base.toLong(this.callSJ0(instance));
 		}
@@ -2392,7 +2368,6 @@ interface CallableResultString {
 	interface CRSJ0FNE0 extends CallableResultString.CRSE0FNE0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -2405,7 +2380,6 @@ interface CallableResultString {
 	interface CRSJ0FNE1 extends CallableResultString.CRSJ1FNE1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -2418,7 +2392,6 @@ interface CallableResultString {
 	interface CRSJ0FNE2 extends CallableResultString.CRSE0FNE2, CallableResultString.CRSJ2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -2431,7 +2404,6 @@ interface CallableResultString {
 	interface CRSJ0FNEA extends CallableResultString.CRSE0FNEA, CallableResultString.CRSJAFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -2444,7 +2416,6 @@ interface CallableResultString {
 	interface CRSJ0FNEX extends CallableResultString.CRSE0FNEX, CallableResultString.CRSJAFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -2457,7 +2428,6 @@ interface CallableResultString {
 	interface CRSJ0FNJ0 extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ0(final BaseObject instance) {
 
@@ -2470,7 +2440,6 @@ interface CallableResultString {
 	interface CRSJ0FNJ1 extends CallableResultString.CRSJ1FNJ1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 
@@ -2483,7 +2452,6 @@ interface CallableResultString {
 	interface CRSJ0FNJ2 extends CallableResultString.CRSJ2FNJ2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -2496,7 +2464,6 @@ interface CallableResultString {
 	interface CRSJ0FNJA extends CallableResultString.CRSJAFNJA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 
@@ -3055,7 +3022,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ0(@NotNull final BaseObject instance) {
+		default long callLJ0(final BaseObject instance) {
 
 			return Base.toLong(this.callSJ1(instance, BaseObject.UNDEFINED));
 		}
@@ -3079,7 +3046,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default long callLJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			return Base.toLong(this.callSJ1(instance, argument1));
 		}
@@ -3091,7 +3058,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default long callLJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default long callLJA(final BaseObject instance, final BaseObject... arguments) {
 
 			return Base.toLong(this.callSJ1(instance, arguments.length == 0
 				? BaseObject.UNDEFINED
@@ -3104,7 +3071,6 @@ interface CallableResultString {
 	interface CRSJ1FNE0 extends CallableResultString.CRSJ0FNE0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE0(final ExecProcess ctx, final BaseObject instance) {
 
@@ -3117,7 +3083,6 @@ interface CallableResultString {
 	interface CRSJ1FNE1 extends CallableResultString.CRSE1FNE1 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 
@@ -3130,7 +3095,6 @@ interface CallableResultString {
 	interface CRSJ1FNE2 extends CallableResultString.CRSE1FNE2, CallableResultString.CRSJ2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -3143,7 +3107,6 @@ interface CallableResultString {
 	interface CRSJ1FNEA extends CallableResultString.CRSE1FNEA, CallableResultString.CRSJAFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -3158,7 +3121,6 @@ interface CallableResultString {
 	interface CRSJ1FNEX extends CallableResultString.CRSE1FNEX, CallableResultString.CRSJAFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -3171,7 +3133,6 @@ interface CallableResultString {
 	interface CRSJ1FNJ0 extends CallableResultString.CRSJ0FNJ0 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ0(final BaseObject instance) {
 
@@ -3184,7 +3145,6 @@ interface CallableResultString {
 	interface CRSJ1FNJ1 extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 
@@ -3197,7 +3157,6 @@ interface CallableResultString {
 	interface CRSJ1FNJ2 extends CallableResultString.CRSJ2FNJ2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -3210,7 +3169,6 @@ interface CallableResultString {
 	interface CRSJ1FNJA extends CallableResultString.CRSJAFNJA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 
@@ -3525,7 +3483,6 @@ interface CallableResultString {
 	interface CRSJ2FNE2 extends CallableResultString.CRSE2FNE2 {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
@@ -3538,9 +3495,8 @@ interface CallableResultString {
 	interface CRSJ2FNJ2 extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJ2(@NotNull final BaseObject instance, @NotNull final BaseObject argument1, @NotNull final BaseObject argument2) {
+		default BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
 
 			return Base.forString(this.callSJ2(instance, argument1, argument2));
 		}
@@ -3751,7 +3707,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default int callIEX(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseArray arguments) {
+		default int callIEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			return Base.toInt32(this.callSJA(instance, arguments.toArrayBase()));
 		}
@@ -3810,7 +3766,6 @@ interface CallableResultString {
 	interface CRSJAFNEA extends CallableResultString.CRSEAFNEA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
 
@@ -3823,7 +3778,6 @@ interface CallableResultString {
 	interface CRSJAFNEX extends CallableResultString.CRSEXFNEX {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
 		default BaseObject callNEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
@@ -3836,9 +3790,8 @@ interface CallableResultString {
 	interface CRSJAFNJA extends CallableResultString.CRSAAFAAA {
 
 		@Override
-		@NotNull
 		@ReflectionHidden
-		default BaseObject callNJA(@NotNull final BaseObject instance, @NotNull final BaseObject... arguments) {
+		default BaseObject callNJA(final BaseObject instance, final BaseObject... arguments) {
 
 			return Base.forString(this.callSJA(instance, arguments));
 		}
@@ -3910,7 +3863,7 @@ interface CallableResultString {
 
 		@Override
 		@ReflectionHidden
-		default int callIEX(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseArray arguments) {
+		default int callIEX(final ExecProcess ctx, final BaseObject instance, final BaseArray arguments) {
 
 			return Base.toInt32(this.callSEX(ctx, instance, arguments));
 		}

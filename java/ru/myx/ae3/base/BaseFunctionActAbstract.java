@@ -1,7 +1,6 @@
 package ru.myx.ae3.base;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import java.util.function.Function;
 
@@ -48,7 +47,7 @@ public abstract class BaseFunctionActAbstract<A, R> extends BaseFunctionAbstract
 	}
 	
 	@Override
-	public BaseObject callNJ1(@Nullable final BaseObject instance, @NotNull final BaseObject argument) {
+	public BaseObject callNJ1(final BaseObject instance, final BaseObject argument) {
 		
 		final A arg = this.argumentConverter.convertAnyNativeToJava(argument);
 		try {
@@ -63,7 +62,7 @@ public abstract class BaseFunctionActAbstract<A, R> extends BaseFunctionAbstract
 	}
 	
 	@Override
-	public BaseObject callNE1(@NotNull final ExecProcess ctx, @Nullable final BaseObject instance, @NotNull final BaseObject argument) {
+	public BaseObject callNE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
 		
 		final A arg = this.argumentConverter.convertAnyNativeToJava(argument);
 		try {
@@ -78,9 +77,9 @@ public abstract class BaseFunctionActAbstract<A, R> extends BaseFunctionAbstract
 	}
 
 	@Override
-	public ExecStateCode execCallPrepare(@NotNull final ExecProcess ctx,
-			@Nullable final BaseObject instance,
-			@NotNull final ResultHandler store,
+	public ExecStateCode execCallPrepare(final ExecProcess ctx,
+			final BaseObject instance,
+			final ResultHandler store,
 			final boolean inline,
 			final BaseObject argument) {
 		

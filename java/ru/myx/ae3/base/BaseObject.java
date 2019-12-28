@@ -5,8 +5,7 @@ package ru.myx.ae3.base;
 
 import java.util.Iterator;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 import ru.myx.ae3.common.FutureValue;
 import ru.myx.ae3.e4.vm.VmReflected;
@@ -28,43 +27,35 @@ public interface BaseObject extends VmReflected
 
 	/** BaseObject PROTOTYPE - root prototype has no prototype */
 	@ReflectionHidden
-	@NotNull
 	BaseObject PROTOTYPE = BaseObject.createObject(null);
 
 	/** FALSE */
 	@ReflectionHidden
-	@NotNull
 	BasePrimitiveBoolean FALSE = new PrimitiveBooleanFalse();
 
 	/** TRUE */
 	@ReflectionHidden
-	@NotNull
 	BasePrimitiveBoolean TRUE = new PrimitiveBooleanTrue();
 
 	/** UNDEFINED */
 	@ReflectionHidden
-	@NotNull
 	BasePrimitiveUndefined UNDEFINED = new BasePrimitiveUndefined();
 
 	/** NULL */
 	@ReflectionHidden
-	@NotNull
 	BasePrimitiveNull NULL = new BasePrimitiveNull();
 	/** iterator() method should not ever return NULL, return this value at least. */
 	@SuppressWarnings("unchecked")
 	@ReflectionHidden
-	@NotNull
 	Iterator<String> ITERATOR_EMPTY = (Iterator<String>) IteratorEmpty.INSTANCE;
 
 	/** iterator() method should not ever return NULL, return this value at least. */
 	@SuppressWarnings("unchecked")
 	@ReflectionHidden
-	@NotNull
 	Iterator<BasePrimitive<?>> ITERATOR_EMPTY_PRIMITIVE = (Iterator<BasePrimitive<?>>) IteratorEmpty.INSTANCE;
 
 	/** constant, read only */
 	@ReflectionHidden
-	@NotNull
 	SealedEmptyObject SEALED_EMPTY_OBJECT = SealedEmptyObject.INSTANCE;
 
 	/**
@@ -199,7 +190,6 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	// @SuppressWarnings("unchecked")
 	@ReflectionHidden
-	@NotNull
 	static <T> BaseList<T> createArray() {
 
 		return Base.OBJECT_FACTORY.createArray();
@@ -218,7 +208,6 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	// @SuppressWarnings("unchecked")
 	@ReflectionHidden
-	@NotNull
 	static <T> BaseList<T> createArray(final BaseArray populate) {
 
 		final int length = populate.length();
@@ -242,7 +231,6 @@ public interface BaseObject extends VmReflected
 	 * @return */
 	// @SuppressWarnings("unchecked")
 	@ReflectionHidden
-	@NotNull
 	static <T> BaseList<T> createArray(final int expectedLength) {
 
 		return Base.OBJECT_FACTORY.createArray(expectedLength);
@@ -259,7 +247,6 @@ public interface BaseObject extends VmReflected
 	 *
 	 * @return */
 	@ReflectionHidden
-	@NotNull
 	static BaseMapEditable createObject() {
 
 		return Base.OBJECT_FACTORY.createObject();
@@ -275,7 +262,6 @@ public interface BaseObject extends VmReflected
 	 *
 	 * @return */
 	@ReflectionHidden
-	@NotNull
 	static BaseMapEditable createObject(final BaseObject prototype) {
 
 		return Base.OBJECT_FACTORY.createObject(prototype);
@@ -526,7 +512,7 @@ public interface BaseObject extends VmReflected
 	 * @param o2
 	 * @return */
 	@ReflectionHidden
-	static boolean equalsNative(@NotNull final BaseObject o1, @NotNull final BaseObject o2) {
+	static boolean equalsNative(final BaseObject o1, final BaseObject o2) {
 
 		if (o1 == BasePrimitiveNumber.NAN || o2 == BasePrimitiveNumber.NAN) {
 			return false;
@@ -703,7 +689,7 @@ public interface BaseObject extends VmReflected
 	 * @param o2
 	 * @return */
 	@ReflectionHidden
-	static boolean equalsStrict(@NotNull final BaseObject o1, @NotNull final BaseObject o2) {
+	static boolean equalsStrict(final BaseObject o1, final BaseObject o2) {
 
 		if (o1 == BasePrimitiveNumber.NAN || o2 == BasePrimitiveNumber.NAN) {
 			return false;
@@ -985,7 +971,7 @@ public interface BaseObject extends VmReflected
 	 * @param attributes
 	 * @return */
 	@ReflectionHidden
-	default boolean baseDefine(@NotNull final BasePrimitiveString name, @NotNull final BaseObject value, final short attributes) {
+	default boolean baseDefine(final BasePrimitiveString name, final BaseObject value, final short attributes) {
 
 		assert value != null : "NULL java object!";
 		final BaseProperty property = this.baseFindProperty(name);
@@ -1328,7 +1314,7 @@ public interface BaseObject extends VmReflected
 	 * @param stop
 	 * @return */
 	@ReflectionHidden
-	default BaseProperty baseFindProperty(final BasePrimitiveString name, @NotNull final BaseObject stop) {
+	default BaseProperty baseFindProperty(final BasePrimitiveString name, final BaseObject stop) {
 
 		for (final BaseProperty property = this.baseGetOwnProperty(name); property != null;) {
 			return property;
@@ -1417,7 +1403,7 @@ public interface BaseObject extends VmReflected
 	 * @param stop
 	 * @return */
 	@ReflectionHidden
-	default BaseProperty baseFindProperty(final String name, @NotNull final BaseObject stop) {
+	default BaseProperty baseFindProperty(final String name, final BaseObject stop) {
 
 		for (final BaseProperty property = this.baseGetOwnProperty(name); property != null;) {
 			return property;
@@ -1759,7 +1745,6 @@ public interface BaseObject extends VmReflected
 	 *
 	 * @return */
 	@ReflectionHidden
-	@NotNull
 	default CharSequence baseToJavaCharSequence() {
 
 		return this.baseToJavaString();
@@ -1781,7 +1766,6 @@ public interface BaseObject extends VmReflected
 
 	/** @return */
 	@ReflectionHidden
-	@NotNull
 	default String baseToJavaString() {
 
 		return this.baseToPrimitive(ToPrimitiveHint.STRING).stringValue();
@@ -1850,8 +1834,7 @@ public interface BaseObject extends VmReflected
 	 *
 	 *         Default implementation will return this.baseToString(); */
 	@ReflectionHidden
-	@NotNull
-	default BasePrimitive<?> baseToPrimitive(@Nullable final ToPrimitiveHint hint) {
+	default BasePrimitive<?> baseToPrimitive(final ToPrimitiveHint hint) {
 
 		if (hint == null || hint == ToPrimitiveHint.NUMBER) {
 			{
@@ -1929,7 +1912,6 @@ public interface BaseObject extends VmReflected
 
 	/** @return string */
 	@ReflectionHidden
-	@NotNull
 	default BasePrimitiveString baseToString() {
 
 		return this.baseToPrimitive(ToPrimitiveHint.STRING).baseToString();
@@ -2051,7 +2033,7 @@ public interface BaseObject extends VmReflected
 	 * @return NULL */
 	@Override
 	@ReflectionHidden
-	default ExecStateCode vmPropertyDefine(@NotNull final ExecProcess ctx, @NotNull final BaseObject name, @NotNull final BaseObject value, @NotNull final ResultHandler store) {
+	default ExecStateCode vmPropertyDefine(final ExecProcess ctx, final BaseObject name, final BaseObject value, final ResultHandler store) {
 
 		assert value != null : "NULL java object!";
 

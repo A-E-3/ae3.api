@@ -117,10 +117,10 @@ public class Reflect extends AbstractSAPI {
 		INT_CACHE = new Integer[Reflect.INT_CACHE_SIZE];
 		LONG_CACHE = new Long[Reflect.LONG_CACHE_SIZE];
 		for (int i = Reflect.INT_CACHE_SIZE - 1; i >= 0; --i) {
-			Reflect.INT_CACHE[i] = new Integer(i);
+			Reflect.INT_CACHE[i] = Integer.valueOf(i);
 		}
 		for (int i = Reflect.LONG_CACHE_SIZE - 1; i >= 0; --i) {
-			Reflect.LONG_CACHE[i] = new Long(i);
+			Reflect.LONG_CACHE[i] = Long.valueOf(i);
 		}
 		/**
 		 * this block should go last
@@ -507,7 +507,7 @@ public class Reflect extends AbstractSAPI {
 
 		return i < Reflect.INT_CACHE_SIZE && i >= 0
 			? Reflect.INT_CACHE[i]
-			: new Integer(i);
+			: Integer.valueOf(i);
 	}
 
 	/**
@@ -518,7 +518,7 @@ public class Reflect extends AbstractSAPI {
 
 		return i < Reflect.LONG_CACHE_SIZE && i >= 0
 			? Reflect.LONG_CACHE[(int) i]
-			: new Long(i);
+			: Long.valueOf(i);
 	}
 
 	/**

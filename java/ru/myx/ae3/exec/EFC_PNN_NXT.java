@@ -1,6 +1,5 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
 
 import ru.myx.ae3.base.BaseObject;
 
@@ -17,42 +16,42 @@ final class EFC_PNN_NXT extends ResultHandlerDirect implements ResultHandler.Use
 	}
 
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx) {
+	public final ExecStateCode execReturn(final ExecProcess ctx) {
 		
 		
 		return ctx.riCallResultHandler.execReturn(ctx);
 	}
 
 	@Override
-	public final ExecStateCode execReturn(@NotNull final ExecProcess ctx, @NotNull final BaseObject value) {
+	public final ExecStateCode execReturn(final ExecProcess ctx, final BaseObject value) {
 		
 		
 		return ctx.riCallResultHandler.execReturn(ctx, value);
 	}
 
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final double value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final double value) {
 		
 		
 		return ctx.riCallResultHandler.execReturnNumeric(ctx, value);
 	}
 
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final int value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final int value) {
 		
 		
 		return ctx.riCallResultHandler.execReturnNumeric(ctx, value);
 	}
 	
 	@Override
-	public final ExecStateCode execReturnNumeric(@NotNull final ExecProcess ctx, final long value) {
+	public final ExecStateCode execReturnNumeric(final ExecProcess ctx, final long value) {
 		
 		
 		return ctx.riCallResultHandler.execReturnNumeric(ctx, value);
 	}
 	
 	@Override
-	public final ExecStateCode execReturnString(@NotNull final ExecProcess ctx, final String value) {
+	public final ExecStateCode execReturnString(final ExecProcess ctx, final String value) {
 		
 		
 		return ctx.riCallResultHandler.execReturnString(ctx, value);
@@ -63,7 +62,6 @@ final class EFC_PNN_NXT extends ResultHandlerDirect implements ResultHandler.Use
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	@NotNull
 	public final ResultHandlerDirect execToCallDirectHandler(final ExecProcess ctx) {
 		
 		

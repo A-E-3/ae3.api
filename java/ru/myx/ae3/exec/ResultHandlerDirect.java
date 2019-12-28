@@ -1,7 +1,6 @@
 package ru.myx.ae3.exec;
 
-import com.sun.istack.internal.NotNull;
-import com.sun.istack.internal.Nullable;
+
 
 /**
  *
@@ -73,7 +72,6 @@ public abstract class ResultHandlerDirect extends ResultHandlerBasic implements 
 	 * @throws IllegalStateException
 	 */
 	@Override
-	@Nullable
 	public final ResultHandlerBasic replaceDoOutput() {
 		
 		
@@ -81,7 +79,6 @@ public abstract class ResultHandlerDirect extends ResultHandlerBasic implements 
 	}
 
 	@Override
-	@NotNull
 	@Deprecated
 	public ResultHandlerDirect execToCallDirectHandler(final ExecProcess ctx) {
 		
@@ -90,7 +87,7 @@ public abstract class ResultHandlerDirect extends ResultHandlerBasic implements 
 	}
 	
 	@Override
-	public ExecStateCode execReturn(@NotNull final ExecProcess ctx) {
+	public ExecStateCode execReturn(final ExecProcess ctx) {
 		
 		
 		return null;

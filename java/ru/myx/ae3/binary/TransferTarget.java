@@ -25,7 +25,7 @@ public interface TransferTarget extends Closeable, Abortable {
 	/**
 	 *
 	 */
-	Function<TransferTarget, Void> FORCE_FUNCTION = new Function<TransferTarget, Void>() {
+	Function<TransferTarget, Void> FORCE_FUNCTION = new Function<>() {
 
 		@Override
 		public Void apply(final TransferTarget arg) {
