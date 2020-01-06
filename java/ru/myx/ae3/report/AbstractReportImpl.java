@@ -3,7 +3,7 @@ package ru.myx.ae3.report;
 abstract class AbstractReportImpl {
 	public abstract ReportReceiver createReciever(final String busName);
 	
-	public abstract int getLevel();
+	public abstract int getLogLevel();
 	
 	public abstract void reportException(
 			final ReportReceiver reciever,
