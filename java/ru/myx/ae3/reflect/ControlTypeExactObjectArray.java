@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ru.myx.ae3.reflect;
 
@@ -13,16 +13,11 @@ import ru.myx.ae3.exec.ExecProcess;
 import ru.myx.ae3.exec.ExecStateCode;
 import ru.myx.ae3.exec.ResultHandler;
 
-/**
- * @author myx
- * 
- */
+/** @author myx */
 final class ControlTypeExactObjectArray implements ControlType<Object[], BaseObject> {
-	
 	
 	@Override
 	public final Object[] convertAnyJavaToJava(final Object object) {
-		
 		
 		if (object == null) {
 			return null;
@@ -55,15 +50,12 @@ final class ControlTypeExactObjectArray implements ControlType<Object[], BaseObj
 		assert false : "cannot convert from: " + object.getClass().getName() + " to Object[]";
 		return null;
 	}
-	
+
 	@Override
 	public final Object[] convertAnyNativeToJava(final BaseObject object) {
 		
-		
 		assert object != null : "NULL java value!";
-		/**
-		 * ensureNative is not required: new array created
-		 */
+		/** ensureNative is not required: new array created */
 		if (object instanceof CharSequence) {
 			return null;
 		}
@@ -82,60 +74,55 @@ final class ControlTypeExactObjectArray implements ControlType<Object[], BaseObj
 				: this.convertAnyJavaToJava(baseValue);
 		}
 	}
-	
+
 	@Override
 	public final BaseObject convertAnyNativeToNative(final BaseObject object) {
-		
 		
 		assert object != null : "NULL java value!";
 		return object;
 	}
-	
+
 	@Override
 	public BaseObject convertJavaToAnyNative(final Object[] object) {
-		
 		
 		return object != null
 			? Base.forArray(object)
 			: BaseObject.NULL;
 	}
-	
+
 	@Override
 	public ExecStateCode convertJavaToCtxResult(final ExecProcess ctx, final Object[] object, final ResultHandler store) {
 		
-		
-		return store.execReturn(ctx, object != null
-			? Base.forArray(object)
-			: BaseObject.NULL);
+		return store.execReturn(
+				ctx,
+				object != null
+					? Base.forArray(object)
+					: BaseObject.NULL);
 	}
-	
+
 	@Override
 	public Class<Object[]> getJavaClass() {
 		
-		
 		return Object[].class;
 	}
-	
+
 	@Override
 	public final String getTypeName() {
 		
-		
 		return "Object[]";
 	}
-	
+
 	@Override
 	public boolean isAnyJavaToJavaPerfect(final Object object) {
-		
 		
 		if (object instanceof Object[]) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean isAnyJavaToJavaPossible(final Object object) {
-		
 		
 		if (object instanceof Collection<?>) {
 			return true;
@@ -154,22 +141,23 @@ final class ControlTypeExactObjectArray implements ControlType<Object[], BaseObj
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean isAnyNativeToJavaPerfect(final BaseObject object) {
-		
 		
 		assert object != null : "NULL java value!";
 		// nothing is perfect for this class
 		return false;
 	}
-	
+
 	@Override
 	public boolean isAnyNativeToJavaPossible(final BaseObject object) {
 		
-		
 		assert object != null : "NULL java value!";
 		if (object.baseArray() != null) {
+			if (object instanceof CharSequence) {
+				return false;
+			}
 			return true;
 		}
 		{
@@ -180,5 +168,5 @@ final class ControlTypeExactObjectArray implements ControlType<Object[], BaseObj
 		}
 		return false;
 	}
-	
+
 }
