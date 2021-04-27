@@ -13,6 +13,7 @@ import java.util.ConcurrentModificationException;
 import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.common.Value;
+import ru.myx.ae3.help.Base58;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.reflect.ReflectionExplicit;
 import ru.myx.ae3.reflect.ReflectionHidden;
@@ -158,6 +159,15 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 * @return
 	 * @throws UnsupportedEncodingException */
 	String toString(final String encoding) throws UnsupportedEncodingException;
+
+	/** Returns binary contents as base58 string.
+	 *
+	 * @return */
+	@ReflectionExplicit
+	default String toStringBase58() {
+
+		return Base58.encode(this.nextDirectArray());
+	}
 
 	/** Returns binary contents as base64 string.
 	 *
