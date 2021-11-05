@@ -13,11 +13,11 @@ import java.util.ConcurrentModificationException;
 import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.common.Value;
-import ru.myx.ae3.help.Base58;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.reflect.ReflectionExplicit;
 import ru.myx.ae3.reflect.ReflectionHidden;
 import ru.myx.ae3.reflect.ReflectionManual;
+import ru.myx.util.Base58;
 
 /** An object whose duty is to provide any number of equal buffers. */
 @ReflectionManual
