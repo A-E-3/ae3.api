@@ -11,80 +11,80 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 /** @author myx */
 @ReflectionDisable
 public interface ExecCallable {
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class Arguments {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface Declared0 extends ExecCallable {
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsDeclared() {
-
+				
 				return 0;
 			}
-
+			
 			@Override
 			@Deprecated
 			default String[] execFormalParameters() {
-
+				
 				return new String[]{};
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface Declared1 extends ExecCallable {
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsDeclared() {
-
+				
 				return 1;
 			}
-
+			
 			@Override
 			default String[] execFormalParameters() {
-
+				
 				return new String[]{
 						"a"
 				};
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface Declared2 extends ExecCallable {
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsDeclared() {
-
+				
 				return 2;
 			}
-
+			
 			@Override
 			default String[] execFormalParameters() {
-
+				
 				return new String[]{
 						"a", "b"
 				};
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface DeclaredX extends ExecCallable {
-
+			
 			@Override
 			int execArgumentsDeclared();
-
+			
 			@Override
 			default String[] execFormalParameters() {
-
+				
 				final int args = this.execArgumentsDeclared();
 				final String[] result = new String[args];
 				for (int i = args - 1; i >= 0; --i) {
@@ -93,91 +93,91 @@ public interface ExecCallable {
 				return result;
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface Exactly0 extends ExecCallable.Arguments.Declared0 {
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsAcceptable() {
-
+				
 				return 0;
 			}
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsMinimal() {
-
+				
 				return 0;
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface Exactly1 extends ExecCallable.Arguments.Declared1 {
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsAcceptable() {
-
+				
 				return 1;
 			}
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsMinimal() {
-
+				
 				return 1;
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface Exactly2 extends ExecCallable.Arguments.Declared2 {
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsAcceptable() {
-
+				
 				return 2;
 			}
-
+			
 			@Override
 			@Deprecated
 			default int execArgumentsMinimal() {
-
+				
 				return 2;
 			}
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface ExactlyX extends ExecCallable.Arguments.DeclaredX {
-
+			
 			@Override
 			default int execArgumentsAcceptable() {
-
+				
 				return this.execArgumentsDeclared();
 			}
-
+			
 			@Override
 			default int execArgumentsMinimal() {
-
+				
 				return this.execArgumentsDeclared();
 			}
 		}
-
+		
 		private Arguments() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForAll {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseE0
@@ -190,7 +190,7 @@ public interface ExecCallable {
 					ExecCallable.ForVoid.UseVoidE0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseE1
@@ -203,7 +203,7 @@ public interface ExecCallable {
 					ExecCallable.ForVoid.UseVoidE1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseE2
@@ -216,7 +216,7 @@ public interface ExecCallable {
 					ExecCallable.ForVoid.UseVoidE2 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseEX
@@ -230,11 +230,11 @@ public interface ExecCallable {
 			//
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForDouble {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseDoubleE0
@@ -247,11 +247,11 @@ public interface ExecCallable {
 					CallableResultDouble.CRDE0FDE2,
 					CallableResultDouble.CRDE0FDEA,
 					CallableResultDouble.CRDE0FDEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseDoubleE1
@@ -264,11 +264,11 @@ public interface ExecCallable {
 					CallableResultDouble.CRDE1FDE2,
 					CallableResultDouble.CRDE1FDEA,
 					CallableResultDouble.CRDE1FDEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseDoubleE2
@@ -281,11 +281,11 @@ public interface ExecCallable {
 					CallableResultDouble.CRDE2FDE1,
 					CallableResultDouble.CRDE2FDEA,
 					CallableResultDouble.CRDE2FDEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseDoubleEX
@@ -298,11 +298,11 @@ public interface ExecCallable {
 					CallableResultDouble.CRDEXFDE1,
 					CallableResultDouble.CRDEXFDE2,
 					CallableResultDouble.CRDEXFDEA {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseDoubleJ
@@ -314,7 +314,7 @@ public interface ExecCallable {
 					CallableResultDouble.CRDJAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseDoubleJ0
@@ -327,10 +327,10 @@ public interface ExecCallable {
 					CallableResultDouble.CRDJ0FDJ1,
 					CallableResultDouble.CRDJ0FDJ2,
 					CallableResultDouble.CRDJ0FDJA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -346,7 +346,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -362,7 +362,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -378,7 +378,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -394,7 +394,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -410,7 +410,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -426,7 +426,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -442,7 +442,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -458,7 +458,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -474,7 +474,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNative
@@ -490,7 +490,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -506,7 +506,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -522,7 +522,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -538,7 +538,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -554,7 +554,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -570,7 +570,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -586,7 +586,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -602,7 +602,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -618,7 +618,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -634,7 +634,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -650,7 +650,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -666,7 +666,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -682,7 +682,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFDEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -698,7 +698,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FDEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -714,7 +714,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FDEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -730,7 +730,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FDEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -746,7 +746,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFDEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseString
@@ -762,7 +762,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE
@@ -778,7 +778,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -794,7 +794,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -810,7 +810,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -826,7 +826,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJAFDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -842,7 +842,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FDEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -858,17 +858,17 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FDEX {
 			//
 		}
-
+		
 		private ForDouble() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForInt {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -884,7 +884,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntE0
@@ -898,9 +898,9 @@ public interface ExecCallable {
 					CallableResultInt.CRIE0FIEA,
 					CallableResultInt.CRIE0FIEX {
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntE1
@@ -914,9 +914,9 @@ public interface ExecCallable {
 					CallableResultInt.CRIE1FIEA,
 					CallableResultInt.CRIE1FIEX {
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntE2
@@ -930,9 +930,9 @@ public interface ExecCallable {
 					CallableResultInt.CRIE2FIEA,
 					CallableResultInt.CRIE2FIEX {
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntEX
@@ -946,9 +946,9 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFIE2,
 					CallableResultInt.CRIEXFIEA {
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -964,7 +964,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFIEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -979,7 +979,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -992,11 +992,11 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FIE2,
 					CallableResultInt.CRIJ1FIEA,
 					CallableResultInt.CRIJ1FIEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -1009,11 +1009,11 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FIE2,
 					CallableResultInt.CRIJ2FIEA,
 					CallableResultInt.CRIJ2FIEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -1029,7 +1029,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -1045,7 +1045,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJAFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -1061,7 +1061,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FIEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -1077,7 +1077,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FIEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNative
@@ -1093,7 +1093,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -1109,7 +1109,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -1125,7 +1125,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -1141,7 +1141,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -1157,7 +1157,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -1173,7 +1173,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -1189,7 +1189,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -1205,7 +1205,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -1221,7 +1221,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -1237,7 +1237,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -1253,7 +1253,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -1269,7 +1269,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -1285,7 +1285,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -1301,7 +1301,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -1317,7 +1317,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -1333,7 +1333,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -1349,7 +1349,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseString
@@ -1365,7 +1365,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE
@@ -1381,7 +1381,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -1397,7 +1397,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -1413,7 +1413,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -1429,7 +1429,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJAFIEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -1445,7 +1445,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FIEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -1461,17 +1461,17 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FIEX {
 			//
 		}
-
+		
 		private ForInt() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForLong {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -1487,7 +1487,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -1503,7 +1503,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -1519,7 +1519,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -1535,7 +1535,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -1551,7 +1551,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -1567,7 +1567,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongE
@@ -1576,10 +1576,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLE1FLJ1,
 					CallableResultLong.CRLE2FLJ2,
 					CallableResultLong.CRLEAFLJA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongE0
@@ -1592,10 +1592,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLE0FLE2,
 					CallableResultLong.CRLE0FLEA,
 					CallableResultLong.CRLE0FLEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongE1
@@ -1608,10 +1608,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLE1FLE2,
 					CallableResultLong.CRLE1FLEA,
 					CallableResultLong.CRLE1FLEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongE2
@@ -1624,10 +1624,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLE2FLE1,
 					CallableResultLong.CRLE2FLEA,
 					CallableResultLong.CRLE2FLEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongEX
@@ -1640,10 +1640,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFLE1,
 					CallableResultLong.CRLEXFLE2,
 					CallableResultLong.CRLEXFLEA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -1653,10 +1653,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ2FLE2,
 					CallableResultLong.CRLJAFLEA,
 					CallableResultLong.CRLJAFLEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -1669,10 +1669,10 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FLE2,
 					CallableResultLong.CRLJ0FLEA,
 					CallableResultLong.CRLJ0FLEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -1688,7 +1688,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNative
@@ -1704,7 +1704,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -1720,7 +1720,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -1736,7 +1736,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -1752,7 +1752,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -1768,7 +1768,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -1784,7 +1784,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -1800,7 +1800,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -1816,7 +1816,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -1832,7 +1832,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -1848,7 +1848,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -1864,7 +1864,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -1880,7 +1880,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -1893,7 +1893,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -1909,7 +1909,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -1925,7 +1925,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -1941,7 +1941,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -1957,7 +1957,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseString
@@ -1973,7 +1973,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE
@@ -1989,7 +1989,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -2005,7 +2005,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -2021,7 +2021,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -2037,7 +2037,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJAFLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -2053,7 +2053,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FLEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -2069,17 +2069,17 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FLEX {
 			//
 		}
-
+		
 		private ForLong() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForNative {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -2095,7 +2095,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -2111,7 +2111,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -2127,7 +2127,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -2143,7 +2143,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -2159,7 +2159,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -2175,7 +2175,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -2191,7 +2191,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJAFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -2207,7 +2207,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -2223,7 +2223,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -2232,10 +2232,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FNJ1,
 					CallableResultNative.CRNE2FNJ2,
 					CallableResultNative.CRNEAFNJA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -2248,10 +2248,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FNE2,
 					CallableResultNative.CRNE0FNEA,
 					CallableResultNative.CRNE0FNEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -2264,10 +2264,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FNE2,
 					CallableResultNative.CRNE1FNEA,
 					CallableResultNative.CRNE1FNEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -2280,10 +2280,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FNE1,
 					CallableResultNative.CRNE2FNEA,
 					CallableResultNative.CRNE2FNEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -2296,11 +2296,11 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFNE1,
 					CallableResultNative.CRNEAFNE2,
 					CallableResultNative.CRNEAFNEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -2313,10 +2313,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFNE1,
 					CallableResultNative.CRNEXFNE2,
 					CallableResultNative.CRNEXFNEA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -2326,10 +2326,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FNE2,
 					CallableResultNative.CRNJAFNEA,
 					CallableResultNative.CRNJAFNEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -2342,10 +2342,10 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FNE2,
 					CallableResultNative.CRNJ0FNEA,
 					CallableResultNative.CRNJ0FNEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -2358,11 +2358,11 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FNE2,
 					CallableResultNative.CRNJ1FNEA,
 					CallableResultNative.CRNJ1FNEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -2375,11 +2375,11 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FNE2,
 					CallableResultNative.CRNJ2FNEA,
 					CallableResultNative.CRNJ2FNEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -2392,11 +2392,11 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFNE2,
 					CallableResultNative.CRNJAFNEA,
 					CallableResultNative.CRNJAFNEX {
-
+			
 			//
-
+			
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -2409,7 +2409,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -2425,7 +2425,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -2441,7 +2441,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -2457,7 +2457,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -2473,7 +2473,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseString
@@ -2489,7 +2489,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE
@@ -2505,7 +2505,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -2521,7 +2521,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -2537,7 +2537,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -2553,7 +2553,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJAFNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -2569,7 +2569,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FNEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -2585,17 +2585,17 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FNEX {
 			//
 		}
-
+		
 		private ForNative() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	static class ForNumbers {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -2605,7 +2605,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseInt {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -2616,7 +2616,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseIntJ {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -2627,7 +2627,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseIntJ0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -2638,7 +2638,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseIntJ1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -2649,7 +2649,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseIntJ2 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -2659,7 +2659,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseLong {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -2670,7 +2670,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseLongJ {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -2681,7 +2681,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseLongJ0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -2692,7 +2692,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseLongJ1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNative
@@ -2702,7 +2702,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNative {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -2713,7 +2713,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeE {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -2724,7 +2724,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeE0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -2735,7 +2735,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeE1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -2746,7 +2746,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeE2 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -2757,7 +2757,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -2768,7 +2768,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -2779,7 +2779,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeJ {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -2790,7 +2790,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeJ0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -2801,7 +2801,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeJ1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -2812,7 +2812,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeJ2 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -2823,7 +2823,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseNativeJA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNumbersE0
@@ -2833,7 +2833,7 @@ public interface ExecCallable {
 					ExecCallable.ForLong.UseLongE0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNumbersE1
@@ -2843,7 +2843,7 @@ public interface ExecCallable {
 					ExecCallable.ForLong.UseLongE1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNumbersE2
@@ -2853,7 +2853,7 @@ public interface ExecCallable {
 					ExecCallable.ForLong.UseLongE2 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNumbersEX
@@ -2863,7 +2863,7 @@ public interface ExecCallable {
 					ExecCallable.ForLong.UseLongEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNumbersJ0
@@ -2873,7 +2873,7 @@ public interface ExecCallable {
 					ExecCallable.ForLong.UseLongJ0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -2883,7 +2883,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStore {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -2893,7 +2893,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStore0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -2903,7 +2903,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStore1 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -2913,7 +2913,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStore2 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -2923,7 +2923,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStoreX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseString
@@ -2933,7 +2933,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseString {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -2944,7 +2944,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStringJ {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -2955,7 +2955,7 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStringJ0 {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -2966,17 +2966,17 @@ public interface ExecCallable {
 					ExecCallable.ForDouble.UseStringJ1 {
 			//
 		}
-
+		
 		private ForNumbers() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForStore {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntE
@@ -2987,7 +2987,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -2998,7 +2998,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -3009,7 +3009,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -3020,7 +3020,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -3031,7 +3031,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongE
@@ -3042,7 +3042,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -3053,7 +3053,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJAFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -3064,7 +3064,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -3075,7 +3075,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -3086,7 +3086,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -3097,7 +3097,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -3108,7 +3108,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -3119,7 +3119,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -3130,7 +3130,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -3141,7 +3141,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -3152,7 +3152,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -3163,7 +3163,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -3174,7 +3174,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -3185,7 +3185,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -3196,7 +3196,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -3206,7 +3206,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -3214,10 +3214,10 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FEE0,
 					CallableResultStore.CREE1FEE2,
 					CallableResultStore.CREE1FEEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -3225,10 +3225,10 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FEE1,
 					CallableResultStore.CREE2FEE0,
 					CallableResultStore.CREE2FEEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -3236,10 +3236,10 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFEE1,
 					CallableResultStore.CREEXFEE0,
 					CallableResultStore.CREEXFEE2 {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE
@@ -3250,7 +3250,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -3261,7 +3261,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -3272,7 +3272,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -3283,7 +3283,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJAFEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -3294,7 +3294,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FEEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -3305,17 +3305,17 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FEEX {
 			//
 		}
-
+		
 		private ForStore() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForString {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -3331,7 +3331,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -3347,7 +3347,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -3363,7 +3363,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -3379,7 +3379,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -3395,7 +3395,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -3411,7 +3411,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -3427,7 +3427,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJAFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -3443,7 +3443,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -3459,7 +3459,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNative
@@ -3475,7 +3475,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFSJA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -3491,7 +3491,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFSJA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -3507,7 +3507,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -3523,7 +3523,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -3539,7 +3539,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -3555,7 +3555,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -3571,7 +3571,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -3587,7 +3587,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -3603,7 +3603,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -3619,7 +3619,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -3635,7 +3635,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -3651,7 +3651,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -3667,7 +3667,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -3683,7 +3683,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -3699,7 +3699,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -3715,7 +3715,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -3731,7 +3731,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFSEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -3744,10 +3744,10 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FSE2,
 					CallableResultString.CRSE0FSEA,
 					CallableResultString.CRSE0FSEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -3760,10 +3760,10 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FSE2,
 					CallableResultString.CRSE1FSEA,
 					CallableResultString.CRSE1FSEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE2
@@ -3776,10 +3776,10 @@ public interface ExecCallable {
 					CallableResultString.CRSE2FSE1,
 					CallableResultString.CRSE2FSEA,
 					CallableResultString.CRSE2FSEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringEX
@@ -3792,10 +3792,10 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFSE1,
 					CallableResultString.CRSEXFSE2,
 					CallableResultString.CRSEXFSEA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -3805,10 +3805,10 @@ public interface ExecCallable {
 					CallableResultString.CRSJ2FSE2,
 					CallableResultString.CRSJAFSEA,
 					CallableResultString.CRSJAFSEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -3821,10 +3821,10 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FSE2,
 					CallableResultString.CRSJ0FSEA,
 					CallableResultString.CRSJ0FSEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -3837,10 +3837,10 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FSE2,
 					CallableResultString.CRSJ1FSEA,
 					CallableResultString.CRSJ1FSEX {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ2
@@ -3853,20 +3853,20 @@ public interface ExecCallable {
 					CallableResultString.CRSJ2FSE2,
 					CallableResultString.CRSJ2FSEA,
 					CallableResultString.CRSJ2FSEX {
-
+			
 			//
 		}
-
+		
 		private ForString() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static class ForVoid {
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseInt
@@ -3882,7 +3882,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ
@@ -3898,7 +3898,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJAFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ0
@@ -3914,7 +3914,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ1
@@ -3930,7 +3930,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseIntJ2
@@ -3946,7 +3946,7 @@ public interface ExecCallable {
 					CallableResultInt.CRIJ2FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLong
@@ -3962,7 +3962,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ
@@ -3978,7 +3978,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJAFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ0
@@ -3994,7 +3994,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseLongJ1
@@ -4010,7 +4010,7 @@ public interface ExecCallable {
 					CallableResultLong.CRLJ1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNative
@@ -4026,7 +4026,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE
@@ -4042,7 +4042,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE0
@@ -4058,7 +4058,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE1
@@ -4074,7 +4074,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeE2
@@ -4090,7 +4090,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNE2FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEA
@@ -4106,7 +4106,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEAFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeEX
@@ -4122,7 +4122,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ
@@ -4138,7 +4138,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ0
@@ -4154,7 +4154,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ1
@@ -4170,7 +4170,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJ2
@@ -4186,7 +4186,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJ2FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseNativeJA
@@ -4202,7 +4202,7 @@ public interface ExecCallable {
 					CallableResultNative.CRNJAFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore
@@ -4218,7 +4218,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore0
@@ -4234,7 +4234,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore1
@@ -4250,7 +4250,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStore2
@@ -4266,7 +4266,7 @@ public interface ExecCallable {
 					CallableResultStore.CREE2FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStoreX
@@ -4282,7 +4282,7 @@ public interface ExecCallable {
 					CallableResultStore.CREEXFVEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseString
@@ -4298,7 +4298,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE
@@ -4314,7 +4314,7 @@ public interface ExecCallable {
 					CallableResultString.CRSEXFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE0
@@ -4330,7 +4330,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringE1
@@ -4346,7 +4346,7 @@ public interface ExecCallable {
 					CallableResultString.CRSE1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ
@@ -4362,7 +4362,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJAFVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ0
@@ -4378,7 +4378,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseStringJ1
@@ -4394,7 +4394,7 @@ public interface ExecCallable {
 					CallableResultString.CRSJ1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseVoidE
@@ -4403,10 +4403,10 @@ public interface ExecCallable {
 					CallableResultVoid.CRVE1FVJ1,
 					CallableResultVoid.CRVE2FVJ2,
 					CallableResultVoid.CRVEAFVJA {
-
+			
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseVoidE0
@@ -4421,7 +4421,7 @@ public interface ExecCallable {
 					CallableResultVoid.CRVE0FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseVoidE1
@@ -4436,7 +4436,7 @@ public interface ExecCallable {
 					CallableResultVoid.CRVE1FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseVoidE2
@@ -4451,7 +4451,7 @@ public interface ExecCallable {
 					CallableResultVoid.CRVE2FVEX {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseVoidEX
@@ -4466,166 +4466,166 @@ public interface ExecCallable {
 					CallableResultVoid.CRVEXFVEA {
 			//
 		}
-
+		
 		/** @author myx */
 		@ReflectionDisable
 		public static interface UseVoidJ extends ExecCallable {
-
+			
 			@Override
 			@ReflectionHidden
 			default void callVE0(final ExecProcess ctx, final BaseObject instance) {
-
+				
 				this.callVJ0(instance);
 			}
-
+			
 			@Override
 			@ReflectionHidden
 			default void callVE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument) {
-
+				
 				this.callVJ1(instance, argument);
 			}
-
+			
 			@Override
 			@ReflectionHidden
 			default void callVE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
-
+				
 				this.callVJ2(instance, argument1, argument2);
 			}
-
+			
 			@Override
 			@ReflectionHidden
 			default void callVEA(final ExecProcess ctx, final BaseObject instance, final BaseObject... arguments) {
-
+				
 				this.callVJA(instance, arguments);
 			}
-
+			
 		}
-
+		
 		private ForVoid() {
 			
 			// prevent
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static interface JavaInt extends ExecCallable {
-
+		
 		@Override
 		@ReflectionHidden
 		default Class<? extends Object> execResultClassJava() {
-
+			
 			return Number.class;
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static interface JavaLong extends ExecCallable {
-
+		
 		@Override
 		@ReflectionHidden
 		default Class<? extends Object> execResultClassJava() {
-
+			
 			return Number.class;
 		}
 	}
-
+	
 	/** @author myx */
 	@ReflectionDisable
 	public static interface JavaString extends ExecCallable {
-
+		
 		@Override
 		@ReflectionHidden
 		default Class<? extends Object> execResultClassJava() {
-
+			
 			return CharSequence.class;
 		}
 	}
-
+	
 	@SuppressWarnings("javadoc")
 	static boolean assertTraceCall(final ExecProcess ctx, final ExecCallable callee, final BaseObject instance) {
-
+		
 		/** <code>
 		System.err.println(">>>>>> " + callee.getClass().getSimpleName() + ": ctx: " + ctx.ri0BSB + ":" + ctx.ri0ASP + ", call0: " + callee);
 		 * </code> */
-
+		
 		assert ctx.fldTracer == null
 			? ExecProcess.fldTracerStatic == null || ExecProcess.fldTracerStatic.traceCall(ctx, callee, instance)
 			: ctx.fldTracer.traceCall(ctx, callee, instance);
-
+		
 		return true;
 	}
-
+	
 	@SuppressWarnings("javadoc")
 	static boolean assertTraceCall(final ExecProcess ctx, final ExecCallable callee, final BaseObject instance, final BaseArray arguments) {
-
+		
 		/** <code>
 		System.err.println(">>>>>> " + callee.getClass().getSimpleName() + ": ctx: " + ctx.ri0BSB + ":" + ctx.ri0ASP + ", callA: " + callee + ", argc: " + arguments.length());
 		 * </code> */
-
+		
 		assert ctx.fldTracer == null
 			? ExecProcess.fldTracerStatic == null || ExecProcess.fldTracerStatic.traceCall(ctx, callee, instance, arguments)
 			: ctx.fldTracer.traceCall(ctx, callee, instance, arguments);
-
+		
 		return true;
 	}
-
+	
 	@SuppressWarnings("javadoc")
 	static boolean assertTraceCall(final ExecProcess ctx, final ExecCallable callee, final BaseObject instance, final BaseObject argument) {
-
+		
 		/** <code>
 		System.err.println(">>>>>> " + callee.getClass().getSimpleName() + ": ctx: " + ctx.ri0BSB + ":" + ctx.ri0ASP + ", call1: " + callee);
 		 * </code> */
-
+		
 		assert ctx.fldTracer == null
 			? ExecProcess.fldTracerStatic == null || ExecProcess.fldTracerStatic.traceCall(ctx, callee, instance, argument)
 			: ctx.fldTracer.traceCall(ctx, callee, instance, argument);
-
+		
 		return true;
 	}
-
+	
 	@SuppressWarnings("javadoc")
 	static boolean assertTraceCall(final ExecProcess ctx, final ExecCallable callee, final BaseObject instance, final BaseObject... arguments) {
-
+		
 		/** <code>
 		System.err.println(">>>>>> " + callee.getClass().getSimpleName() + ": ctx: " + ctx.ri0BSB + ":" + ctx.ri0ASP + ", callX: " + callee + ", argc: " + arguments.length);
 		 * </code> */
-
+		
 		assert ctx.fldTracer == null
 			? ExecProcess.fldTracerStatic == null || ExecProcess.fldTracerStatic.traceCall(ctx, callee, instance, arguments)
 			: ctx.fldTracer.traceCall(ctx, callee, instance, arguments);
-
+		
 		return true;
 	}
-
+	
 	@SuppressWarnings("javadoc")
 	static boolean assertTraceCall(final ExecProcess ctx, final ExecCallable callee, final BaseObject instance, final BaseObject argument1, final BaseObject argument2) {
-
+		
 		/** <code>
 		System.err.println(">>>>>> " + callee.getClass().getSimpleName() + ": ctx: " + ctx.ri0BSB + ":" + ctx.ri0ASP + ", call2: " + callee);
 		 * </code> */
-
+		
 		assert ctx.fldTracer == null
 			? ExecProcess.fldTracerStatic == null || ExecProcess.fldTracerStatic.traceCall(ctx, callee, instance, argument1, argument2)
 			: ctx.fldTracer.traceCall(ctx, callee, instance, argument1, argument2);
-
+		
 		return true;
 	}
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @return */
 	@ReflectionHidden
 	double callDE0(ExecProcess ctx, BaseObject instance);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	double callDE1(ExecProcess ctx, BaseObject instance, BaseObject argument);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument1
@@ -4633,58 +4633,58 @@ public interface ExecCallable {
 	 * @return */
 	@ReflectionHidden
 	double callDE2(ExecProcess ctx, BaseObject instance, BaseObject argument1, BaseObject argument2);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	double callDEA(ExecProcess ctx, BaseObject instance, BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	double callDEX(ExecProcess ctx, BaseObject instance, BaseArray arguments);
-
+	
 	/** @param instance
 	 * @return */
 	@ReflectionHidden
 	double callDJ0(final BaseObject instance);
-
+	
 	/** @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	double callDJ1(final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param instance
 	 * @param argument1
 	 * @param argument2
 	 * @return */
 	@ReflectionHidden
 	double callDJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	double callDJA(final BaseObject instance, final BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @return */
 	@ReflectionHidden
 	int callIE0(final ExecProcess ctx, final BaseObject instance);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	int callIE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument1
@@ -4692,58 +4692,58 @@ public interface ExecCallable {
 	 * @return */
 	@ReflectionHidden
 	int callIE2(final ExecProcess ctx, final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	int callIEA(ExecProcess ctx, BaseObject instance, BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	int callIEX(ExecProcess ctx, BaseObject instance, BaseArray arguments);
-
+	
 	/** @param instance
 	 * @return */
 	@ReflectionHidden
 	int callIJ0(final BaseObject instance);
-
+	
 	/** @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	int callIJ1(final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param instance
 	 * @param argument1
 	 * @param argument2
 	 * @return */
 	@ReflectionHidden
 	int callIJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	int callIJA(final BaseObject instance, final BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @return */
 	@ReflectionHidden
 	long callLE0(ExecProcess ctx, BaseObject instance);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	long callLE1(ExecProcess ctx, BaseObject instance, BaseObject argument);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument1
@@ -4751,126 +4751,124 @@ public interface ExecCallable {
 	 * @return */
 	@ReflectionHidden
 	long callLE2(ExecProcess ctx, BaseObject instance, BaseObject argument1, BaseObject argument2);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	long callLEA(ExecProcess ctx, BaseObject instance, BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	long callLEX(ExecProcess ctx, BaseObject instance, BaseArray arguments);
-
+	
 	/** @param instance
 	 * @return */
 	@ReflectionHidden
 	long callLJ0(final BaseObject instance);
-
+	
 	/** @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	long callLJ1(final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param instance
 	 * @param argument1
 	 * @param argument2
 	 * @return */
 	@ReflectionHidden
 	long callLJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	long callLJA(final BaseObject instance, final BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNE0(ExecProcess ctx, BaseObject instance);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNE1(ExecProcess ctx, BaseObject instance, BaseObject argument);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument1
 	 * @param argument2
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNE2(ExecProcess ctx, BaseObject instance, BaseObject argument1, BaseObject argument2);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNEA(ExecProcess ctx, BaseObject instance, BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNEX(ExecProcess ctx, BaseObject instance, BaseArray arguments);
-
+	
 	/** @param instance
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNJ0(final BaseObject instance);
-
+	
 	/** @param instance
 	 * @param argument
 	 * @return */
-
 	@ReflectionHidden
 	BaseObject callNJ1(final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param instance
 	 * @param argument1
 	 * @param argument2
 	 * @return */
-
 	@ReflectionHidden
 	BaseObject callNJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param instance
 	 * @param arguments
 	 * @return */
-
+	
 	@ReflectionHidden
 	BaseObject callNJA(final BaseObject instance, final BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @return */
 	@ReflectionHidden
 	String callSE0(final ExecProcess ctx, final BaseObject instance);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument
 	 * @return */
 	@ReflectionHidden
 	String callSE1(ExecProcess ctx, BaseObject instance, BaseObject argument);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument1
@@ -4878,127 +4876,118 @@ public interface ExecCallable {
 	 * @return */
 	@ReflectionHidden
 	String callSE2(ExecProcess ctx, BaseObject instance, BaseObject argument1, BaseObject argument2);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	String callSEA(ExecProcess ctx, BaseObject instance, BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	String callSEX(ExecProcess ctx, BaseObject instance, BaseArray arguments);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @return */
 	@ReflectionHidden
 	String callSJ0(final BaseObject instance);
-
+	
 	/** @param instance
 	 * @param argument
 	 * @return */
-
+	
 	@ReflectionHidden
 	String callSJ1(final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param instance
 	 * @param argument1
 	 * @param argument2
 	 * @return */
 	@ReflectionHidden
 	String callSJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param instance
 	 * @param arguments
 	 * @return */
 	@ReflectionHidden
 	String callSJA(final BaseObject instance, final BaseObject... arguments);
-
+	
 	/** @param ctx
-	 * @param instance
-	 */
+	 * @param instance */
 	@ReflectionHidden
 	void callVE0(final ExecProcess ctx, final BaseObject instance);
-
+	
 	/** @param ctx
 	 * @param instance
-	 * @param argument
-	 */
+	 * @param argument */
 	@ReflectionHidden
 	void callVE1(final ExecProcess ctx, final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param ctx
 	 * @param instance
 	 * @param argument1
-	 * @param argument2
-	 */
+	 * @param argument2 */
 	@ReflectionHidden
 	void callVE2(ExecProcess ctx, BaseObject instance, BaseObject argument1, BaseObject argument2);
-
+	
 	/** @param ctx
 	 * @param instance
-	 * @param arguments
-	 */
+	 * @param arguments */
 	@ReflectionHidden
 	void callVEA(ExecProcess ctx, BaseObject instance, BaseObject... arguments);
-
+	
 	/** @param ctx
 	 * @param instance
-	 * @param arguments
-	 */
+	 * @param arguments */
 	@ReflectionHidden
 	void callVEX(ExecProcess ctx, BaseObject instance, BaseArray arguments);
-
-	/** @param instance
-	 */
+	
+	/** @param instance */
 	@ReflectionHidden
 	void callVJ0(final BaseObject instance);
-
+	
 	/** @param instance
-	 * @param argument
-	 */
+	 * @param argument */
 	@ReflectionHidden
 	void callVJ1(final BaseObject instance, final BaseObject argument);
-
+	
 	/** @param instance
 	 * @param argument1
-	 * @param argument2
-	 */
+	 * @param argument2 */
 	@ReflectionHidden
 	void callVJ2(final BaseObject instance, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** @param instance
-	 * @param arguments
-	 */
+	 * @param arguments */
 	@ReflectionHidden
 	void callVJA(final BaseObject instance, final BaseObject... arguments);
-
+	
 	/** @return int */
 	@ReflectionHidden
 	default int execArgumentsAcceptable() {
-
+		
 		return Integer.MAX_VALUE;
 	}
-
+	
 	/** @return int */
 	@ReflectionHidden
 	default int execArgumentsDeclared() {
-
+		
 		return 0;
 	}
-
+	
 	/** @return int */
 	@ReflectionHidden
 	default int execArgumentsMinimal() {
-
+		
 		return 0;
 	}
-
+	
 	/** Return REPEAT when you just setup context for stepper execution
 	 *
 	 * @param ctx
@@ -5007,7 +4996,7 @@ public interface ExecCallable {
 	 * @param inline
 	 * @return */
 	ExecStateCode execCallPrepare(final ExecProcess ctx, final BaseObject instance, final ResultHandler store, boolean inline);
-
+	
 	/** Return REPEAT when you just setup context for stepper execution
 	 *
 	 * @param ctx
@@ -5017,7 +5006,7 @@ public interface ExecCallable {
 	 * @param arguments
 	 * @return */
 	ExecStateCode execCallPrepare(final ExecProcess ctx, final BaseObject instance, final ResultHandler store, boolean inline, final BaseArray arguments);
-
+	
 	/** Return REPEAT when you just setup context for stepper execution
 	 *
 	 * @param ctx
@@ -5028,7 +5017,7 @@ public interface ExecCallable {
 	 * @param argument
 	 * @return */
 	ExecStateCode execCallPrepare(final ExecProcess ctx, final BaseObject instance, final ResultHandler store, boolean inline, final BaseObject argument);
-
+	
 	/** Return REPEAT when you just setup context for stepper execution
 	 *
 	 * @param ctx
@@ -5041,7 +5030,7 @@ public interface ExecCallable {
 	 * @return */
 	ExecStateCode
 			execCallPrepare(final ExecProcess ctx, final BaseObject instance, final ResultHandler store, boolean inline, final BaseObject argument1, final BaseObject argument2);
-
+	
 	/** A possibly empty List containing the identifier Strings of a Function’s FormalParameterList.
 	 * Of the standard built-in ECMAScript objects, only Function objects implement
 	 * [[FormalParameterList]].
@@ -5049,33 +5038,33 @@ public interface ExecCallable {
 	 * @return List of Strings */
 	@ReflectionHidden
 	default String[] execFormalParameters() {
-
+		
 		return null;
 	}
-
+	
 	/** @return boolean */
 	@ReflectionHidden
 	default boolean execHasNamedArguments() {
-
+		
 		return false;
 	}
-
+	
 	/** @return boolean */
 	@ReflectionHidden
 	default boolean execIsConstant() {
-
+		
 		return false;
 	}
-
+	
 	/** If not sure, return Object.class
 	 *
 	 * @return */
 	@ReflectionHidden
 	default Class<? extends Object> execResultClassJava() {
-
+		
 		return Object.class;
 	}
-
+	
 	/** A scope chain that defines the environment in which a Function object is executed.
 	 *
 	 * FROM ECMAScript specification:
@@ -5093,8 +5082,8 @@ public interface ExecCallable {
 	 */
 	@ReflectionHidden
 	default BaseObject execScope() {
-
+		
 		return ExecProcess.GLOBAL;
 	}
-
+	
 }
