@@ -318,8 +318,8 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 				final Guid replaced = GUID_SIMPLE_FOR_PRIMITIVE.put(baseValue, guid);
 
 				assert replaced == null || replaced.getInlineBaseValue() == baseValue //
-				: type + ", " + baseValue + " (" + baseValue.getClass().getName() + ") replaced the: " + replaced.getInlineBaseValue() + " ("
-						+ replaced.getInlineBaseValue().getClass().getName() + "), eq: " + replaced.getInlineBaseValue().equals(baseValue);
+						: type + ", " + baseValue + " (" + baseValue.getClass().getName() + ") replaced the: " + replaced.getInlineBaseValue() + " ("
+								+ replaced.getInlineBaseValue().getClass().getName() + "), eq: " + replaced.getInlineBaseValue().equals(baseValue);
 
 				assert GUID_SIMPLE_FOR_PRIMITIVE.get(baseValue) == guid;
 			}
@@ -1171,6 +1171,9 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 		if (object instanceof TransferBuffer) {
 			return Guid.forBinaryInline(((TransferBuffer) object).toBinary());
 		}
+		if (object instanceof Guid) {
+			return (Guid) object;
+		}
 		/** this includes BaseNativeObject & BaseIdentityObject */
 		if (object instanceof Bindings) {
 			final BaseObject prototype = object.basePrototype();
@@ -1222,6 +1225,9 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 			return Guid.forString((CharSequence) value);
 		}
 		if (value instanceof BaseObject) {
+			if (value instanceof Guid) {
+				return (Guid) value;
+			}
 			return Guid.forUnknown((BaseObject) value);
 		}
 		if (value == null) {
@@ -1273,7 +1279,11 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws NullPointerException */
 	public static final Guid fromHex(final String guidString) throws IllegalArgumentException, NullPointerException {
 		
-		if (guidString == null || guidString.length() == 0) {
+		if (guidString == null) {
+			return Guid.GUID_NULL;
+		}
+		final int inputLength = guidString.length();
+		if (inputLength == 0) {
 			return Guid.GUID_NULL;
 		}
 		final byte[] guidBytes = new byte[Guid.MAX_LENGTH];
@@ -1281,7 +1291,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 		int source = 0;
 		for (; target < Guid.MAX_LENGTH;) {
 			final char char1 = guidString.charAt(source++);
-			if (source == guidString.length()) {
+			if (source == inputLength) {
 				guidBytes[target++] = (byte) ((Guid.XLATDE16[char1] & 0x0F) << 4);
 				break;
 			}
@@ -1293,7 +1303,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 			if (target >= Guid.MAX_LENGTH) {
 				break;
 			}
-			if (source == guidString.length()) {
+			if (source == inputLength) {
 				break;
 			}
 		}

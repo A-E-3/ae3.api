@@ -17,34 +17,35 @@ import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.reflect.ReflectionExplicit;
 import ru.myx.ae3.reflect.ReflectionHidden;
 import ru.myx.ae3.reflect.ReflectionManual;
+import ru.myx.util.Base16;
 import ru.myx.util.Base58;
 
 /** An object whose duty is to provide any number of equal buffers. */
 @ReflectionManual
 public interface TransferCopier extends BaseObject, Value<TransferCopier>, Comparable<TransferCopier> {
-
+	
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BaseObject PROTOTYPE = Reflect.classToBasePrototype(TransferCopier.class);
-
+	
 	/** NUL COPIER instance - empty copier. */
 	@ReflectionExplicit
 	TransferCopier NUL_COPIER = new NullCopier();
-
+	
 	@Override
 	default BaseObject basePrototype() {
-
+		
 		return TransferCopier.PROTOTYPE;
 	}
-
+	
 	@Override
 	default TransferCopier baseValue() {
-
+		
 		return this;
 	}
-
+	
 	/** Copies a slice of the copier. Out of bounds are silently discarded.
 	 *
 	 * @param start
@@ -57,14 +58,14 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	int copy(long start, byte[] target, int offset, int count) throws ConcurrentModificationException;
-
+	
 	/** Returns true if another object is also a copier and have same length and same contents.
 	 *
 	 * @param another
 	 * @return */
 	@Override
 	boolean equals(final Object another);
-
+	
 	/** Returns a checksum.
 	 *
 	 * @return checksum
@@ -72,13 +73,13 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	MessageDigest getMessageDigest() throws ConcurrentModificationException;
-
+	
 	/** @return length of copier contents
 	 * @throws ConcurrentModificationException
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	long length() throws ConcurrentModificationException;
-
+	
 	/** Returns a copy of copier contents in a newly created buffer.
 	 *
 	 * @return buffer
@@ -86,17 +87,17 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	TransferBuffer nextCopy() throws ConcurrentModificationException;
-
+	
 	/** Same as nextCopy().toDirectArray() but could be more effective.
 	 *
 	 * @return
 	 * @throws ConcurrentModificationException */
 	@ReflectionExplicit
 	default byte[] nextDirectArray() throws ConcurrentModificationException {
-
+		
 		return this.nextCopy().toDirectArray();
 	}
-
+	
 	/** Returns a copy of copier contents in a newly created InputStream.
 	 *
 	 * @return InputStream
@@ -105,7 +106,7 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	InputStream nextInputStream() throws IOException, ConcurrentModificationException;
-
+	
 	/** Same as ByteBuffer.wrap(nextDirectArray()) but could be more effective.
 	 *
 	 * @return
@@ -115,7 +116,7 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 		
 		return ByteBuffer.wrap(this.nextDirectArray());
 	}
-
+	
 	/** Returns a copy of copier contents in a newly created InputStream.
 	 *
 	 * @return BufferedReader
@@ -124,7 +125,7 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	Reader nextReaderUtf8() throws IOException, ConcurrentModificationException;
-
+	
 	/** Returns a slice of the copier. Out of bounds are silently discarded.
 	 *
 	 * @param start
@@ -135,14 +136,14 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 *             when underlying data suddenly changed */
 	@ReflectionExplicit
 	TransferCopier slice(long start, long count) throws ConcurrentModificationException;
-
+	
 	/** Returns a text representation of copier contents. Any binary-to-character conversions (if
 	 * any) are performed using system-default locale and encoding.
 	 *
 	 * returns nextCopy().toString(); */
 	@Override
 	String toString();
-
+	
 	/** Returns a text representation of copier contents.
 	 *
 	 * returns nextCopy().toString(charset);
@@ -150,7 +151,7 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 * @param charset
 	 * @return */
 	String toString(final Charset charset);
-
+	
 	/** Returns a text representation of copier contents.
 	 *
 	 * returns nextCopy().toString(encoding);
@@ -159,25 +160,35 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	 * @return
 	 * @throws UnsupportedEncodingException */
 	String toString(final String encoding) throws UnsupportedEncodingException;
-
+	
+	/** Returns binary contents as base16 (hex) string.
+	 *
+	 * @return */
+	@ReflectionExplicit
+	default String toStringBase16() {
+		
+		return Base16.encode(this.nextDirectArray());
+		// return String.format("%016X", new BigInteger(1, this.nextDirectArray()));
+	}
+	
 	/** Returns binary contents as base58 string.
 	 *
 	 * @return */
 	@ReflectionExplicit
 	default String toStringBase58() {
-
+		
 		return Base58.encode(this.nextDirectArray());
 	}
-
+	
 	/** Returns binary contents as base64 string.
 	 *
 	 * @return */
 	@ReflectionExplicit
 	default String toStringBase64() {
-
+		
 		return new String(Base64.getEncoder().withoutPadding().encode(this.nextDirectArray()), Engine.CHARSET_ASCII);
 	}
-
+	
 	/** Returns a text representation of copier contents. Any binary-to-character conversions (if
 	 * any) are performed using utf-8 encoding.
 	 *
