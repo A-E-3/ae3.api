@@ -3,56 +3,36 @@ package ru.myx.ae3.vfs.ars;
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.know.Guid;
 
-/**
- * @author myx
- * 
- */
+/** @author myx */
 public interface ArsRecord {
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	long getBinaryContentLength();
-	
-	/**
-	 * required to return non-NULL values only for records created as result of
-	 * createKeyForString method.
-	 * 
-	 * @return
-	 */
+
+	/** required to return non-NULL values only for records created as result of createKeyForString
+	 * method.
+	 *
+	 * @return */
 	String getKeyString();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	BaseObject getPrimitiveBaseValue();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	Guid getPrimitiveGuid();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	Object getPrimitiveValue();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	boolean isBinary();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	boolean isCharacter();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	boolean isContainer();
-	
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	boolean isPrimitive();
 }

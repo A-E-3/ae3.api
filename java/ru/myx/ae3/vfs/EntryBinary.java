@@ -10,34 +10,37 @@ import ru.myx.ae3.reflect.ReflectionManual;
 /** @author myx */
 @ReflectionManual
 public interface EntryBinary extends Entry {
-	
+
 	/**
 	 *
 	 */
 	@ReflectionExplicit
 	static BaseObject PROTOTYPE = Reflect.classToBasePrototype(EntryBinary.class);
-	
+
 	/** @return */
 	@ReflectionExplicit
 	TransferCopier getBinary();
-	
+
 	/** @return */
 	@Override
 	Value<? extends TransferCopier> getBinaryContent();
-	
+
 	/** @return */
 	@ReflectionExplicit
-	long getBinaryContentLength();
-	
+	default long getBinaryContentLength() {
+		
+		return this.getBinary().length();
+	}
+
 	@Override
 	default boolean isBinary() {
-		
+
 		return true;
 	}
-	
+
 	@Override
 	default EntryBinary toBinary() {
-		
+
 		return this;
 	}
 }
