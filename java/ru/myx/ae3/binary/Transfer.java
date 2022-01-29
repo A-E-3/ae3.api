@@ -16,13 +16,13 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.security.DigestException;
 import java.security.MessageDigest;
 import java.util.ConcurrentModificationException;
 
 import ru.myx.ae3.AbstractSAPI;
-import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.BaseMessage;
 import ru.myx.ae3.common.BodyAccessBinary;
 import ru.myx.ae3.common.BodyAccessCharacter;
@@ -537,7 +537,7 @@ public final class Transfer extends AbstractSAPI {
 		if (string == null || string.length() == 0) {
 			return TransferBuffer.NUL_BUFFER;
 		}
-		return Transfer.wrapBuffer(string.toString().getBytes(Engine.CHARSET_UTF8));
+		return Transfer.wrapBuffer(string.toString().getBytes(StandardCharsets.UTF_8));
 	}
 	
 	/** Creates buffer representing given string using UTF-8 charset encoding.
@@ -551,7 +551,7 @@ public final class Transfer extends AbstractSAPI {
 		if (string == null || string.isEmpty()) {
 			return TransferBuffer.NUL_BUFFER;
 		}
-		return Transfer.wrapBuffer(string.getBytes(Engine.CHARSET_UTF8));
+		return Transfer.wrapBuffer(string.getBytes(StandardCharsets.UTF_8));
 	}
 	
 	/** Creates new collector.
@@ -788,7 +788,7 @@ public final class Transfer extends AbstractSAPI {
 		if (string == null || string.length() == 0) {
 			return TransferCopier.NUL_COPIER;
 		}
-		return Transfer.wrapCopier(string.toString().getBytes(Engine.CHARSET_UTF8));
+		return Transfer.wrapCopier(string.toString().getBytes(StandardCharsets.UTF_8));
 	}
 	
 	/** Creates copier representing given string using UTF-8 charset encoding.
@@ -802,7 +802,7 @@ public final class Transfer extends AbstractSAPI {
 		if (string == null || string.isEmpty()) {
 			return TransferCopier.NUL_COPIER;
 		}
-		return Transfer.wrapCopier(string.getBytes(Engine.CHARSET_UTF8));
+		return Transfer.wrapCopier(string.getBytes(StandardCharsets.UTF_8));
 	}
 	
 	/** Creates writable transfer description.
@@ -1356,7 +1356,7 @@ public final class Transfer extends AbstractSAPI {
 			dstBytes[dstOffset + 0] = 0;
 			return 1;
 		}
-		final byte[] bytes = string.toString().getBytes(Engine.CHARSET_UTF8);
+		final byte[] bytes = string.toString().getBytes(StandardCharsets.UTF_8);
 		System.arraycopy(bytes, 0, dstBytes, dstOffset, bytes.length);
 		dstBytes[dstOffset + bytes.length] = 0;
 		return bytes.length + 1;

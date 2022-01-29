@@ -3,7 +3,8 @@
  */
 package ru.myx.ae3.reflect;
 
-import ru.myx.ae3.Engine;
+import java.nio.charset.StandardCharsets;
+
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.base.BasePrimitiveString;
@@ -30,7 +31,7 @@ final class ControlTypeExactString implements ControlType<String, BasePrimitiveS
 			return new String((char[]) any);
 		}
 		if (cls == byte[].class) {
-			return new String((byte[]) any, Engine.CHARSET_UTF8);
+			return new String((byte[]) any, StandardCharsets.UTF_8);
 		}
 		final String tmp = any.toString();
 		return tmp == null

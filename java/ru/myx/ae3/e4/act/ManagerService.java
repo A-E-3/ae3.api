@@ -1,28 +1,18 @@
 package ru.myx.ae3.e4.act;
 
-/**
- * FIXME: TODO:
- * 
+/** FIXME: TODO:
+ *
  * @author myx
- * 
- * @param <T>
- */
+ *
+ * @param <T> */
 public interface ManagerService<T extends Task<?>> {
-	/**
-	 * 
-	 * @return
-	 */
+
+	/** @return */
 	Manager<T> getManager();
-	
-	/**
-	 * @throws Exception
-	 * 
-	 */
+
+	/** @throws Exception */
 	void start() throws Exception;
-	
-	/**
-	 * @throws Exception
-	 * 
-	 */
+
+	/** @throws Exception */
 	void stop() throws Exception;
 }

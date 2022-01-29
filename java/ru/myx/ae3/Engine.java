@@ -26,198 +26,160 @@ import java.util.TimeZone;
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseObject;
 
-/**
- *
- * @author myx
- */
+/** @author myx */
 public final class Engine extends AbstractSAPI {
-	
-	/**
-	 *
-	 */
+
+	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.US_ASCII */
+	@Deprecated
 	public static final Charset CHARSET_ASCII = StandardCharsets.US_ASCII;
-	
-	/**
-	 *
-	 */
+
+	/** ATTN: JUST USE: java.nio.charset.Charset.defaultCharset() */
+	@Deprecated
 	public static final Charset CHARSET_DEFAULT = Charset.defaultCharset();
-	
-	/**
-	 *
-	 */
+
+	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.ISO_8859_1 */
+	@Deprecated
 	public static final Charset CHARSET_ISO_8859_1 = StandardCharsets.ISO_8859_1;
-	
-	/**
-	 *
-	 */
+
+	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.UTF_16 */
+	@Deprecated
 	public static final Charset CHARSET_UTF16 = StandardCharsets.UTF_16;
-	
-	/**
-	 *
-	 */
+
+	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.UTF_8 */
+	@Deprecated
 	public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
-	
-	/**
-	 * Uses low-resolution polled time, suitable to measure long periods, like
-	 * 20 second timeouts 8-)
+
+	/** Uses low-resolution polled time, suitable to measure long periods, like 20 second timeouts
+	 * 8-)
 	 *
-	 * A Date object whose getTime() method returns current time. setTime()
-	 * calls just ignored.
-	 */
+	 * A Date object whose getTime() method returns current time. setTime() calls just ignored. */
 	public static final Date CURRENT_TIME;
-	
+
 	private static final MessageDigest DIGEST;
-	
-	/**
-	 * this is internalized canonical name for US-ASCII character set
-	 */
+
+	/** this is internalized canonical name for US-ASCII character set */
 	public static final String ENCODING_ASCII = StandardCharsets.US_ASCII.name();
 
-	/**
-	 *
-	 */
+	/** ATTN: use `Charset.defaultCharset().name()` wherever possible */
 	public static final String ENCODING_DEFAULT = Charset.defaultCharset().name();
 
-	/**
-	 * this is internalized canonical name for ISO-8859-1 character set
-	 */
+	/** ATTN: use `StandardCharsets.ISO_8859_1.name()` wherever possible
+	 *
+	 * this is internalized canonical name for ISO-8859-1 character set */
 	public static final String ENCODING_ISO_8859_1 = StandardCharsets.ISO_8859_1.name();
 
-	/**
-	 * this is internalized canonical name for UTF-16 character set
-	 */
+	/** ATTN: use `StandardCharsets.UTF_16.name()` wherever possible
+	 *
+	 * this is internalized canonical name for UTF-16 character set */
 	public static final String ENCODING_UTF16 = StandardCharsets.UTF_16.name();
-	
-	/**
-	 * this is internalized canonical name for UTF-8 character set
-	 */
+
+	/** ATTN: use `StandardCharsets.UTF_8.name()` wherever possible
+	 *
+	 * this is internalized canonical name for UTF-8 character set */
 	public static final String ENCODING_UTF8 = StandardCharsets.UTF_8.name();
-	
-	/**
-	 * "devel".equals(GROUP_NAME);
-	 */
+
+	/** "devel".equals(GROUP_NAME); */
 	public static final boolean GROUP_DEVEL;
-	
-	/**
-	 * "live".equals(GROUP_NAME);
-	 */
+
+	/** "live".equals(GROUP_NAME); */
 	public static final boolean GROUP_LIVE;
-	
-	/**
-	 * Group type name, i.e. live
-	 */
+
+	/** Group type name, i.e. live */
 	public static final String GROUP_NAME;
-	
-	/**
-	 * "test".equals(GROUP_NAME);
-	 */
+
+	/** "test".equals(GROUP_NAME); */
 	public static final boolean GROUP_TEST;
-	
+
 	static final AbstractEngineImpl.GuidFactory GUID_GENERATOR;
-	
-	/**
-	 * toString method will always return new GUID
-	 */
+
+	/** toString method will always return new GUID */
 	public static final Object GUID_PRODUCER;
-	
-	/**
-	 * as opposed to speed - compactness explicitly wanted here
-	 */
+
+	/** as opposed to speed - compactness explicitly wanted here */
 	public static final boolean MODE_SIZE;
-	
-	/**
-	 * as opposed to speed - speed even when leads to bloat explicitly wanted
-	 * here
-	 */
+
+	/** as opposed to speed - speed even when leads to bloat explicitly wanted here */
 	public static final boolean MODE_SPEED;
-	
-	/**
-	 * Instance host name, i.e. live.agava.myx.ru
-	 */
+
+	/** Instance host name, i.e. live.agava.myx.ru */
 	public static final String HOST_NAME;
-	
-	/**
-	 * The minimal number of asynchronous execution units to gain performance.
-	 * This number guaranteed to be the power of 2.<br>
+
+	/** The minimal number of asynchronous execution units to gain performance. This number
+	 * guaranteed to be the power of 2.<br>
 	 * Source: number of available processors <br>
-	 * Allows static access to some parameters whose values are defaults or
-	 * explicitly specified by a user and should be considered if possible.
-	 */
+	 * Allows static access to some parameters whose values are defaults or explicitly specified by
+	 * a user and should be considered if possible. */
 	public static final int PARALLELISM;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_CACHE;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_LOGS;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_PRIVATE;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_PROTECTED;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_PUBLIC;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_SHARED;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_TEMP;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_USER_DIR;
-	
+
 	/**
 	 *
 	 */
 	public static final File PATH_USER_HOME;
-	
+
 	static final AbstractEngineImpl.RandFactory RAND_GENERATOR;
-	
+
 	/**
 	 *
 	 */
 	public static final long STARTED = System.currentTimeMillis();
-	
-	/**
-	 * GMT time zone
-	 */
+
+	/** GMT time zone */
 	public static final TimeZone TIMEZONE_GMT = TimeZone.getTimeZone("GMT");
-	
-	/**
-	 * Version string
-	 */
+
+	/** Version string */
 	public static final int VERSION_NUMBER;
-	
-	/**
-	 * Version string
-	 */
+
+	/** Version string */
 	public static final String VERSION_STRING;
-	
+
 	static {
 		{
-			final PrintStream output = new StdOutput(Engine.STARTED, new FileOutputStream(FileDescriptor.out), true);
+			@SuppressWarnings("resource")
+			final FileOutputStream out = new FileOutputStream(FileDescriptor.out);
+			final PrintStream output = new StdOutput(Engine.STARTED, out, true);
 			System.setOut(output);
 		}
-		
+
 		{
 			final String name = System.getProperty("ru.myx.ae3.properties.groupname", "live").toLowerCase();
 			GROUP_NAME = name;
@@ -225,21 +187,19 @@ public final class Engine extends AbstractSAPI {
 			GROUP_TEST = "test".equals(name);
 			GROUP_DEVEL = "devel".equals(name);
 		}
-		
+
 		{
 			final String mode = System.getProperty("ru.myx.ae3.properties.optimize", "default").toLowerCase();
 			MODE_SIZE = "size".equalsIgnoreCase(mode);
 			MODE_SPEED = "speed".equalsIgnoreCase(mode);
 		}
-		
+
 		{
 			final int CPUs = Runtime.getRuntime().availableProcessors();
-			/**
-			 * Make it power of two (for bitwise masks)
-			 */
+			/** Make it power of two (for bitwise masks) */
 			PARALLELISM = (int) Math.pow(2, Math.floor(Math.log(CPUs) / Math.log(2)));
 		}
-		
+
 		try {
 			DIGEST = (MessageDigest) MessageDigest.getInstance("MD5").clone();
 		} catch (final NoSuchAlgorithmException e) {
@@ -247,9 +207,9 @@ public final class Engine extends AbstractSAPI {
 		} catch (final CloneNotSupportedException e) {
 			throw new RuntimeException("MD5 support for cloning is required!");
 		}
-		
+
 		HOST_NAME = Engine.getHostName();
-		
+
 		try {
 			{
 				PATH_USER_DIR = new File(System.getProperty("user.dir")).getCanonicalFile();
@@ -257,7 +217,7 @@ public final class Engine extends AbstractSAPI {
 			{
 				PATH_USER_HOME = new File(System.getProperty("user.home")).getCanonicalFile();
 			}
-			
+
 			{
 				final String pathDefault = Engine.PATH_USER_DIR.getPath();
 				PATH_PUBLIC = new File(System.getProperty("ru.myx.ae3.properties.path.public", pathDefault)).getCanonicalFile();
@@ -289,28 +249,26 @@ public final class Engine extends AbstractSAPI {
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		Engine.PATH_PROTECTED.mkdirs();
 		Engine.PATH_PRIVATE.mkdirs();
 		Engine.PATH_SHARED.mkdirs();
 		Engine.PATH_CACHE.mkdirs();
 		Engine.PATH_LOGS.mkdirs();
 		Engine.PATH_TEMP.mkdirs();
-		
+
 		System.setProperty("java.io.tmpdir", Engine.PATH_TEMP.getPath());
-		
-		/**
-		 * this block should go last
-		 */
+
+		/** this block should go last */
 		{
 			final AbstractEngineImpl impl = AbstractSAPI.createObject("ru.myx.ae3.ImplementEngine");
 			GUID_GENERATOR = impl.GUID_GENERATOR;
 			GUID_PRODUCER = impl.GUID_GENERATOR.producer();
 			RAND_GENERATOR = impl.RAND_GENERATOR;
 			CURRENT_TIME = impl.TIME_RETRIEVER.date();
-			
+
 			VERSION_NUMBER = 679;
-			
+
 			final String version = impl.getVersion();
 			VERSION_STRING = (version == null
 				? String.valueOf(Engine.VERSION_NUMBER)//
@@ -318,38 +276,31 @@ public final class Engine extends AbstractSAPI {
 					? version//
 					: String.valueOf(Engine.VERSION_NUMBER) + " (" + version + ')' //
 			).intern();
-			
+
 			impl.start();
 		}
 	}
-	
-	/**
-	 * GUID is a sequence of characters used for a distinct identification of
-	 * any object in a globally accessible, concurrently modifiable space for a
-	 * long term life.
+
+	/** GUID is a sequence of characters used for a distinct identification of any object in a
+	 * globally accessible, concurrently modifiable space for a long term life.
 	 * <p>
 	 *
 	 * General contract is: <br>
-	 * <li>GUID length MUST NOT to be less than 16 characters and more than 32
-	 * characters</li>
-	 * <li>Every character in GUID sequence is either a digit, small english
-	 * letter or an underline symbol '_'.</li>
-	 * <li>There SHOULD NOT ever be two guid generations with the same guid as a
-	 * result</li>
+	 * <li>GUID length MUST NOT to be less than 16 characters and more than 32 characters</li>
+	 * <li>Every character in GUID sequence is either a digit, small english letter or an underline
+	 * symbol '_'.</li>
+	 * <li>There SHOULD NOT ever be two guid generations with the same guid as a result</li>
 	 *
-	 * @return newly generated guid
-	 */
+	 * @return newly generated guid */
 	public static final String createGuid() {
-		
+
 		return Engine.GUID_GENERATOR.guid();
 	}
-	
-	/**
-	 * @param file
+
+	/** @param file
 	 * @param environment
 	 * @param folder
-	 * @return
-	 */
+	 * @return */
 	public static final Process createProcess(final String file, final BaseObject environment, final File folder) {
 
 		final ProcessBuilder builder = new ProcessBuilder();
@@ -365,9 +316,7 @@ public final class Engine extends AbstractSAPI {
 		}
 		final List<Exception> exceptions = new ArrayList<>(5);
 		{
-			/**
-			 * Try itself
-			 */
+			/** Try itself */
 			builder.command(file);
 			try {
 				return builder.start();
@@ -376,9 +325,7 @@ public final class Engine extends AbstractSAPI {
 			}
 		}
 		{
-			/**
-			 * Try unix 1 way
-			 */
+			/** Try unix 1 way */
 			builder.command("see", file);
 			try {
 				return builder.start();
@@ -387,9 +334,7 @@ public final class Engine extends AbstractSAPI {
 			}
 		}
 		{
-			/**
-			 * Try unix 1 way
-			 */
+			/** Try unix 1 way */
 			builder.command("xdg-open", file);
 			try {
 				return builder.start();
@@ -398,9 +343,7 @@ public final class Engine extends AbstractSAPI {
 			}
 		}
 		{
-			/**
-			 * Try unix 2 way
-			 */
+			/** Try unix 2 way */
 			builder.command("gnome-open", file);
 			try {
 				return builder.start();
@@ -409,9 +352,7 @@ public final class Engine extends AbstractSAPI {
 			}
 		}
 		{
-			/**
-			 * Try normal mac way
-			 */
+			/** Try normal mac way */
 			builder.command("open", file);
 			try {
 				return builder.start();
@@ -420,9 +361,7 @@ public final class Engine extends AbstractSAPI {
 			}
 		}
 		{
-			/**
-			 * Try windows way
-			 */
+			/** Try windows way */
 			builder.command("cmd", "/c", "start " + file.replace(" ", "\" \""));
 			try {
 				return builder.start();
@@ -431,9 +370,7 @@ public final class Engine extends AbstractSAPI {
 			}
 		}
 		{
-			/**
-			 * Try itself
-			 */
+			/** Try itself */
 			builder.command(file);
 			try {
 				return builder.start();
@@ -444,73 +381,53 @@ public final class Engine extends AbstractSAPI {
 		System.err.println("ERROR, was unable to start process, here are all errors: " + exceptions);
 		return null;
 	}
-	
-	/**
-	 * @return newly generated random number
-	 */
+
+	/** @return newly generated random number */
 	public static final int createRandom() {
-		
-		/**
-		 * current rand generator is not doing proper distribution for 'long'
-		 * type
-		 */
+
+		/** current rand generator is not doing proper distribution for 'long' type */
 		return (int) Engine.RAND_GENERATOR.rand();
 	}
-	
-	/**
-	 * Returns random integer value in a range 0..(max-1)
+
+	/** Returns random integer value in a range 0..(max-1)
 	 *
 	 * @param max
-	 * @return int
-	 */
+	 * @return int */
 	public static final int createRandom(final int max) {
-		
+
 		return (int) ((Engine.RAND_GENERATOR.rand() & 0x7FFFFFFFFFFFFFFFL) % max);
 	}
-	
-	/**
-	 * @return newly generated random number, from 0.0 to 1.0
-	 */
+
+	/** @return newly generated random number, from 0.0 to 1.0 */
 	public static final double createRandomDouble() {
-		
-		/**
-		 * current rand generator is not doing proper distribution for 'long'
-		 * type
-		 */
+
+		/** current rand generator is not doing proper distribution for 'long' type */
 		return new BigDecimal(Engine.createRandomLong())//
 				.abs()//
 				.divide(new BigDecimal(Long.MAX_VALUE), 20, RoundingMode.FLOOR)//
 				.doubleValue();
 	}
-	
-	/**
-	 * @return newly generated random number, whole range of Long.
-	 */
+
+	/** @return newly generated random number, whole range of Long. */
 	public static final long createRandomLong() {
-		
-		/**
-		 * current rand generator is not doing proper distribution for 'long'
-		 * type
-		 */
+
+		/** current rand generator is not doing proper distribution for 'long' type */
 		return (int) Engine.RAND_GENERATOR.rand() ^ Engine.RAND_GENERATOR.rand() << 32;
 	}
-	
-	/**
-	 * Returns current time. It's normal for the value returned by this method
-	 * to be more discreet that real-time system clocks but in any case it
-	 * should change at least once per second. This value is recommended to use
-	 * in some statistics algorithms, cache expiration calculation and any other
-	 * places where millisecond resolution is not significant.
+
+	/** Returns current time. It's normal for the value returned by this method to be more discreet
+	 * that real-time system clocks but in any case it should change at least once per second. This
+	 * value is recommended to use in some statistics algorithms, cache expiration calculation and
+	 * any other places where millisecond resolution is not significant.
 	 *
-	 * @return
-	 */
+	 * @return */
 	public static final long fastTime() {
-		
+
 		return Engine.CURRENT_TIME.getTime();
 	}
-	
+
 	private static final String getHostName() {
-		
+
 		final String parameter = System.getProperty("ru.myx.ae3.properties.hostname", "").trim();
 		if (parameter.length() > 0) {
 			return parameter;
@@ -521,41 +438,35 @@ public final class Engine extends AbstractSAPI {
 			return null;
 		}
 	}
-	
-	/**
-	 *
-	 * @return
-	 */
+
+	/** @return */
 	public static final String getInstanceId() {
-		
+
 		return ManagementFactory.getRuntimeMXBean().getName();
 	}
-	
-	/**
-	 * literally:
-	 *
-	 * System.currentTimeMillis() - Engine.STARTED
-	 *
-	 * @return
-	 */
-	public static final long getUptimeMillis() {
-		
-		return System.currentTimeMillis() - Engine.STARTED;
-	}
-	
-	/**
-	 * @return digest
-	 */
+
+	/** @return digest */
 	public static final MessageDigest getMessageDigestInstance() {
-		
+
 		try {
 			return (MessageDigest) Engine.DIGEST.clone();
 		} catch (final CloneNotSupportedException e) {
 			throw new RuntimeException("Error creating new message digest", e);
 		}
 	}
-	
+
+	/** literally:
+	 *
+	 * System.currentTimeMillis() - Engine.STARTED
+	 *
+	 * @return */
+	public static final long getUptimeMillis() {
+
+		return System.currentTimeMillis() - Engine.STARTED;
+	}
+
 	private Engine() {
+
 		// empty
 	}
 }

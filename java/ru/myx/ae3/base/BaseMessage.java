@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import ru.myx.ae3.Engine;
 import ru.myx.ae3.binary.Transfer;
@@ -347,7 +348,7 @@ public interface BaseMessage extends Event, BodyAccessUnknown, HasAttributes {
 						this.getEventTypeId(),
 						this.getTitle(),
 						BaseObject.createObject(null).putAppend("Content-Type", "text/plain; charset=UTF-8"),
-						Transfer.createBuffer(Format.Throwable.toText(e).getBytes(Engine.CHARSET_UTF8)));
+						Transfer.createBuffer(Format.Throwable.toText(e).getBytes(StandardCharsets.UTF_8)));
 			}
 		}
 		return null;

@@ -6,6 +6,7 @@ package ru.myx.ae3.answer;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.Base;
@@ -501,7 +502,7 @@ public interface ReplyAnswer extends BaseMessage {
 						.useFlags(this.getFlags());
 			} catch (final IOException e) {
 				collector.close();
-				return Reply.binary(this.getEventTypeId(), this.getQuery(), Transfer.createBuffer(Format.Throwable.toText(e).getBytes(Engine.CHARSET_UTF8)))
+				return Reply.binary(this.getEventTypeId(), this.getQuery(), Transfer.createBuffer(Format.Throwable.toText(e).getBytes(StandardCharsets.UTF_8)))
 						.setAttribute("Content-Type", "text/plain; charset=UTF-8")//
 						.useFlags(this.getFlags());
 			}

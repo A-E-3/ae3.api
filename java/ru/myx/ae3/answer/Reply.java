@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.StringTokenizer;
 
@@ -413,7 +414,7 @@ public class Reply extends AbstractSAPI {
 				}
 				try {
 					final Charset tryCharset = Charset.forName(charsetName);
-					if (tryCharset == Engine.CHARSET_UTF8) {
+					if (tryCharset == StandardCharsets.UTF_8) {
 						break clientNonDefaultCharset;
 					}
 					if (charset == null) {

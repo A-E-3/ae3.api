@@ -5,20 +5,16 @@ import java.util.function.Function;
 
 import ru.myx.ae3.e4.run.RunManager;
 
-/**
- * 
- * @author myx
- * 		
- */
+/** @author myx */
 public interface ActManager extends RunManager {
-	
-	<T, R> Future<R> launchTask(Function<T, R> function, T argument);
-	
+
 	@Override
 	default ActTaskBuilder design() {
-		
+
 		return null;
 	}
-	
+
+	<T, R> Future<R> launchTask(Function<T, R> function, T argument);
+
 	<V> ActTaskContext<V> launchTaskBuilder();
 }

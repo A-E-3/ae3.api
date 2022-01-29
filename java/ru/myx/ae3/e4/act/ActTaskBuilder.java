@@ -8,37 +8,79 @@ import java.util.function.Supplier;
 import ru.myx.ae3.e4.run.RunTaskBuilder;
 
 public interface ActTaskBuilder extends RunTaskBuilder {
-	
+
 	static void example() {
-		
+
 		Act4.createProcess("Example Process").design()//
 				.setTaskTitle("Example Task")//
-				.executeSingle(() -> System.out.println("Hello!"))//
+				.executeSingle(new Runnable() {
+					
+					@Override
+					public void run() {
+						
+						System.out.println("Hello!");
+					}
+				})//
 				.launchLater(10, TimeUnit.SECONDS);
-				
+
 		Act4.createProcess("Example Process").design()//
 				.setTaskTitle("Example Task")//
-				.executeSingle("Hello!", (x) -> System.out.println(x))//
+				.executeSingle("Hello!", new Consumer<String>() {
+					
+					@Override
+					public void accept(String x) {
+						
+						System.out.println(x);
+					}
+				})//
 				.launchLater(10, TimeUnit.SECONDS);
-				
+
 		Act4.createProcess("Example Process").design()//
 				.setTaskTitle("Example Task")//
-				.executeSingle(() -> "Hello!", (x) -> System.out.println(x))//
+				.executeSingle(new Supplier<String>() {
+					
+					@Override
+					public String get() {
+						
+						return "Hello!";
+					}
+				}, new Consumer<String>() {
+					
+					@Override
+					public void accept(String x) {
+						
+						System.out.println(x);
+					}
+				})//
 				.launchLater(10, TimeUnit.SECONDS);
-				
+
 		Act4.createProcess("Example Process").design()//
 				.setTaskTitle("Example Task")//
-				.executeSingle((x) -> System.out.println(x), () -> "Hello!")//
+				.executeSingle(new Consumer<String>() {
+					
+					@Override
+					public void accept(String x) {
+						
+						System.out.println(x);
+					}
+				}, new Callable<String>() {
+					
+					@Override
+					public String call() throws Exception {
+						
+						return "Hello!";
+					}
+				})//
 				.launchLater(10, TimeUnit.SECONDS);
-				
+
 	}
-	
-	@Override
-			ActTaskBuilder setTaskTitle(CharSequence title);
-			
-	<V> ActTaskBuilder executeSingle(V Object, Consumer<V> consumer);
-	
-	<V> ActTaskBuilder executeSingle(Supplier<V> producer, Consumer<V> consumer);
-	
+
 	<V> ActTaskBuilder executeSingle(Consumer<V> consumer, Callable<V> callable);
+
+	<V> ActTaskBuilder executeSingle(Supplier<V> producer, Consumer<V> consumer);
+
+	<V> ActTaskBuilder executeSingle(V Object, Consumer<V> consumer);
+
+	@Override
+	ActTaskBuilder setTaskTitle(CharSequence title);
 }

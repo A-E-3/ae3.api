@@ -6,11 +6,11 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.ConcurrentModificationException;
 
-import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.common.Value;
 import ru.myx.ae3.reflect.Reflect;
@@ -186,7 +186,7 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	@ReflectionExplicit
 	default String toStringBase64() {
 		
-		return new String(Base64.getEncoder().withoutPadding().encode(this.nextDirectArray()), Engine.CHARSET_ASCII);
+		return new String(Base64.getEncoder().withoutPadding().encode(this.nextDirectArray()), StandardCharsets.US_ASCII);
 	}
 	
 	/** Returns a text representation of copier contents. Any binary-to-character conversions (if

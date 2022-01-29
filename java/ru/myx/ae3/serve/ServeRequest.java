@@ -5,6 +5,7 @@ package ru.myx.ae3.serve;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 
 import ru.myx.ae3.Engine;
@@ -471,7 +472,7 @@ public interface ServeRequest extends BaseMessage {
 				return Request.binary(
 						this.getEventTypeId(),
 						this.getTitle(),
-						Transfer.createBuffer(Format.Throwable.toText(e).getBytes(Engine.CHARSET_UTF8)),
+						Transfer.createBuffer(Format.Throwable.toText(e).getBytes(StandardCharsets.UTF_8)),
 						BaseObject.createObject(null).putAppend("Content-Type", "text/plain; charset=UTF-8"));
 			}
 		}

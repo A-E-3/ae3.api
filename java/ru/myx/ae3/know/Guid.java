@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.ObjectStreamException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -657,13 +658,13 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 				return inline;
 			}
 			/** TODO: can make a loop buffered write to save on huge byte-array allocation. */
-			final byte[] bytes = value.toString().getBytes(Engine.CHARSET_UTF16);
+			final byte[] bytes = value.toString().getBytes(StandardCharsets.UTF_16);
 			collector.getTarget().absorbArray(bytes, 0, bytes.length);
 			return inline;
 		}
 		final TransferCollector temp = Transfer.createCollector();
 		/** TODO: can make a loop buffered write to save on huge byte-array allocation. */
-		final byte[] bytes = value.toString().getBytes(Engine.CHARSET_UTF16);
+		final byte[] bytes = value.toString().getBytes(StandardCharsets.UTF_16);
 		temp.getTarget().absorbArray(bytes, 0, bytes.length);
 		final TransferCopier binary = temp.toBinary();
 		final long length = binary.length();
@@ -703,13 +704,13 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 				return inline;
 			}
 			/** TODO: can make a loop buffered write to save on huge byte-array allocation. */
-			final byte[] bytes = value.toString().getBytes(Engine.CHARSET_UTF8);
+			final byte[] bytes = value.toString().getBytes(StandardCharsets.UTF_8);
 			collector.getTarget().absorbArray(bytes, 0, bytes.length);
 			return inline;
 		}
 		final TransferCollector temp = Transfer.createCollector();
 		/** TODO: can make a loop buffered write to save on huge byte-array allocation. */
-		final byte[] bytes = value.toString().getBytes(Engine.CHARSET_UTF8);
+		final byte[] bytes = value.toString().getBytes(StandardCharsets.UTF_8);
 		temp.getTarget().absorbArray(bytes, 0, bytes.length);
 		final TransferCopier binary = temp.toBinary();
 		final long length = binary.length();
