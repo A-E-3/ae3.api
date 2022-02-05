@@ -60,7 +60,7 @@ class BaseArrayNumericStringProperty implements BaseProperty {
 	}
 	
 	@Override
-	public ExecStateCode propertyGetCtxResult(final ExecProcess ctx, final BaseObject instance, final BasePrimitive<?> name, ResultHandler store) {
+	public ExecStateCode propertyGetCtxResult(final ExecProcess ctx, final BaseObject instance, final BasePrimitive<?> name, final ResultHandler store) {
 		
 		final BaseArray array = instance.baseArray();
 		return array == null
