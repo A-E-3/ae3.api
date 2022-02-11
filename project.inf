@@ -1,9 +1,12 @@
 Type: ae3.Package
 Name: ae3.api
 Title: AE3 API Package
-Requires: myx/clean-java.io myx/clean-java.util myx/clean-java.e5
-Provides:	\
+Requires: \
+	myx/clean-java.io \
+	myx/clean-java.util \
+	myx/clean-java.e5 \
+
+Provides: \
 	ae3.api \
 	source-process:compile-java \
 	source-process:ae3-packages \
-
