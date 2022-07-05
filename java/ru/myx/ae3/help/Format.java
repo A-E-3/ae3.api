@@ -455,8 +455,7 @@ public class Format extends AbstractSAPI {
 				return Format.Describe.toEcmaSource(builder, BaseObject.UNDEFINED, prefix, idented, depth, limit);
 			}
 
-			if (o instanceof BaseObject) {
-				final BaseObject b = (BaseObject) o;
+			if (o instanceof final BaseObject b) {
 				if (b.baseIsPrimitive()) {
 					if (b.baseIsPrimitiveString()) {
 						return Format.Text.identNewLines(builder, b.baseToJavaString(), prefix);
