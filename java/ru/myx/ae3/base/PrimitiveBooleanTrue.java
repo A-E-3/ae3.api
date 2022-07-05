@@ -6,107 +6,109 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 /** @author myx */
 @ReflectionDisable
 final class PrimitiveBooleanTrue extends BasePrimitiveBoolean {
-	
+
 	/** @param value */
 	PrimitiveBooleanTrue() {
+		
 		//
 	}
-
+	
 	@Override
 	public BasePrimitiveBoolean baseToBooleanXorTrue() {
-		
+
 		return BaseObject.FALSE;
 	}
-
+	
 	@Override
 	public final BasePrimitiveNumber baseToInt32() {
-		
+
 		return BasePrimitiveNumber.ONE;
 	}
-
+	
 	@Override
 	public final BasePrimitiveNumber baseToInteger() {
-		
+
 		return BasePrimitiveNumber.ONE;
 	}
-
+	
 	@Override
 	@ReflectionHidden
 	public boolean baseToJavaBoolean() {
-		
+
 		return true;
 	}
-
+	
 	@Override
 	@ReflectionHidden
 	public int baseToJavaInteger() {
-		
+
 		return 1;
 	}
-
+	
 	@Override
 	@ReflectionHidden
 	public long baseToJavaLong() {
-		
+
 		return 1L;
 	}
-
+	
 	@Override
 	@ReflectionHidden
 	public String baseToJavaString() {
-		
+
 		return BaseString.STR_TRUE.baseToJavaString();
 	}
-
+	
 	@Override
 	public final BasePrimitiveNumber baseToNumber() {
-		
+
 		return BasePrimitiveNumber.ONE;
 	}
-
+	
 	@Override
 	public final BasePrimitiveString baseToString() {
-		
+
 		return BaseString.STR_TRUE;
 	}
-
+	
 	@Override
 	public final BasePrimitiveString baseToStringIfReady() {
-		
+
 		return BaseString.STR_TRUE;
 	}
-
+	
 	@Override
 	public final Boolean baseValue() {
-		
+
 		return Boolean.TRUE;
 	}
-
+	
 	@Override
 	public final Boolean baseValueXorTrue() {
-		
+
 		return Boolean.FALSE;
 	}
-
+	
 	@Override
 	public final boolean booleanValue() {
-		
+
 		return true;
 	}
-
+	
 	@Override
 	public boolean booleanValueXorTrue() {
-		
+
 		return false;
 	}
-
+	
 	@Override
 	public double doubleValue() {
-		
+
 		return 1.0;
 	}
-
-	/** <pre>
+	
+	/**
+	 * <pre>
 	 * 11.9.1 The Equals Operator ( == )
 	 * The production EqualityExpression : EqualityExpression == RelationalExpression is evaluated as follows:
 	 * 1. Evaluate EqualityExpression.
@@ -174,37 +176,37 @@ final class PrimitiveBooleanTrue extends BasePrimitiveBoolean {
 	 * Type x is this and is an object of any type. */
 	@Override
 	public boolean equals(final Object o) {
-		
-		return o == this || o instanceof Boolean && ((Boolean) o).booleanValue();
-	}
 
+		return o == this || o instanceof final Boolean booleanObject && booleanObject.booleanValue();
+	}
+	
 	@Override
 	public int hashCode() {
-		
+
 		return 1;
 	}
-
+	
 	@Override
 	public int intValue() {
-		
+
 		return 1;
 	}
-
+	
 	@Override
 	public long longValue() {
-		
+
 		return 1L;
 	}
-
+	
 	@Override
 	public String stringValue() {
-		
+
 		return BaseString.STR_TRUE.stringValue();
 	}
-
+	
 	@Override
 	public String toString() {
-		
+
 		return BaseString.STR_TRUE.toString();
 	}
 }

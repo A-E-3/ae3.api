@@ -5,8 +5,6 @@ package ru.myx.ae3.base;
 
 import java.util.Iterator;
 
-
-
 import ru.myx.ae3.common.FutureValue;
 import ru.myx.ae3.e4.vm.VmReflected;
 import ru.myx.ae3.exec.ExecProcess;
@@ -596,9 +594,9 @@ public interface BaseObject extends VmReflected
 		 * </code>
 		 *
 		 * TODO: re-check, clean up */
-		if (o1 instanceof Number && o2 instanceof Number) {
-			return Double.doubleToLongBits(((Number) o1).doubleValue()) //
-			== Double.doubleToLongBits(((Number) o2).doubleValue());
+		if (o1 instanceof final Number o1n && o2 instanceof final Number o2n) {
+			return Double.doubleToLongBits(o1n.doubleValue()) //
+					== Double.doubleToLongBits(o2n.doubleValue());
 		}
 		/** 16. If Type(x) is Number and Type(y) is String, return the result of the comparison x ==
 		 * ToNumber(y). */
@@ -606,7 +604,7 @@ public interface BaseObject extends VmReflected
 			/** for fakes */
 			// return o1 == o2.baseToNumber();
 			return Double.doubleToLongBits(o1.baseToPrimitive(null).doubleValue()) //
-			== Double.doubleToLongBits(o2.baseToPrimitive(null).doubleValue());
+					== Double.doubleToLongBits(o2.baseToPrimitive(null).doubleValue());
 		}
 		/** 17. If Type(x) is String and Type(y) is Number, return the result of the comparison
 		 * ToNumber(x) == y. */
@@ -614,7 +612,7 @@ public interface BaseObject extends VmReflected
 			/** for fakes */
 			// return o1.baseToNumber() == o2;
 			return Double.doubleToLongBits(o1.baseToPrimitive(null).doubleValue()) //
-			== Double.doubleToLongBits(o2.baseToPrimitive(null).doubleValue());
+					== Double.doubleToLongBits(o2.baseToPrimitive(null).doubleValue());
 		}
 		if (!o2.baseIsPrimitive()) {
 			/** 20. If Type(x) is either String or Number and Type(y) is Object, return the result
@@ -727,8 +725,8 @@ public interface BaseObject extends VmReflected
 		{
 			final Object base = o1.baseValue();
 			if (base != o1) {
-				if (base instanceof BaseObject) {
-					return BaseObject.equalsStrict((BaseObject) base, o2);
+				if (base instanceof final BaseObject baseObject) {
+					return BaseObject.equalsStrict(baseObject, o2);
 				} else //
 				if (o1 instanceof FutureValue) {
 					return BaseObject.equalsStrict(Base.forUnknown(base), o2);
@@ -738,8 +736,8 @@ public interface BaseObject extends VmReflected
 		{
 			final Object base = o2.baseValue();
 			if (base != o2) {
-				if (base instanceof BaseObject) {
-					return BaseObject.equalsStrict(o1, (BaseObject) base);
+				if (base instanceof final BaseObject baseObject) {
+					return BaseObject.equalsStrict(o1, baseObject);
 				} else //
 				if (o2 instanceof FutureValue) {
 					return BaseObject.equalsStrict(o1, Base.forUnknown(base));
@@ -943,8 +941,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default boolean baseDefine(final BasePrimitive<?> name, final BaseObject value) {
 
-		return name instanceof BasePrimitiveString
-			? this.baseDefine((BasePrimitiveString) name, value, BaseProperty.ATTRS_MASK_WED)
+		return name instanceof final BasePrimitiveString primitiveString
+			? this.baseDefine(primitiveString, value, BaseProperty.ATTRS_MASK_WED)
 			: this.baseDefine(name.stringValue(), value, BaseProperty.ATTRS_MASK_WED);
 	}
 
@@ -998,8 +996,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default boolean baseDefine(final CharSequence name, final BaseObject value, final short attributes) {
 
-		return name instanceof BasePrimitiveString
-			? this.baseDefine((BasePrimitiveString) name, value, attributes)
+		return name instanceof final BasePrimitiveString primitiveString
+			? this.baseDefine(primitiveString, value, attributes)
 			: this.baseDefine(name.toString(), value, attributes);
 	}
 
@@ -1092,8 +1090,8 @@ public interface BaseObject extends VmReflected
 	default boolean baseDefine(final String name, final CharSequence value) {
 
 		assert value != null : "NULL java object!";
-		return value instanceof BaseObject
-			? this.baseDefine(name, (BaseObject) value, BaseProperty.ATTRS_MASK_WED)
+		return value instanceof final BaseObject baseObject
+			? this.baseDefine(name, baseObject, BaseProperty.ATTRS_MASK_WED)
 			: this.baseDefine(name, value.toString(), BaseProperty.ATTRS_MASK_WED);
 	}
 
@@ -1169,8 +1167,7 @@ public interface BaseObject extends VmReflected
 		return this.baseDefine(name, Base.forString(value), attributes);
 	}
 
-	/** @param source
-	 */
+	/** @param source */
 	@ReflectionHidden
 	default void baseDefineImportAllEnumerable(final BaseObject source) {
 
@@ -1183,8 +1180,7 @@ public interface BaseObject extends VmReflected
 		}
 	}
 
-	/** @param source
-	 */
+	/** @param source */
 	@ReflectionHidden
 	default void baseDefineImportOwnAll(final BaseObject source) {
 
@@ -1197,8 +1193,7 @@ public interface BaseObject extends VmReflected
 		}
 	}
 
-	/** @param source
-	 */
+	/** @param source */
 	@ReflectionHidden
 	default void baseDefineImportOwnEnumerable(final BaseObject source) {
 
@@ -1255,8 +1250,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final BasePrimitive<?> name) {
 
-		return name instanceof BasePrimitiveString
-			? this.baseFindProperty((BasePrimitiveString) name)
+		return name instanceof final BasePrimitiveString primitiveString
+			? this.baseFindProperty(primitiveString)
 			: this.baseFindProperty(name.baseToJavaString());
 	}
 
@@ -1345,8 +1340,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default BaseProperty baseFindProperty(final CharSequence name) {
 
-		return name instanceof BasePrimitiveString
-			? this.baseFindProperty((BasePrimitiveString) name)
+		return name instanceof final BasePrimitiveString primitiveString
+			? this.baseFindProperty(primitiveString)
 			: this.baseFindProperty(name.toString());
 	}
 
@@ -1433,8 +1428,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default BaseObject baseGet(final BaseObject name, final BaseObject defaultValue) {
 
-		if (name instanceof BasePrimitiveString) {
-			return this.baseGet((BasePrimitiveString) name, defaultValue);
+		if (name instanceof final BasePrimitiveString primitiveString) {
+			return this.baseGet(primitiveString, defaultValue);
 		}
 		if (name instanceof CharSequence) {
 			return this.baseGet(name.toString(), defaultValue);
@@ -1461,8 +1456,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default BaseObject baseGet(final BasePrimitive<?> name, final BaseObject defaultValue) {
 
-		if (name instanceof BasePrimitiveString) {
-			return this.baseGet((BasePrimitiveString) name, defaultValue);
+		if (name instanceof final BasePrimitiveString primitiveString) {
+			return this.baseGet(primitiveString, defaultValue);
 		}
 		if (name instanceof CharSequence) {
 			return this.baseGet(name.toString(), defaultValue);
@@ -1507,13 +1502,13 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default BaseObject baseGet(final CharSequence name, final BaseObject defaultValue) {
 
-		if (name instanceof BasePrimitiveString) {
-			return this.baseGet((BasePrimitiveString) name, defaultValue);
+		if (name instanceof final BasePrimitiveString primitiveString) {
+			return this.baseGet(primitiveString, defaultValue);
 		}
 
 		return this.baseGet(
-				name instanceof String
-					? (String) name
+				name instanceof final String nameString
+					? nameString
 					: name.toString(),
 				defaultValue);
 	}
@@ -1565,8 +1560,8 @@ public interface BaseObject extends VmReflected
 	@ReflectionHidden
 	default BaseProperty baseGetOwnProperty(final CharSequence name) {
 
-		return name instanceof BasePrimitiveString
-			? this.baseGetOwnProperty((BasePrimitiveString) name)
+		return name instanceof final BasePrimitiveString primitiveString
+			? this.baseGetOwnProperty(primitiveString)
 			: this.baseGetOwnProperty(name.toString());
 	}
 
@@ -2037,8 +2032,8 @@ public interface BaseObject extends VmReflected
 
 		assert value != null : "NULL java object!";
 
-		if (name instanceof BasePrimitiveString) {
-			this.baseDefine((BasePrimitiveString) name, value, BaseProperty.ATTRS_MASK_WED);
+		if (name instanceof final BasePrimitiveString primitiveString) {
+			this.baseDefine(primitiveString, value, BaseProperty.ATTRS_MASK_WED);
 			return store.execReturn(ctx, value);
 		}
 

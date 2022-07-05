@@ -3,64 +3,82 @@ package ru.myx.ae3.base;
 import ru.myx.ae3.reflect.ReflectionDisable;
 import ru.myx.ae3.reflect.ReflectionHidden;
 
-/**
- * @author myx
- *
- */
+/** @author myx */
 @ReflectionDisable
 final class PrimitiveStringOne extends BasePrimitiveString {
 	
-	
 	private final String value;
-
+	
 	PrimitiveStringOne() {
+		
 		this.value = "1".intern();
 	}
-
+	
 	@Override
 	public BasePrimitiveNumber baseToInt32() {
 		
-		
 		return BasePrimitiveNumber.ONE;
 	}
-
+	
 	@Override
 	public BasePrimitiveNumber baseToInteger() {
 		
-		
 		return BasePrimitiveNumber.ONE;
 	}
-
+	
 	@Override
-	public BasePrimitiveNumber baseToNumber() {
+	@ReflectionHidden
+	public boolean baseToJavaBoolean() {
 		
-		
-		return BasePrimitiveNumber.ONE;
+		return true;
 	}
-
+	
 	@Override
-	public final String baseValue() {
-		
-		
-		return this.value;
-	}
-
-	@Override
-	public double doubleValue() {
-		
+	@ReflectionHidden
+	public int baseToJavaInteger() {
 		
 		return 1;
 	}
-
+	
+	@Override
+	@ReflectionHidden
+	public long baseToJavaLong() {
+		
+		return 1L;
+	}
+	
+	@Override
+	@ReflectionHidden
+	public String baseToJavaString() {
+		
+		return this.value;
+	}
+	
+	@Override
+	public BasePrimitiveNumber baseToNumber() {
+		
+		return BasePrimitiveNumber.ONE;
+	}
+	
+	@Override
+	public final String baseValue() {
+		
+		return this.value;
+	}
+	
+	@Override
+	public double doubleValue() {
+		
+		return 1;
+	}
+	
 	@Override
 	public boolean equals(final Object o) {
-		
 		
 		if (o == this || o == this.value) {
 			return true;
 		}
-		if (o instanceof BaseObject) {
-			final BaseObject object = (BaseObject) o;
+		if (o instanceof final BaseObject object) {
 			if (object.baseIsPrimitive()) {
 				if (object.baseIsPrimitiveString()) {
 					return this.value.equals(object.baseToJavaString());
@@ -80,93 +98,53 @@ final class PrimitiveStringOne extends BasePrimitiveString {
 		}
 		return o instanceof CharSequence && this.value.equals(o);
 	}
-
+	
 	@Override
 	public int indexOf(final String search, final int fromIndex) {
 		
-		
 		return this.value.indexOf(search, fromIndex);
 	}
-
+	
 	@Override
 	public int intValue() {
 		
-		
 		return 1;
 	}
-
-	@Override
-	public long longValue() {
-		
-		
-		return 1L;
-	}
-
+	
 	@Override
 	public final boolean isEmpty() {
 		
-		
 		return false;
 	}
-
+	
 	@Override
 	public final int length() {
 		
-		
 		return 1;
 	}
-
+	
 	@Override
-	@ReflectionHidden
-	public int baseToJavaInteger() {
-		
-		
-		return 1;
-	}
-
-	@Override
-	@ReflectionHidden
-	public long baseToJavaLong() {
-		
+	public long longValue() {
 		
 		return 1L;
 	}
-
-	@Override
-	@ReflectionHidden
-	public boolean baseToJavaBoolean() {
-		
-		
-		return true;
-	}
-
-	@Override
-	@ReflectionHidden
-	public String baseToJavaString() {
-		
-		
-		return this.value;
-	}
-
+	
 	@Override
 	public final String stringValue() {
 		
-		
 		return this.value;
 	}
-
+	
 	@Override
 	public final String toString() {
 		
-		
 		return this.value;
 	}
-
+	
 	@Override
 	public final BasePrimitiveString trim() {
 		
-		
 		return this;
 	}
-
+	
 }

@@ -66,17 +66,19 @@ final class PrimitiveStringLengthMethod implements BaseObjectNoOwnProperties, Ba
 	@Override
 	public int callIJ0(final BaseObject instance) {
 
-		return instance instanceof CharSequence
-			? ((CharSequence) instance).length()
+		return instance instanceof final CharSequence charSequence
+			? charSequence.length()
 			: instance.baseToString().length();
 	}
 	
 	@Override
 	public ExecStateCode execCallPrepare(final ExecProcess ctx, final BaseObject instance, final ResultHandler store, final boolean inline) {
 
-		return store.execReturnNumeric(ctx, instance instanceof CharSequence
-			? ((CharSequence) instance).length()
-			: instance.baseToString().length());
+		return store.execReturnNumeric(
+				ctx,
+				instance instanceof final CharSequence charSequence
+					? charSequence.length()
+					: instance.baseToString().length());
 	}
 	
 	@Override
