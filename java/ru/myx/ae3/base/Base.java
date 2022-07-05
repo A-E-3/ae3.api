@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-
 import ru.myx.ae3.AbstractSAPI;
 import ru.myx.ae3.Engine;
 import ru.myx.ae3.exec.Exec;
@@ -60,16 +58,16 @@ public final class Base extends AbstractSAPI {
 	public static final BaseObject[] ZERO_BASE_OBJECT_ARRAY = new BaseObject[0];
 	
 	static {
-
+		
 		assert AbstractSAPI.logDebug("Base: public api, static init...");
-
+		
 		/** this block should go last */
 		{
 			BASE_IMPL = AbstractSAPI.createObject("ru.myx.ae3.base.ImplementBase");
 		}
 		{
 			assert AbstractSAPI.logDebug("Base: public api, static init: start factories...");
-
+			
 			OBJECT_FACTORY = Base.BASE_IMPL.createObjectFactory();
 			OF_CLS_BASE_LIST = Base.OBJECT_FACTORY.getClassForBaseList();
 			OF_CLS_BASE_MAP = Base.OBJECT_FACTORY.getClassForBaseMap();
@@ -99,7 +97,7 @@ public final class Base extends AbstractSAPI {
 					: 4 * 64 * 1024;
 			CACHE_INT_POSITIVE = new BasePrimitiveNumber[size];
 			CACHE_INT_POSITIVE_SIZE = size;
-
+			
 			/** Excluding ONE and ZERO */
 			for (int i = Base.CACHE_INT_POSITIVE_SIZE - 1; i > 1; --i) {
 				Base.CACHE_INT_POSITIVE[i] = new PrimitiveNumberTrueInteger(i);
@@ -111,35 +109,35 @@ public final class Base extends AbstractSAPI {
 		}
 		/** INT_CACHE_NEGATIVE */
 		{
-
+			
 			final int size = (Engine.MODE_SIZE
 				? 2 * 1024
 				: Engine.MODE_SPEED
 					? 32 * 1024
 					: 8 * 1024) - 1;
-
+			
 			CACHE_INT_NEGATIVE = new BasePrimitiveNumber[size];
-
+			
 			/** yes - same number, cause starts with -1 (not 0) */
 			CACHE_INT_NEGATIVE_MIN = (short) -size;
-
+			
 			CACHE_INT_NEGATIVE_MIN_SHORT = (short) -size;
-
+			
 			CACHE_INT_NEGATIVE_SIZE = (short) size;
-
+			
 			/** than 'negatives starting with -1' excluding -1 */
 			for (int i = Base.CACHE_INT_NEGATIVE_SIZE - 1; i > 0; --i) {
 				Base.CACHE_INT_NEGATIVE[i] = new PrimitiveNumberTrueInteger(-i - 1);
 			}
 			/** Here goes MONE */
 			Base.CACHE_INT_NEGATIVE[0] = BasePrimitiveNumber.MONE;
-
+			
 			/** Just to be sure that byte range support is here. */
 			assert Math.round(Base.CACHE_INT_POSITIVE_SIZE) >= Short.MAX_VALUE : "Required for full range positive short support";
 			assert Math.round(Base.CACHE_INT_NEGATIVE_SIZE) >= 255 : "Required for full range byte support";
 			assert Math.round(Base.CACHE_INT_NEGATIVE_MIN) <= -256 : "Required for full range byte support";
 			assert Math.round(Base.CACHE_INT_NEGATIVE_MIN_SHORT) <= -256 : "Required for full range byte support";
-
+			
 			/** fill 1-char length strings */
 			for (int i = Base.CHARS.length - 1; i >= 0; --i) {
 				switch (i) {
@@ -163,7 +161,7 @@ public final class Base extends AbstractSAPI {
 						Base.CHARS[i] = new PrimitiveStringBaseNaN(String.valueOf((char) i).intern());
 				}
 			}
-
+			
 			assert AbstractSAPI.logDebug("Base: public api, static init: prefill double cache...");
 			
 			/** fill constants */
@@ -180,9 +178,9 @@ public final class Base extends AbstractSAPI {
 			Base.initCachePutDouble(BasePrimitiveNumber.PINF);
 			Base.initCachePutDouble(BasePrimitiveNumber.SQRT1_2);
 			Base.initCachePutDouble(BasePrimitiveNumber.SQRT2);
-
+			
 			assert AbstractSAPI.logDebug("Base: public api, static init: prefill string cache...");
-
+			
 			Base.initCachePutString(BaseString.EMPTY);
 			Base.initCachePutString(BaseString.STR_FALSE);
 			Base.initCachePutString(BaseString.STR_INFINITY);
@@ -197,36 +195,36 @@ public final class Base extends AbstractSAPI {
 			Base.initCachePutString(BaseString.STR_UTF8);
 			Base.initCachePutString(BaseString.STR_ONE);
 			Base.initCachePutString(BaseString.STR_ZERO);
-
+			
 			Base.initCachePutString(BaseString.STR_BOOLEAN);
 			Base.initCachePutString(BaseString.STR_FUNCTION);
 			Base.initCachePutString(BaseString.STR_NUMBER);
 			Base.initCachePutString(BaseString.STR_OBJECT);
 			Base.initCachePutString(BaseString.STR_STRING);
-
+			
 			Base.initCachePutString(BaseString.STR_LENGTH);
 			Base.initCachePutString(BaseString.STR_CALLEE);
 			Base.initCachePutString(BaseString.STR_PROTOTYPE);
 			Base.initCachePutString(BaseString.STR_CONSTRUCTOR);
-
+			
 			Base.initCachePutString(BaseString.STR_EX_GETDATA);
 		}
 		{
 			assert BaseString.STR_LENGTH == Base.forString("length") : "Should return the same instance!";
 			assert BaseString.STR_PROTOTYPE == Base.forString("prototype") : "Should return the same instance!";
 		}
-
+		
 		BaseString.class.getName();
-
+		
 		BaseObject.PROTOTYPE.getClass();
-
+		
 		assert AbstractSAPI.logDebug("Base: public api, static init: patch editable...");
 		
 		((BaseEditable) BaseString.PROTOTYPE).setOwnProperty( //
 				BaseString.STR_LENGTH,
 				Base.LENGTH_PROPERTY_STRING,
 				BaseProperty.ATTRS_MASK_NNN);
-
+		
 		assert AbstractSAPI.logDebug("Base: public api, static init: done.");
 	}
 	
@@ -347,7 +345,7 @@ public final class Base extends AbstractSAPI {
 			/** for fakes */
 			// return o1 == o2.baseToNumber();
 			return Double.doubleToLongBits(o1.baseToPrimitive(null).doubleValue()) //
-			== Double.doubleToLongBits(o2.doubleValue());
+					== Double.doubleToLongBits(o2.doubleValue());
 		}
 		if (!o1.baseIsPrimitive()) {
 			/** 21. If Type(x) is Object and Type(y) is either String or Number, return the result
@@ -390,8 +388,7 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param arg
 	 * @return
-	 * @throws Exception
-	 */
+	 * @throws Exception */
 	public static final BaseFunction createFunction(final String... arg) throws Exception {
 		
 		if (arg == null) {
@@ -521,8 +518,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forArray(final BaseObject object) {
 		
@@ -574,8 +570,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param date
-	 */
+	 * @param date */
 	@Deprecated
 	public static final void forDate(final BaseDate date) {
 		
@@ -592,8 +587,8 @@ public final class Base extends AbstractSAPI {
 		if (date == null) {
 			return null;
 		}
-		if (date instanceof BaseDate) {
-			return (BaseDate) date;
+		if (date instanceof final BaseDate baseDate) {
+			return baseDate;
 		}
 		return date.getClass() == Date.class
 			? new BaseDate(date)
@@ -611,8 +606,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forDouble(final byte value) {
 		
@@ -644,8 +638,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forDouble(final int value) {
 		
@@ -654,8 +647,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forDouble(final long value) {
 		
@@ -664,8 +656,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forDouble(final short value) {
 		
@@ -718,8 +709,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** Catch method
 	 *
-	 * @param function
-	 */
+	 * @param function */
 	@Deprecated
 	public static final void forFunction(final BaseFunction function) {
 		
@@ -754,8 +744,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forInteger(final short value) {
 		
@@ -783,8 +772,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forLong(final byte value) {
 		
@@ -793,8 +781,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forLong(final int value) {
 		
@@ -816,8 +803,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param value
-	 */
+	 * @param value */
 	@Deprecated
 	public static final void forLong(final short value) {
 		
@@ -861,8 +847,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forNumber(final Byte object) {
 		
@@ -872,8 +857,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forNumber(final Double object) {
 		
@@ -883,8 +867,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forNumber(final Float object) {
 		
@@ -894,8 +877,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forNumber(final Integer object) {
 		
@@ -905,8 +887,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forNumber(final Long object) {
 		
@@ -923,8 +904,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have String type
 	 * already - user forNumber().
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forNumber(final Short object) {
 		
@@ -944,8 +924,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** Catch method
 	 *
-	 * @param stringValue
-	 */
+	 * @param stringValue */
 	@Deprecated
 	public static void forString(final BasePrimitiveString stringValue) {
 		
@@ -956,8 +935,8 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	public static BasePrimitiveString forString(final CharSequence stringValue) {
 		
-		if (stringValue instanceof BasePrimitiveString) {
-			return (BasePrimitiveString) stringValue;
+		if (stringValue instanceof final BasePrimitiveString primitiveString) {
+			return primitiveString;
 		}
 		if (stringValue != null) {
 			switch (stringValue.length()) {
@@ -1047,8 +1026,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forThrowable(final BaseObject object) {
 		
@@ -1065,8 +1043,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final BaseObject object) {
 		
@@ -1076,8 +1053,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final Boolean object) {
 		
@@ -1087,8 +1063,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final Date object) {
 		
@@ -1098,8 +1073,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final ExecCallable object) {
 		
@@ -1110,8 +1084,7 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * Use getArray
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final List<?> object) {
 		
@@ -1121,8 +1094,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final Number object) {
 		
@@ -1140,8 +1112,7 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * Use forArray
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final Object[] object) {
 		
@@ -1151,8 +1122,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final String object) {
 		
@@ -1162,8 +1132,7 @@ public final class Base extends AbstractSAPI {
 	/** Catch method for catching objects that are known before compilation to have BaseObject type
 	 * already.
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void forUnknown(final Throwable object) {
 		
@@ -1172,8 +1141,7 @@ public final class Base extends AbstractSAPI {
 	
 	/** CATCH METHOD
 	 *
-	 * @param object
-	 */
+	 * @param object */
 	@Deprecated
 	public static final void fromMap(final BaseMap object) {
 		
@@ -1184,17 +1152,18 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	public static final BaseMap fromMap(final BaseObject object) {
 		
-		return object instanceof BaseMap
-			? (BaseMap) object
-			: BaseObject.createObject(object);
+		if (object instanceof final BaseMap baseMap) {
+			return baseMap;
+		}
+		return BaseObject.createObject(object);
 	}
 	
 	/** @param map
 	 * @return */
 	public static final BaseMap fromMap(final Map<String, Object> map) {
 		
-		if (map instanceof BaseMap) {
-			return (BaseMap) map;
+		if (map instanceof final BaseMap baseMap) {
+			return baseMap;
 		}
 		final BaseMap base = BaseObject.createObject();
 		if (map != null) {
@@ -1570,32 +1539,28 @@ public final class Base extends AbstractSAPI {
 	
 	/** @param iterator
 	 * @return */
-	@SuppressWarnings("unchecked")
 	public static final Iterator<BasePrimitive<?>> iteratorPrimitiveSafe(final Iterator<?> iterator) {
 		
 		if (!iterator.hasNext()) {
 			return BaseObject.ITERATOR_EMPTY_PRIMITIVE;
 		}
-		return iterator instanceof IteratorTypeSafePrimitive
-			? (Iterator<BasePrimitive<?>>) iterator
-			: iterator.hasNext()
-				? new IteratorTypeSafePrimitive(iterator)
-				: BaseObject.ITERATOR_EMPTY_PRIMITIVE;
+		if (iterator instanceof final IteratorTypeSafePrimitive iteratorPrimitive) {
+			return iteratorPrimitive;
+		}
+		return new IteratorTypeSafePrimitive(iterator);
 	}
 	
 	/** @param iterator
 	 * @return */
-	@SuppressWarnings("unchecked")
 	public static final Iterator<String> iteratorStringSafe(final Iterator<?> iterator) {
 		
 		if (!iterator.hasNext()) {
 			return BaseObject.ITERATOR_EMPTY;
 		}
-		return iterator instanceof IteratorTypeSafe
-			? (Iterator<String>) iterator
-			: iterator.hasNext()
-				? new IteratorTypeSafe(iterator)
-				: BaseObject.ITERATOR_EMPTY;
+		if (iterator instanceof final IteratorTypeSafe iteratorTypeSafe) {
+			return iteratorTypeSafe;
+		}
+		return new IteratorTypeSafe(iterator);
 	}
 	
 	/** @param primary
@@ -2392,9 +2357,10 @@ public final class Base extends AbstractSAPI {
 	 * @return */
 	public static final boolean put(final BaseObject object, final CharSequence name, final BaseObject value, final short attributes) {
 		
-		return name instanceof BasePrimitiveString
-			? Base.put(object, (BasePrimitiveString) name, value, attributes)
-			: Base.put(object, name.toString(), value, attributes);
+		if (name instanceof final BasePrimitiveString primitiveName) {
+			return Base.put(object, primitiveName, value, attributes);
+		}
+		return Base.put(object, name.toString(), value, attributes);
 	}
 	
 	/** Short cut for 'put(o,name,value.true,true,true)'
@@ -2903,8 +2869,7 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param target
 	 *
-	 * @param source
-	 */
+	 * @param source */
 	public static final void putAll(final BaseObject target, final BaseObject source) {
 		
 		if (source == null || source.baseIsPrimitive()) {
@@ -2939,8 +2904,7 @@ public final class Base extends AbstractSAPI {
 	 *
 	 * @param s
 	 * @return
-	 * @throws ParseException
-	 */
+	 * @throws ParseException */
 	public static final long toDateMillis(final String s) throws ParseException {
 		
 		final String format;
