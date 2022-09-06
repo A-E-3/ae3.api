@@ -1233,8 +1233,7 @@ public class Format extends AbstractSAPI {
 		 * @return */
 		public static final boolean isValidAttributeValue(final CharSequence string) {
 
-			final int length = string.length();
-			for (int i = length - 1; i > 0; --i) {
+			for (int i = string.length() - 1; i > 0; --i) {
 				if (!Format.Xml.isValidAttributeValueChar(string.charAt(i))) {
 					return false;
 				}
@@ -1268,6 +1267,7 @@ public class Format extends AbstractSAPI {
 				case '&' :
 				case ';' :
 				case '\'' :
+				case '/' :
 				case 0xB7 :
 					return true;
 				default :
