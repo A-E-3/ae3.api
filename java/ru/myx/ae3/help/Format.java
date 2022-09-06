@@ -23,24 +23,24 @@ import ru.myx.ae3.report.Report;
  *         myx - barachta Window>Preferences>Java>Templates. To enable and disable the creation of
  *         type comments go to Window>Preferences>Java>Code Generation. */
 public class Format extends AbstractSAPI {
-
+	
 	/** Inexact, Human readable
 	 *
 	 * Compact, short form. No more than one line of text. */
 	public static final class Compact {
-
+		
 		private static final class NumberFormatter {
-
+			
 			private static final int CAPACITY = 32;
-
+			
 			private static volatile int counter = 0;
-
+			
 			private static final NumberFormat[] POOL1 = new NumberFormat[NumberFormatter.CAPACITY];
-
+			
 			private static final NumberFormat[] POOL2 = new NumberFormat[NumberFormatter.CAPACITY];
-
+			
 			private static final NumberFormat[] POOL3 = new NumberFormat[NumberFormatter.CAPACITY];
-
+			
 			static {
 				for (int i = 0; i < NumberFormatter.CAPACITY; ++i) {
 					NumberFormatter.POOL1[i] = NumberFormat.getInstance(Locale.ROOT);
@@ -49,14 +49,14 @@ public class Format extends AbstractSAPI {
 					NumberFormatter.POOL1[i].setMinimumIntegerDigits(1);
 					NumberFormatter.POOL1[i].setGroupingUsed(false);
 					NumberFormatter.POOL1[i].setRoundingMode(RoundingMode.HALF_UP);
-
+					
 					NumberFormatter.POOL2[i] = NumberFormat.getInstance(Locale.ROOT);
 					NumberFormatter.POOL2[i].setMaximumFractionDigits(2);
 					NumberFormatter.POOL2[i].setMinimumFractionDigits(0);
 					NumberFormatter.POOL2[i].setMinimumIntegerDigits(1);
 					NumberFormatter.POOL2[i].setGroupingUsed(false);
 					NumberFormatter.POOL2[i].setRoundingMode(RoundingMode.HALF_UP);
-
+					
 					NumberFormatter.POOL3[i] = NumberFormat.getInstance(Locale.ROOT);
 					NumberFormatter.POOL3[i].setMaximumFractionDigits(3);
 					NumberFormatter.POOL3[i].setMinimumFractionDigits(0);
@@ -65,27 +65,27 @@ public class Format extends AbstractSAPI {
 					NumberFormatter.POOL3[i].setRoundingMode(RoundingMode.HALF_UP);
 				}
 			}
-
+			
 			static String format1(final double d) {
-
+				
 				final int index = NumberFormatter.counter++;
 				final NumberFormat current = NumberFormatter.POOL1[index % NumberFormatter.CAPACITY];
 				synchronized (current) {
 					return current.format(d);
 				}
 			}
-
+			
 			static String format2(final double d) {
-
+				
 				final int index = NumberFormatter.counter++;
 				final NumberFormat current = NumberFormatter.POOL2[index % NumberFormatter.CAPACITY];
 				synchronized (current) {
 					return current.format(d);
 				}
 			}
-
+			
 			static String format3(final double d) {
-
+				
 				final int index = NumberFormatter.counter++;
 				final NumberFormat current = NumberFormatter.POOL3[index % NumberFormatter.CAPACITY];
 				synchronized (current) {
@@ -93,13 +93,13 @@ public class Format extends AbstractSAPI {
 				}
 			}
 		}
-
+		
 		private static final DateFormatterCompact DATE = new DateFormatterCompact();
-
+		
 		/** @param argument
 		 * @return */
 		public static final String baseObject(final BaseObject argument) {
-
+			
 			if (argument == null) {
 				return "null";
 			}
@@ -113,48 +113,48 @@ public class Format extends AbstractSAPI {
 			}
 			return builder.toString();
 		}
-
+		
 		/** @param date
 		 * @return string */
 		public static final String date(final Date date) {
-
+			
 			return Compact.DATE.format(date);
 		}
-
+		
 		/** @param time
 		 * @return string */
 		public static final String date(final long time) {
-
+			
 			return Compact.DATE.format(time);
 		}
-
+		
 		/** @param date
 		 * @return string */
 		public static final String dateRelative(final Date date) {
-
+			
 			return Compact.DATE.formatRelative(date);
 		}
-
+		
 		/** @param time
 		 * @return string */
 		public static final String dateRelative(final long time) {
-
+			
 			return Compact.DATE.formatRelative(time);
 		}
-
+		
 		static final int limitStringCompact() {
-
+			
 			return Report.MODE_ASSERT || Report.MODE_DEBUG
 				? Report.MODE_DEVEL
 					? 128
 					: 64
 				: 32;
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toBytes(final double value) {
-
+			
 			if (value < 1000L) {
 				if (value < 0) {
 					return '-' + Format.Compact.toBytes(-value);
@@ -184,11 +184,11 @@ public class Format extends AbstractSAPI {
 			}
 			return "n/a";
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toBytes(final long value) {
-
+			
 			if (value < 0) {
 				return '-' + Format.Compact.toBytes(-value);
 			}
@@ -206,11 +206,11 @@ public class Format extends AbstractSAPI {
 			}
 			return NumberFormatter.format2(value / Format.DOUBLE_KILO_BYTES) + " k";
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toDecimal(final double value) {
-
+			
 			if (Double.isInfinite(value)) {
 				return value > 0
 					? "+inf"
@@ -266,11 +266,11 @@ public class Format extends AbstractSAPI {
 			}
 			return NumberFormatter.format2(value / Format.DOUBLE_NANO) + "n";
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toDecimal(final long value) {
-
+			
 			if (value < 0) {
 				return '-' + Format.Compact.toDecimal(-value);
 			}
@@ -303,11 +303,11 @@ public class Format extends AbstractSAPI {
 			}
 			return NumberFormatter.format2(value);
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toPeriod(final double value) {
-
+			
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
@@ -335,11 +335,11 @@ public class Format extends AbstractSAPI {
 			}
 			return NumberFormatter.format2(value / Format.DOUBLE_NANOSECOND_PERIOD) + " nanos";
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toPeriod(final long value) {
-
+			
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
@@ -360,21 +360,21 @@ public class Format extends AbstractSAPI {
 			}
 			return NumberFormatter.format2(value) + " ms";
 		}
-
+		
 		private Compact() {
-
+			
 			// empty
 		}
-
+		
 	}
-
+	
 	/** Inexact, Human readable
 	 *
 	 * Text formatting of no more than one paragraph */
 	public static final class Describe extends AbstractSAPI {
-
+		
 		private static final AbstractFormatDescribeImpl IMPL;
-
+		
 		static {
 			/** this block should go last */
 			{
@@ -382,9 +382,9 @@ public class Format extends AbstractSAPI {
 				assert Describe.IMPL != null : "Format.Describe implementation is not accessible!";
 			}
 		}
-
+		
 		static final StringBuilder ident(final StringBuilder builder, final String ident, final int count) {
-
+			
 			if (ident != null) {
 				builder.append(ident);
 			}
@@ -393,9 +393,9 @@ public class Format extends AbstractSAPI {
 			}
 			return builder;
 		}
-
+		
 		static final String limitStringCompact(final String stringValue) {
-
+			
 			final int length = stringValue.length();
 			final int limit = Format.Compact.limitStringCompact();
 			if (length <= limit) {
@@ -403,18 +403,18 @@ public class Format extends AbstractSAPI {
 			}
 			return stringValue.substring(0, limit).replace("\r", "").replace("\n", "\\n").replace("\t", "\\t") + "... +" + (length - limit);
 		}
-
+		
 		static final int limitStringDescribe() {
-
+			
 			return Report.MODE_ASSERT || Report.MODE_DEBUG
 				? Report.MODE_DEVEL
 					? 1024
 					: 512
 				: 256;
 		}
-
+		
 		static final String limitStringDescribe(final String stringValue) {
-
+			
 			final int length = stringValue.length();
 			final int limit = Describe.limitStringDescribe();
 			if (length <= limit) {
@@ -423,12 +423,12 @@ public class Format extends AbstractSAPI {
 			return stringValue.substring(0, limit).replace("\r", "").replace("\n", "\\n").replace("\t", "\\t") + "... and " + (length - limit) + " of " + length
 					+ " characters left...";
 		}
-
+		
 		/** @param o
 		 * @param prefix
 		 * @return */
 		public static final String toDescription(final Object o, final String prefix) {
-
+			
 			return Describe.toDescription(
 					new StringBuilder(), //
 					o,
@@ -437,7 +437,7 @@ public class Format extends AbstractSAPI {
 					0,
 					3).toString();
 		}
-
+		
 		/** @param builder
 		 * @param o
 		 * @param prefix
@@ -446,21 +446,21 @@ public class Format extends AbstractSAPI {
 		 * @param limit
 		 * @return */
 		public static final StringBuilder toDescription(final StringBuilder builder, final Object o, final String prefix, final boolean idented, final int depth, final int limit) {
-
+			
 			if (!idented && prefix != null) {
 				builder.append(prefix);
 			}
-
+			
 			if (o == null) {
 				return Format.Describe.toEcmaSource(builder, BaseObject.UNDEFINED, prefix, idented, depth, limit);
 			}
-
+			
 			if (o instanceof final BaseObject b) {
 				if (b.baseIsPrimitive()) {
 					if (b.baseIsPrimitiveString()) {
 						return Format.Text.identNewLines(builder, b.baseToJavaString(), prefix);
 					}
-
+					
 					return builder.append(b.baseToJavaString());
 				}
 				return Format.Describe.IMPL.toDescription(
@@ -473,10 +473,10 @@ public class Format extends AbstractSAPI {
 						depth,
 						limit);
 			}
-
+			
 			return Format.Text.identNewLines(builder, String.valueOf(o), prefix);
 		}
-
+		
 		/** Macro for:
 		 * <code>ExecValueFormat.toEcmaSource( new StringBuilder(), Base.forUnknown(o), prefix, true, 0, 3 )</code>
 		 *
@@ -484,7 +484,7 @@ public class Format extends AbstractSAPI {
 		 * @param prefix
 		 * @return */
 		public static final String toEcmaSource(final Attributes o, final String prefix) {
-
+			
 			final BaseMap object = BaseObject.createObject((BaseObject) null);
 			for (int i = 0; i < o.getLength(); ++i) {
 				object.baseDefine(o.getLocalName(i), o.getValue(i));
@@ -497,12 +497,12 @@ public class Format extends AbstractSAPI {
 					0,
 					3).toString();
 		}
-
+		
 		/** @param o
 		 * @param prefix
 		 * @return */
 		public static final String toEcmaSource(final BaseObject o, final String prefix) {
-
+			
 			return Describe.toEcmaSource(
 					new StringBuilder(), //
 					o,
@@ -511,7 +511,7 @@ public class Format extends AbstractSAPI {
 					0,
 					3).toString();
 		}
-
+		
 		/** Macro for:
 		 * <code>ExecValueFormat.toEcmaSource( new StringBuilder(), Base.forUnknown(o), prefix, true, 0, 3 )</code>
 		 *
@@ -519,7 +519,7 @@ public class Format extends AbstractSAPI {
 		 * @param prefix
 		 * @return */
 		public static final String toEcmaSource(final Object o, final String prefix) {
-
+			
 			return Format.Describe.toEcmaSource(
 					new StringBuilder(), //
 					Base.forUnknown(o),
@@ -528,7 +528,7 @@ public class Format extends AbstractSAPI {
 					0,
 					3).toString();
 		}
-
+		
 		/** @param builder
 		 * @param o
 		 * @param prefix
@@ -538,7 +538,7 @@ public class Format extends AbstractSAPI {
 		 * @return */
 		public static final StringBuilder
 				toEcmaSource(final StringBuilder builder, final BaseObject o, final String prefix, final boolean idented, final int depth, final int limit) {
-
+			
 			if (o == null) {
 				return Format.Describe.toEcmaSource(builder, BaseObject.UNDEFINED, prefix, idented, depth, limit);
 			}
@@ -548,7 +548,7 @@ public class Format extends AbstractSAPI {
 					if (prefix == null || idented) {
 						return Describe.toEcmaString(builder, o.baseToJavaString(), true);
 					}
-
+					
 					return Describe.toEcmaString(
 							Describe.ident(builder, prefix, 0), //
 							o.baseToJavaString(),
@@ -570,7 +570,7 @@ public class Format extends AbstractSAPI {
 					depth,
 					limit);
 		}
-
+		
 		/** @param builder
 		 * @param o
 		 * @param prefix
@@ -579,20 +579,20 @@ public class Format extends AbstractSAPI {
 		 * @param limit
 		 * @return */
 		public static final StringBuilder toEcmaSource(final StringBuilder builder, final Object o, final String prefix, final boolean idented, final int depth, final int limit) {
-
+			
 			if (o == null) {
 				return Format.Describe.toEcmaSource(builder, BaseObject.UNDEFINED, prefix, idented, depth, limit);
 			}
-
+			
 			return Describe.toEcmaSource(builder, Base.forUnknown(o), prefix, idented, depth, limit);
 		}
-
+		
 		/** @param builder
 		 * @param string
 		 * @param quoted
 		 * @return */
 		public static final StringBuilder toEcmaString(final StringBuilder builder, final String string, final boolean quoted) {
-
+			
 			if (string == null) {
 				return builder.append("null");
 			}
@@ -718,62 +718,62 @@ public class Format extends AbstractSAPI {
 				builder.append(length);
 				builder.append(" characters left...");
 			}
-
+			
 			return builder;
 		}
-
+		
 		private Describe() {
-
+			
 			// empty
 		}
 	}
-
+	
 	/** ECMA-related formatting
 	 *
 	 * ISO 8601 Extended Format */
 	public static final class Ecma {
-
+		
 		private static final DateFormatterEcma DATE = new DateFormatterEcma();
-
+		
 		/** @param date
 		 * @return string */
 		public static final String date(final Date date) {
-
+			
 			return Ecma.DATE.format(date);
 		}
-
+		
 		/** @param time
 		 * @return string */
 		public static final String date(final long time) {
-
+			
 			return Ecma.DATE.format(time);
 		}
-
+		
 		/** Returns -1 on error or parsed ECMA date.
 		 *
 		 * @param string
 		 * @return date */
 		public static final long dateParse(final String string) {
-
+			
 			return Ecma.DATE.parse(string);
 		}
-
+		
 		/** TODO: Move to Format.Ecma.stringLiteral or something like this
 		 *
 		 * @param string
 		 * @return */
 		public static final String string(final CharSequence string) {
-
+			
 			return string == null
 				? "null"
 				: Ecma.string(new StringBuilder(2 + (int) (string.length() * 1.1)), string).toString();
 		}
-
+		
 		/** @param builder
 		 * @param string
 		 * @return */
 		public static final StringBuilder string(final StringBuilder builder, final CharSequence string) {
-
+			
 			if (string == null) {
 				return builder.append("null");
 			}
@@ -885,20 +885,20 @@ public class Format extends AbstractSAPI {
 			builder.append('"');
 			return builder;
 		}
-
+		
 		private Ecma() {
-
+			
 			// empty
 		}
 	}
-
+	
 	/** Exact, Machine/Human readable */
 	public static final class Exact {
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toBytes(double value) {
-
+			
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
@@ -928,11 +928,11 @@ public class Format extends AbstractSAPI {
 			}
 			return result.toString();
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toBytes(long value) {
-
+			
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
@@ -962,11 +962,11 @@ public class Format extends AbstractSAPI {
 			}
 			return result.toString();
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toPeriod(long value) {
-
+			
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
@@ -1001,20 +1001,20 @@ public class Format extends AbstractSAPI {
 			}
 			return result.toString();
 		}
-
+		
 		private Exact() {
-
+			
 			// empty
 		}
 	}
-
+	
 	/** @author myx */
 	public static final class Round {
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toBytes(final long value) {
-
+			
 			if (value < 0) {
 				return '-' + Format.Round.toBytes(-value);
 			}
@@ -1032,11 +1032,11 @@ public class Format extends AbstractSAPI {
 			}
 			return (int) (value / Format.DOUBLE_KILO_BYTES) + " k";
 		}
-
+		
 		/** @param value
 		 * @return string */
 		public static final String toDecimal(final double value) {
-
+			
 			if (Double.isInfinite(value)) {
 				return value > 0
 					? "+inf"
@@ -1078,16 +1078,16 @@ public class Format extends AbstractSAPI {
 			}
 			return (int) (value / Format.DOUBLE_NANO) + "n";
 		}
-
+		
 		private Round() {
-
+			
 			// empty
 		}
 	}
-
+	
 	/** @author myx */
 	public static final class Text {
-
+		
 		/** excluding initial line. ignores '\r'
 		 *
 		 * @param target
@@ -1095,11 +1095,11 @@ public class Format extends AbstractSAPI {
 		 * @param ident
 		 * @return */
 		public static final StringBuilder identNewLines(final StringBuilder target, final CharSequence string, final String ident) {
-
+			
 			if (ident == null || ident.isEmpty()) {
 				return target.append(string);
 			}
-
+			
 			final int length = string.length();
 			for (int i = 0; i < length; ++i) {
 				final char c = string.charAt(i);
@@ -1116,12 +1116,12 @@ public class Format extends AbstractSAPI {
 			return target;
 		}
 	}
-
+	
 	/** @author myx */
 	public static final class Throwable {
-
+		
 		private static final void fill(final StringBuilder target, final java.lang.Throwable t, final int level) {
-
+			
 			Throwable.ident(target, level).append("> ").append(t.getLocalizedMessage()).append("\r\n");
 			Throwable.ident(target, level).append("> ").append(t.getClass().getName()).append("\r\n");
 			final java.lang.Throwable cause = t.getCause();
@@ -1153,19 +1153,19 @@ public class Format extends AbstractSAPI {
 				}
 			}
 		}
-
+		
 		private static final StringBuilder ident(final StringBuilder target, final int ident) {
-
+			
 			for (int i = ident; i > 0; --i) {
 				target.append("    ");
 			}
 			return target;
 		}
-
+		
 		/** @param t
 		 * @return string */
 		public static final String toText(final java.lang.Throwable t) {
-
+			
 			if (t == null) {
 				return "Exception is NULL!";
 			}
@@ -1173,66 +1173,66 @@ public class Format extends AbstractSAPI {
 			Throwable.fill(sb, t, 0);
 			return sb.toString();
 		}
-
+		
 		/** @param info
 		 * @param t
 		 * @return string */
 		public static final String toText(final String info, final java.lang.Throwable t) {
-
+			
 			final StringBuilder sb = new StringBuilder(info).append("\r\n");
 			Throwable.fill(sb, t, 1);
 			return sb.toString();
 		}
-
+		
 		private Throwable() {
-
+			
 			// empty
 		}
 	}
-
+	
 	/** Common web formatting */
 	public static final class Web {
-
+		
 		private static final DateFormatterWeb DATE = new DateFormatterWeb();
-
+		
 		/** @param date
 		 * @return string */
 		public static final String date(final Date date) {
-
+			
 			return Web.DATE.format(date);
 		}
-
+		
 		/** @param time
 		 * @return string */
 		public static final String date(final long time) {
-
+			
 			return Web.DATE.format(time);
 		}
-
+		
 		/** Returns -1 on error or parsed HTTP date.
 		 *
 		 * @param string
 		 * @return date */
 		public static final long dateParse(final String string) {
-
+			
 			return Web.DATE.parse(string);
 		}
-
+		
 		private Web() {
-
+			
 			// empty
 		}
 	}
-
+	
 	/** Common xml formatting */
 	public static final class Xml {
-
+		
 		/** Is this string an exact valid element attribute value.
 		 *
 		 * @param string
 		 * @return */
 		public static final boolean isValidAttributeValue(final CharSequence string) {
-
+			
 			for (int i = string.length() - 1; i > 0; --i) {
 				if (!Format.Xml.isValidAttributeValueChar(string.charAt(i))) {
 					return false;
@@ -1240,7 +1240,7 @@ public class Format extends AbstractSAPI {
 			}
 			return true;
 		}
-
+		
 		/** FIXME: not properly implemented
 		 *
 		 * [67] Reference ::= EntityRef | CharRef
@@ -1255,28 +1255,8 @@ public class Format extends AbstractSAPI {
 		 * @param c
 		 * @return */
 		public static final boolean isValidAttributeValueChar(final char c) {
-
-			switch (c) {
-				case ' ' :
-				case '#' :
-				case '+' :
-				case ':' :
-				case '_' :
-				case '-' :
-				case '.' :
-				case '&' :
-				case ';' :
-				case '\'' :
-				case '/' :
-				case 0xB7 :
-					return true;
-				default :
-					break;
-			}
-			if (c >= 'A' && c <= 'Z' || c >= 'a' && c <= 'z') {
-				return true;
-			}
-			if (c >= '0' && c <= '9') {
+			
+			if (c >= 32 || c <= 127 || c == 0xB7) {
 				return true;
 			}
 			/** same as in first char */
@@ -1325,13 +1305,13 @@ public class Format extends AbstractSAPI {
 			}
 			return false;
 		}
-
+		
 		/** Is this string an exact valid character data (CDATA) block.
 		 *
 		 * @param string
 		 * @return */
 		public static final boolean isValidCharacterData(final CharSequence string) {
-
+			
 			final int length = string.length();
 			for (int i = length - 1; i > 0; --i) {
 				if (!Format.Xml.isValidCharacterDataChar(string.charAt(i))) {
@@ -1340,7 +1320,7 @@ public class Format extends AbstractSAPI {
 			}
 			return true;
 		}
-
+		
 		/** FIXME: exclude ']]>'
 		 *
 		 * [20] CData ::= (Char* - (Char* ']]>' Char*))
@@ -1358,7 +1338,7 @@ public class Format extends AbstractSAPI {
 		 * @param c
 		 * @return */
 		public static final boolean isValidCharacterDataChar(final char c) {
-
+			
 			switch (c) {
 				case 0x09 :
 				case 0x0A :
@@ -1385,14 +1365,14 @@ public class Format extends AbstractSAPI {
 			}
 			return false;
 		}
-
+		
 		/** Is this string an exact valid element name or attribute name. Yes according to XML
 		 * specification there are same rules for both element names and attribute names.
 		 *
 		 * @param string
 		 * @return */
 		public static final boolean isValidName(final CharSequence string) {
-
+			
 			final int length = string.length();
 			if (length == 0) {
 				return false;
@@ -1407,7 +1387,7 @@ public class Format extends AbstractSAPI {
 			}
 			return true;
 		}
-
+		
 		/** NameStartChar ::= ":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] |
 		 * [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |
 		 * [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
@@ -1418,7 +1398,7 @@ public class Format extends AbstractSAPI {
 		 * @param c
 		 * @return */
 		public static final boolean isValidNameBodyChar(final char c) {
-
+			
 			switch (c) {
 				case ':' :
 				case '_' :
@@ -1481,7 +1461,7 @@ public class Format extends AbstractSAPI {
 			}
 			return false;
 		}
-
+		
 		/** NameStartChar ::= ":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] |
 		 * [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] |
 		 * [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
@@ -1489,7 +1469,7 @@ public class Format extends AbstractSAPI {
 		 * @param c
 		 * @return */
 		public static final boolean isValidNameStartChar(final char c) {
-
+			
 			switch (c) {
 				case ':' :
 				case '_' :
@@ -1538,7 +1518,7 @@ public class Format extends AbstractSAPI {
 			}
 			return false;
 		}
-
+		
 		/** Basic reference escaping
 		 *
 		 * @param string
@@ -1546,7 +1526,7 @@ public class Format extends AbstractSAPI {
 		 * @return
 		 * @throws IOException */
 		public static final <T extends Appendable> T xmlAttributeFragmentImpl(final String string, final T target) throws IOException {
-
+			
 			final int length = string.length();
 			for (int i = 0; i < length; ++i) {
 				final char c = string.charAt(i);
@@ -1578,7 +1558,7 @@ public class Format extends AbstractSAPI {
 			}
 			return target;
 		}
-
+		
 		/** Basic reference escaping
 		 *
 		 * Skips if name is illegal or value is undefined.
@@ -1589,7 +1569,7 @@ public class Format extends AbstractSAPI {
 		 * @return
 		 * @throws IOException */
 		public static final <T extends Appendable> T xmlAttributeImpl(final String name, final Object value, final T builder) throws IOException {
-
+			
 			if (value == null || value == BaseObject.UNDEFINED) {
 				return builder;
 			}
@@ -1602,7 +1582,7 @@ public class Format extends AbstractSAPI {
 			Format.Xml.xmlAttributeValueImpl(value, builder);
 			return builder;
 		}
-
+		
 		/** Basic reference escaping and attribute value quotes
 		 *
 		 * @param string
@@ -1610,7 +1590,7 @@ public class Format extends AbstractSAPI {
 		 * @return
 		 * @throws IOException */
 		public static final <T extends Appendable> T xmlAttributeValueImpl(final Object string, final T target) throws IOException {
-
+			
 			if (string == null) {
 				target.append("\"\"");
 				return target;
@@ -1633,7 +1613,7 @@ public class Format extends AbstractSAPI {
 			target.append('"');
 			return target;
 		}
-
+		
 		/** Basic reference escaping
 		 *
 		 * @param o
@@ -1641,7 +1621,7 @@ public class Format extends AbstractSAPI {
 		 * @return
 		 * @throws IOException */
 		public static final <T extends Appendable> T xmlNodeValueImpl(final Object o, final T target) throws IOException {
-
+			
 			if (o == null || o == BaseObject.UNDEFINED) {
 				return target;
 			}
@@ -1681,121 +1661,121 @@ public class Format extends AbstractSAPI {
 			}
 			return target;
 		}
-
+		
 	}
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_KILO_BYTES = 1024L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MEGA_BYTES = 1024L * 1024L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_GIGA_BYTES = 1024L * 1024L * 1024L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_TERA_BYTES = 1024L * 1024L * 1024L * 1024L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MILLI_BYTES = Format.DOUBLE_KILO_BYTES / Format.DOUBLE_MEGA_BYTES;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MICRO_BYTES = Format.DOUBLE_KILO_BYTES / Format.DOUBLE_GIGA_BYTES;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_NANO_BYTES = Format.DOUBLE_KILO_BYTES / Format.DOUBLE_TERA_BYTES;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_KILO = 1000L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MEGA = 1000L * 1000L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_GIGA = 1000L * 1000L * 1000L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_TERA = 1000L * 1000L * 1000L * 1000L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MILLI = 1000L / Format.DOUBLE_MEGA;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MICRO = 1000L / Format.DOUBLE_GIGA;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_NANO = 1000L / Format.DOUBLE_TERA;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_SECOND_PERIOD = 1000L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MINUTE_PERIOD = 1000L * 60L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_HOUR_PERIOD = 1000L * 60L * 60L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_DAY_PERIOD = 1000L * 60L * 60L * 24L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_WEEK_PERIOD = 1000L * 60L * 60L * 24L * 7L;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MILLISECOND_PERIOD = 1.0;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_MICROSECOND_PERIOD = Format.DOUBLE_MILLISECOND_PERIOD / 1000.0;
-
+	
 	/**
 	 *
 	 */
 	public static final double DOUBLE_NANOSECOND_PERIOD = Format.DOUBLE_MICROSECOND_PERIOD / 1000.0;
-
+	
 	private Format() {
-
+		
 		// empty
 	}
 }
