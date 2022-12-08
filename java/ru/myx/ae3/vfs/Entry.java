@@ -526,6 +526,14 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 		return this.relativeFile(path).toPrimitive().getPrimitiveValue();
 	}
 
+	/** @param path
+	 * @return */
+	@ReflectionExplicit
+	default Entry relativeField(final String path) {
+
+		return this.relative(path, TreeLinkType.PUBLIC_FIELD_REFERENCE);
+	}
+
 	/** TODO: add default value and make use of java/async
 	 *
 	 * @param ctx
