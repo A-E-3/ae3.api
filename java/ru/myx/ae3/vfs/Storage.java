@@ -504,9 +504,8 @@ public class Storage extends AbstractSAPI {
 	 * @return */
 	public static final//
 	EntryContainer getRelativeTreeFolder(final Entry root, final Entry focus, final String path) {
-
-		final Entry result = Storage.getRelative(root, focus, path, TreeLinkType.PUBLIC_TREE_REFERENCE);
-		return result.toContainer();
+		
+		return Storage.getRelative(root, focus, path, TreeLinkType.PUBLIC_TREE_REFERENCE).toContainer();
 	}
 
 	/** @param root
@@ -527,8 +526,7 @@ public class Storage extends AbstractSAPI {
 	public static final//
 	EntryContainer getRelativeTreeFolder(final ExecProcess ctx, final String path) {
 
-		final Entry result = Storage.getRelative(ctx, path, TreeLinkType.PUBLIC_TREE_REFERENCE);
-		return result.toContainer();
+		return Storage.getRelative(ctx, path, TreeLinkType.PUBLIC_TREE_REFERENCE).toContainer();
 	}
 
 	/** @param ctx
