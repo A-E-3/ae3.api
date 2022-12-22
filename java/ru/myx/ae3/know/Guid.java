@@ -32,12 +32,13 @@ import ru.myx.ae3.binary.TransferCopier;
 import ru.myx.ae3.binary.TransferTarget;
 import ru.myx.ae3.common.Describable;
 import ru.myx.ae3.common.Value;
+import ru.myx.ae3.ecma.Ecma;
 import ru.myx.ae3.help.Format;
 import ru.myx.ae3.reflect.Reflect;
 
 /** @author myx */
 public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Serializable, Value<Guid>, Describable {
-	
+
 	/** NULL GUID */
 	public static final Guid GUID_NULL;
 
@@ -268,7 +269,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 				final Object javaValue = type.getJavaObject(bytes);
 				final int hashCode = Guid.hashCode(bytes, 0, 1);
 				final Guid guid = new Guid(bytes) {
-					
+
 					/**
 						 *
 						 */
@@ -276,37 +277,37 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 
 					@Override
 					public BaseObject getInlineBaseValue() {
-						
+
 						return baseValue;
 					}
 
 					@Override
 					public Object getInlineValue() {
-						
+
 						return javaValue;
 					}
 
 					@Override
 					public int hashCode() {
-						
+
 						return hashCode;
 					}
 
 					@Override
 					public boolean isInline() {
-						
+
 						return true;
 					}
 
 					@Override
 					public boolean isInvalid() {
-						
+
 						return type == GuidType.INVALID;
 					}
 
 					@Override
 					public boolean isValid() {
-						
+
 						return type != GuidType.INVALID;
 					}
 				};
@@ -404,7 +405,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return guid */
 	public static final Guid createGuid184() {
-		
+
 		final GuidType type = GuidType.GUID184;
 		final byte[] bytes = new byte[type.getLeastSize(0) + 1];
 		Guid.RANDOM.nextBytes(bytes);
@@ -416,7 +417,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return guid */
 	public static final Guid createGuid384() {
-		
+
 		final GuidType type = GuidType.GUID384;
 		final byte[] bytes = new byte[type.getLeastSize(0) + 1];
 		Guid.RANDOM.nextBytes(bytes);
@@ -425,7 +426,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	}
 
 	private static final void fillBytesFromString(final String guidString, final byte[] guidBytes, final int offset, final int limit) {
-		
+
 		int target = offset;
 		int source = 0;
 		int left = limit;
@@ -467,7 +468,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param binary
 	 * @return guid, when non-inline - the binary should be stored externally! */
 	public static final Guid forBinaryChecksum(final byte[] binary) {
-		
+
 		if (binary == null) {
 			return Guid.GUID_NULL;
 		}
@@ -494,7 +495,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param binary
 	 * @return guid, when non-inline - the binary should be stored externally! */
 	public static final Guid forBinaryChecksum(final TransferCopier binary) {
-		
+
 		if (binary == null) {
 			return Guid.GUID_NULL;
 		}
@@ -521,7 +522,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param binary
 	 * @return guid or NULL if binary should be stored externally! */
 	public static final Guid forBinaryInline(final byte[] binary) {
-		
+
 		if (binary == null) {
 			return Guid.GUID_NULL;
 		}
@@ -548,7 +549,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param binary
 	 * @return guid, or NULL if binary should be stored externally! */
 	public static final Guid forBinaryInline(final TransferCopier binary) {
-		
+
 		if (binary == null) {
 			return Guid.GUID_NULL;
 		}
@@ -575,7 +576,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param binary
 	 * @return guid or NULL if binary should be stored externally! */
 	public static final Guid forBinaryText(final byte[] binary) {
-		
+
 		if (binary == null) {
 			return Guid.GUID_NULL;
 		}
@@ -604,7 +605,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param binary
 	 * @return guid or NULL if binary should be stored externally! */
 	public static final Guid forBinaryText(final TransferCopier binary) {
-		
+
 		if (binary == null) {
 			return Guid.GUID_NULL;
 		}
@@ -650,7 +651,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *            it will be filled regardless.
 	 * @return */
 	public static final Guid forBinaryTextUtf16(final CharSequence value, final TransferCollector collector, final boolean nonInlineOnly) {
-		
+
 		final Guid inline = Guid.forString(value);
 		if (inline != null) {
 			assert inline.isInline() : "Guid.forString( value ) supposed to return 'inline' only!";
@@ -696,7 +697,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *            it will be filled regardless.
 	 * @return */
 	public static final Guid forBinaryTextUtf8(final CharSequence value, final TransferCollector collector, final boolean nonInlineOnly) {
-		
+
 		final Guid inline = Guid.forString(value);
 		if (inline != null) {
 			assert inline.isInline() : "Guid.forString( value ) supposed to return 'inline' only!";
@@ -726,7 +727,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @param instance
 	 * @return guid */
 	public static final Guid forInstanceIdentifier(final String identifier, final String instance) {
-		
+
 		if (identifier.length() >= 32) {
 			throw new IllegalArgumentException("Identifier is too long!");
 		}
@@ -744,14 +745,14 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param value
 	 * @return guid */
 	public static final Guid forJavaDate(final Date value) {
-		
+
 		return Guid.forJavaDateMillis(value.getTime());
 	}
 
 	/** @param value
 	 * @return guid */
 	public static final Guid forJavaDateMillis(final long value) {
-		
+
 		if (value == 0) {
 			return Guid.GUID_DATE_ZERO;
 		}
@@ -774,7 +775,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param value
 	 * @return guid */
 	public static final Guid forJavaDouble(final double value) {
-		
+
 		if (Double.isNaN(value)) {
 			return Guid.GUID_NUMBER_NAN;
 		}
@@ -810,7 +811,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param value
 	 * @return guid */
 	public static final Guid forJavaInteger(final int value) {
-		
+
 		if (value == 0) {
 			return Guid.GUID_NUMBER_ZERO;
 		}
@@ -856,7 +857,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param value
 	 * @return guid */
 	public static final Guid forJavaLong(final long value) {
-		
+
 		if (value == 0L) {
 			return Guid.GUID_NUMBER_ZERO;
 		}
@@ -948,7 +949,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** @param value
 	 * @return guid or NULL if string should be stored externally! */
 	public static final Guid forString(final CharSequence value) {
-		
+
 		if (value == null) {
 			return Guid.GUID_NULL;
 		}
@@ -1139,7 +1140,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @param object
 	 * @return guid */
 	public static final Guid forUnknown(final BaseObject object) {
-		
+
 		if (object == null || object == BaseObject.NULL) {
 			return Guid.GUID_NULL;
 		}
@@ -1221,7 +1222,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @param value
 	 * @return guid */
 	public static final Guid forUnknown(final Object value) {
-		
+
 		if (value instanceof CharSequence) {
 			return Guid.forString((CharSequence) value);
 		}
@@ -1265,7 +1266,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final Guid fromBase64(final String guidString) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidString == null || guidString.length() == 0) {
 			return Guid.GUID_NULL;
 		}
@@ -1279,7 +1280,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final Guid fromHex(final String guidString) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidString == null) {
 			return Guid.GUID_NULL;
 		}
@@ -1316,7 +1317,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final Guid fromName(final String guidString) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidString == null || guidString.length() == 0) {
 			return Guid.GUID_NULL;
 		}
@@ -1388,7 +1389,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	}
 
 	private static final int hashCode(final byte[] bytes, final int offset, final int length) {
-		
+
 		int hashCode = 0;
 		for (int i = length - 1; i >= 0; --i) {
 			final int x = bytes[offset + i] & 0xFF;
@@ -1402,7 +1403,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @param guid
 	 * @return */
 	public static final int readCompare(final byte[] guidBytes, final int offset, final Guid guid) {
-		
+
 		if (guidBytes == null) {
 			return guid == Guid.GUID_NULL
 				? 0
@@ -1426,7 +1427,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @param guid
 	 * @return */
 	public static final boolean readEquals(final byte[] guidBytes, final int offset, final Guid guid) {
-		
+
 		if (guidBytes == null) {
 			return guid == Guid.GUID_NULL;
 		}
@@ -1444,7 +1445,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final Guid readGuid(final byte[] guidBytes) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidBytes == null || guidBytes.length == 0) {
 			return Guid.GUID_NULL;
 		}
@@ -1482,7 +1483,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final Guid readGuid(final byte[] guidBytes, final int offset) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidBytes == null || guidBytes.length <= offset + 0) {
 			return Guid.GUID_NULL;
 		}
@@ -1525,7 +1526,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @return guid
 	 * @throws IOException */
 	public static final Guid readGuid(final DataInput input) throws IOException {
-		
+
 		final int firstByte = input.readByte();
 		if (firstByte == 0) {
 			return Guid.GUID_NULL;
@@ -1569,7 +1570,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @return guid
 	 * @throws IOException */
 	public static final Guid readGuid(final InputStream input) throws IOException {
-		
+
 		final int firstByte = input.read();
 		if (firstByte == 0) {
 			return Guid.GUID_NULL;
@@ -1632,7 +1633,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final int readGuidByteCount(final byte[] guidBytes, final int offset) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidBytes == null || guidBytes.length <= offset + 0) {
 			return 0;
 		}
@@ -1654,7 +1655,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final int readGuidHashCode(final byte[] guidBytes, final int offset) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidBytes == null || guidBytes.length <= offset + 0) {
 			// NULL GUID
 			return 0;
@@ -1678,7 +1679,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException */
 	public static final boolean readGuidIsInline(final byte[] guidBytes, final int offset) throws IllegalArgumentException, NullPointerException {
-		
+
 		if (guidBytes == null || guidBytes.length <= offset + 0) {
 			// NULL GUID
 			return true;
@@ -1698,7 +1699,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 *             when any argument equals to null */
 	public static final int writeGuid(final Guid guid, final byte[] output, final int offset) throws IllegalArgumentException {
-		
+
 		if (output == null) {
 			throw new IllegalArgumentException("output == null");
 		}
@@ -1727,7 +1728,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *             when any argument equals to null
 	 * @throws IOException */
 	public static final void writeGuid(final Guid guid, final DataOutput output) throws IllegalArgumentException, IOException {
-		
+
 		if (output == null) {
 			throw new IllegalArgumentException("output == null");
 		}
@@ -1758,7 +1759,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *             when any argument equals to null
 	 * @throws IOException */
 	public static final void writeGuid(final Guid guid, final OutputStream output) throws IllegalArgumentException, IOException {
-		
+
 		if (output == null) {
 			throw new IllegalArgumentException("output == null");
 		}
@@ -1788,7 +1789,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalArgumentException
 	 *             when any argument equals to null */
 	public static final void writeGuid(final Guid guid, final TransferTarget output) throws IllegalArgumentException {
-		
+
 		if (output == null) {
 			throw new IllegalArgumentException("output == null");
 		}
@@ -1818,7 +1819,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @param guid
 	 * @return */
 	public static int writeGuidByteCount(final Guid guid) {
-		
+
 		if (guid == null) {
 			return 0;
 		}
@@ -1839,27 +1840,40 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	@Override
 	public Object baseDescribe() {
 
-		if (this.isPrimitive()) {
+		final GuidType type = this.getType();
+		if (this.isInline() || type.isPrimitive()) {
 			return "Guid(" + Format.Describe.toEcmaSource(this.getInlineBaseValue(), "") + ')';
+		}
+		if (type.isObject()) {
+			if (type.isGuidXXX()) {
+				return "Guid('g64','" + this.toBase64() + "')";
+			}
+			return "Guid('o64','" + this.toBase64() + "')";
+		}
+		if (type.isBinary()) {
+			if (type.isBinaryText()) {
+				return "Guid('t64','" + this.toBase64() + "')";
+			}
+			return "Guid('b64','" + this.toBase64() + "')";
 		}
 		return "Guid('b64','" + this.toBase64() + "')";
 	}
 
 	@Override
 	public BaseObject basePrototype() {
-		
+
 		return Reflect.classToBasePrototype(Guid.class);
 	}
 
 	@Override
 	public Guid baseValue() {
-		
+
 		return this;
 	}
 
 	@Override
 	public int compareTo(final Object o) {
-		
+
 		if (o == this) {
 			return 0;
 		}
@@ -1892,7 +1906,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 
 	@Override
 	public boolean equals(final Object obj) {
-		
+
 		if (obj == this) {
 			return true;
 		}
@@ -1930,7 +1944,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalAccessError
 	 *             only and always when GUID is not in-line GUID */
 	public long getBinaryLength() throws IllegalAccessError {
-		
+
 		return this.getType().getBinaryLength(this.bytes);
 	}
 
@@ -1941,7 +1955,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalAccessError
 	 *             only and always when GUID is not in-line GUID */
 	public BaseObject getInlineBaseValue() throws IllegalAccessError {
-		
+
 		return this.getType().getBaseObject(this.bytes);
 	}
 
@@ -1952,7 +1966,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @throws IllegalAccessError
 	 *             only and always when GUID is not in-line GUID */
 	public Object getInlineValue() throws IllegalAccessError {
-		
+
 		return this.getType().getJavaObject(this.bytes);
 	}
 
@@ -1961,13 +1975,13 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return 0..1 value */
 	public double getPartitioningParameter() {
-		
+
 		return (this.hashCode() - Guid.PARTITIONING_SUBSTRACT) / Guid.PARTITIONING_DIVIDE;
 	}
 
 	/** @return type */
 	public GuidType getType() {
-		
+
 		return this.bytes == null
 			? GuidType.NULL
 			: Guid.GUID_TYPES_FOR_TYPE_BYTE[this.bytes[0] & 0xFF];
@@ -1976,7 +1990,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	/** Hashcode is not cached to make object smaller (objects aligned by 8 byte boundary) */
 	@Override
 	public int hashCode() {
-		
+
 		return Guid.hashCode(this.bytes, 0, this.bytes.length);
 	}
 
@@ -1985,7 +1999,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return */
 	public boolean isBinary() {
-		
+
 		return this.getType().isBinary();
 	}
 
@@ -1994,7 +2008,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return */
 	public boolean isBinaryText() {
-		
+
 		return this.getType().isBinaryText();
 	}
 
@@ -2002,7 +2016,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return */
 	public boolean isCollection() {
-		
+
 		return this.getType().isObject();
 	}
 
@@ -2012,7 +2026,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return */
 	public boolean isExternal() {
-		
+
 		return !this.getType().isInline();
 	}
 
@@ -2020,7 +2034,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isGuid184() {
-		
+
 		return this.getType() == GuidType.GUID184;
 	}
 
@@ -2028,7 +2042,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isGuid384() {
-		
+
 		return this.getType() == GuidType.GUID384;
 	}
 
@@ -2036,7 +2050,8 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isGuidXXX() {
-		
+
+		// return this.getType().isGuidXXX();
 		return this.getType() == GuidType.GUID384 || this.getType() == GuidType.GUID184;
 	}
 
@@ -2045,7 +2060,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isInline() {
-		
+
 		return this.getType().isInline();
 	}
 
@@ -2054,7 +2069,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isInlineNumber() {
-		
+
 		return this.getType().isNumber();
 	}
 
@@ -2064,7 +2079,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isInlineNumberInteger() {
-		
+
 		return this.getType().isNumberInteger();
 	}
 
@@ -2073,7 +2088,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isInlineString() {
-		
+
 		return this.getType().isString();
 	}
 
@@ -2083,7 +2098,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isInvalid() {
-		
+
 		final GuidType type = this.getType();
 		if (type == GuidType.INVALID) {
 			return true;
@@ -2103,7 +2118,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isPrimitive() {
-		
+
 		return this.getType().isPrimitive();
 	}
 
@@ -2113,7 +2128,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return boolean */
 	public boolean isValid() {
-		
+
 		final GuidType type = this.getType();
 		if (type == GuidType.INVALID) {
 			return false;
@@ -2131,7 +2146,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @return
 	 * @throws ObjectStreamException */
 	Object readResolve() {
-		
+
 		final byte[] bytes = this.bytes;
 		if (bytes == null || bytes.length == 0) {
 			return Guid.GUID_NULL;
@@ -2147,7 +2162,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return string */
 	public String toBase64() {
-		
+
 		final byte[] bytes = this.bytes;
 		if (bytes == null || bytes.length == 0) {
 			return "";
@@ -2180,7 +2195,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 
 	/** @return */
 	public byte[] toBytes() {
-		
+
 		return this.bytes.clone();
 	}
 
@@ -2188,7 +2203,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 *
 	 * @return string */
 	public String toHex() {
-		
+
 		final byte[] bytes = this.bytes;
 		if (bytes == null || bytes.length == 0) {
 			return "";
@@ -2206,7 +2221,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 
 	/** @return */
 	public InputStream toInputStream() {
-		
+
 		return new GuidInputStream(this.bytes);
 	}
 
@@ -2215,7 +2230,7 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 * @return string */
 
 	public String toName() {
-		
+
 		final byte[] bytes = this.bytes;
 		if (bytes == null || bytes.length == 0) {
 			return "";
@@ -2265,9 +2280,29 @@ public class Guid implements BaseObjectNoOwnProperties, Comparable<Object>, Seri
 	 */
 	@Override
 	public String toString() {
-		
-		if (this.isPrimitive()) {
-			return "Guid(" + Format.Describe.toEcmaSource(this.getInlineBaseValue(), "") + ')';
+
+		final GuidType type = this.getType();
+		if (this.isInline() || type.isPrimitive()) {
+			return Ecma.toEcmaSourceCompact(
+					new StringBuilder() //
+							.append("Guid("), //
+					this.getInlineBaseValue() //
+			) //
+					.append(')') //
+					.toString() //
+			;
+		}
+		if (type.isObject()) {
+			if (type.isGuidXXX()) {
+				return "Guid('g64','" + this.toBase64() + "')";
+			}
+			return "Guid('o64','" + this.toBase64() + "')";
+		}
+		if (type.isBinary()) {
+			if (type.isBinaryText()) {
+				return "Guid('t64','" + this.toBase64() + "')";
+			}
+			return "Guid('b64','" + this.toBase64() + "')";
 		}
 		return "Guid('b64','" + this.toBase64() + "')";
 	}

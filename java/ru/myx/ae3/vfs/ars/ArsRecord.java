@@ -3,7 +3,9 @@ package ru.myx.ae3.vfs.ars;
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.know.Guid;
 
-/** @author myx */
+/** A unique record, that is user to represent any supported value or a key.
+ *
+ * @author myx */
 public interface ArsRecord {
 
 	/** @return */

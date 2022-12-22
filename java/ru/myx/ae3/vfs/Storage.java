@@ -9,7 +9,7 @@ import ru.myx.ae3.exec.ExecProcess;
 import ru.myx.ae3.vfs.ars.ArsArray;
 import ru.myx.ae3.vfs.ars.ArsRecord;
 import ru.myx.ae3.vfs.ars.ArsReference;
-import ru.myx.ae3.vfs.ars.ArsStorageImpl;
+import ru.myx.ae3.vfs.ars.ArsStorage;
 
 /** @author myx */
 public class Storage extends AbstractSAPI {
@@ -249,7 +249,7 @@ public class Storage extends AbstractSAPI {
 	 * @param impl
 	 * @return */
 	public static final <O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> //
-	EntryContainer createRoot(final ArsStorageImpl<O, R, A> impl) {
+	EntryContainer createRoot(final ArsStorage<O, R, A> impl) {
 
 		return Storage.IMPL.createRoot(impl);
 	}

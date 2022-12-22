@@ -2,44 +2,33 @@ package ru.myx.ae3.vfs.ars;
 
 import ru.myx.ae3.vfs.TreeLinkType;
 
-/**
+/** A named reference from record to a record with a key that is also a record. 8)
+ *
+ * Source [ Key ]-> Target
+ *
  * @author myx
- * 
- * @param <O>
- */
+ *
+ * @param <O> */
 public interface ArsReference<O extends ArsRecord> {
-	/**
-	 * @return
-	 */
+
+	/** @return */
 	O getKey();
 	
-	/**
-	 * @return
-	 */
+	/** @return */
 	String getKeyString();
 	
-	/**
-	 * @return
-	 */
+	/** @return */
 	long getLastModified();
 	
-	/**
-	 * @return
-	 */
+	/** @return */
 	TreeLinkType getLinkageMode();
 	
-	/**
-	 * @return
-	 */
+	/** @return */
 	O getSource();
 	
-	/**
-	 * @return
-	 */
+	/** @return */
 	O getTarget();
 	
-	/**
-	 * @return
-	 */
+	/** @return */
 	boolean isExist();
 }

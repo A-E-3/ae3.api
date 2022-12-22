@@ -7,7 +7,7 @@ import ru.myx.ae3.exec.ExecProcess;
 import ru.myx.ae3.vfs.ars.ArsArray;
 import ru.myx.ae3.vfs.ars.ArsRecord;
 import ru.myx.ae3.vfs.ars.ArsReference;
-import ru.myx.ae3.vfs.ars.ArsStorageImpl;
+import ru.myx.ae3.vfs.ars.ArsStorage;
 
 abstract class AbstractStorageImpl implements VfsStorage {
 	public abstract//
@@ -20,7 +20,7 @@ abstract class AbstractStorageImpl implements VfsStorage {
 	EntryContainer createRamStorageRoot(String name);
 	
 	public abstract <O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> //
-	EntryContainer createRoot(final ArsStorageImpl<O, R, A> impl);
+	EntryContainer createRoot(final ArsStorage<O, R, A> impl);
 	
 	public abstract//
 	TransactionVfs createTransaction(ExecProcess ctx);
