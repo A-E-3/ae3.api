@@ -1,106 +1,70 @@
 package ru.myx.ae3.console;
 
-import ru.myx.ae3.reflect.ReflectionHidden;
-
-/**
- * 
- * @author myx
- * 		
- */
+/** @author myx */
 public interface ConsoleLogger {
-	
-	/**
-	 * 
-	 * @param format
-	 * @param arguments
-	 */
-	@ReflectionHidden
-	default void debug(String format, Object... arguments) {
-		
+
+	/** 'log', 'info', 'warn' and 'error' methods are different from sendXXX and readXXX methods in
+	 * that the are logging methods not input/output methods.
+	 *
+	 * @param message */
+	void debug(String message);
+
+	/** @param format
+	 * @param arguments */
+	default void debug(final String format, final Object... arguments) {
+
 		this.debug(String.format(format, arguments));
 	}
-	
-	/**
-	 * 'log', 'info', 'warn' and 'error' methods are different from sendXXX and
-	 * readXXX methods in that the are logging methods not input/output methods.
-	 * 
-	 * @param message
-	 */
-	void debug(String message);
-	
-	/**
-	 * 
-	 * @param format
-	 * @param arguments
-	 */
-	@ReflectionHidden
-	default void error(String format, Object... arguments) {
-		
+
+	/** 'log', 'info', 'warn' and 'error' methods are different from sendXXX and readXXX methods in
+	 * that the are logging methods not input/output methods.
+	 *
+	 * @param message */
+	void error(String message);
+
+	/** @param format
+	 * @param arguments */
+	default void error(final String format, final Object... arguments) {
+
 		this.error(String.format(format, arguments));
 	}
-	
-	/**
-	 * 'log', 'info', 'warn' and 'error' methods are different from sendXXX and
-	 * readXXX methods in that the are logging methods not input/output methods.
-	 * 
-	 * @param message
-	 */
-	void error(String message);
-	
-	/**
-	 * 
-	 * @param format
-	 * @param arguments
-	 */
-	@ReflectionHidden
-	default void info(String format, Object... arguments) {
-		
+
+	/** 'log', 'info', 'warn' and 'error' methods are different from sendXXX and readXXX methods in
+	 * that the are logging methods not input/output methods.
+	 *
+	 * @param message */
+	void info(String message);
+
+	/** @param format
+	 * @param arguments */
+	default void info(final String format, final Object... arguments) {
+
 		this.info(String.format(format, arguments));
 	}
-	
-	/**
-	 * 'log', 'info', 'warn' and 'error' methods are different from sendXXX and
-	 * readXXX methods in that the are logging methods not input/output methods.
-	 * 
-	 * @param message
-	 */
-	void info(String message);
-	
-	/**
-	 * 
-	 * @param format
-	 * @param arguments
-	 */
-	@ReflectionHidden
-	default void log(String format, Object... arguments) {
-		
+
+	/** 'log', 'info', 'warn' and 'error' methods are different from sendXXX and readXXX methods in
+	 * that the are logging methods not input/output methods.
+	 *
+	 * @param message */
+	void log(String message);
+
+	/** @param format
+	 * @param arguments */
+	default void log(final String format, final Object... arguments) {
+
 		this.log(String.format(format, arguments));
 	}
-	
-	/**
-	 * 'log', 'info', 'warn' and 'error' methods are different from sendXXX and
-	 * readXXX methods in that the are logging methods not input/output methods.
-	 * 
-	 * @param message
-	 */
-	void log(String message);
-	
-	/**
-	 * 
-	 * @param format
-	 * @param arguments
-	 */
-	@ReflectionHidden
-	default void warn(String format, Object... arguments) {
-		
+
+	/** 'log', 'info', 'warn' and 'error' methods are different from sendXXX and readXXX methods in
+	 * that the are logging methods not input/output methods.
+	 *
+	 * @param message */
+	void warn(String message);
+
+	/** @param format
+	 * @param arguments */
+	default void warn(final String format, final Object... arguments) {
+
 		this.warn(String.format(format, arguments));
 	}
-	
-	/**
-	 * 'log', 'info', 'warn' and 'error' methods are different from sendXXX and
-	 * readXXX methods in that the are logging methods not input/output methods.
-	 * 
-	 * @param message
-	 */
-	void warn(String message);
 }
