@@ -131,7 +131,8 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	/** moves/renames given entry.
 	 *
 	 * @param newEntry
-	 *
+	 *            target entry (not a container of...)
+	 * 			
 	 * @return succeeds only if both entries are located in the same storage. */
 	@ReflectionExplicit
 	Value<Boolean> doMoveRename(Entry newEntry);
@@ -143,7 +144,8 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	 * </pre>
 	 *
 	 * @param newKey
-	 *
+	 *            new name, withing tje same container
+	 *			
 	 * @return */
 	@ReflectionExplicit
 	Value<Boolean> doRename(String newKey);
@@ -445,6 +447,14 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	/** @param path
 	 * @return */
 	@ReflectionExplicit
+	default Entry relativeField(final String path) {
+
+		return this.relative(path, TreeLinkType.PUBLIC_FIELD_REFERENCE);
+	}
+
+	/** @param path
+	 * @return */
+	@ReflectionExplicit
 	default Entry relativeFile(final String path) {
 
 		return this.relative(path, TreeLinkType.PUBLIC_TREE_REFERENCE);
@@ -524,14 +534,6 @@ public interface Entry extends EntryChange /* FIXME: temporarily, decouple later
 	default Object relativePrimitive(final String path) {
 
 		return this.relativeFile(path).toPrimitive().getPrimitiveValue();
-	}
-
-	/** @param path
-	 * @return */
-	@ReflectionExplicit
-	default Entry relativeField(final String path) {
-
-		return this.relative(path, TreeLinkType.PUBLIC_FIELD_REFERENCE);
 	}
 
 	/** TODO: add default value and make use of java/async

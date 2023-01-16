@@ -29,6 +29,7 @@ import ru.myx.ae3.base.ToPrimitiveHint;
 import ru.myx.ae3.console.Console;
 import ru.myx.ae3.e5.exec.ExecStackContext;
 import ru.myx.ae3.exec.dynamic.ExecLexicalScope;
+import ru.myx.ae3.reflect.ReflectionDisable;
 import ru.myx.ae3.reflect.ReflectionHidden;
 import ru.myx.ae3.vfs.Entry;
 import ru.myx.ae3.vfs.EntryVfsRoot;
@@ -46,6 +47,7 @@ import ru.myx.util.IteratorSingle;
  *
  *
  * @author myx */
+@ReflectionDisable
 public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/* , ExecArguments */, BaseArray {
 	
 	private static final boolean DBG_TMP_NODIRECT = true;
