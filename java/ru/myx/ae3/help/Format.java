@@ -142,20 +142,11 @@ public class Format extends AbstractSAPI {
 			return Compact.DATE.formatRelative(time);
 		}
 		
-		static final int limitStringCompact() {
-			
-			return Report.MODE_ASSERT || Report.MODE_DEBUG
-				? Report.MODE_DEVEL
-					? 128
-					: 64
-				: 32;
-		}
-		
 		/** @param value
 		 * @return string */
 		public static final String toBytes(final double value) {
 			
-			if (value < 1000L) {
+			if (value < 1_000L) {
 				if (value < 0) {
 					return '-' + Format.Compact.toBytes(-value);
 				}
@@ -170,16 +161,16 @@ public class Format extends AbstractSAPI {
 				}
 				return NumberFormatter.format2(value / Format.DOUBLE_NANO_BYTES) + " n";
 			}
-			if (value >= 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_TERA_BYTES) + " T";
 			}
-			if (value >= 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_GIGA_BYTES) + " G";
 			}
-			if (value >= 1000L * 1000L) {
+			if (value >= 1_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_MEGA_BYTES) + " M";
 			}
-			if (value >= 1000L) {
+			if (value >= 1_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_KILO_BYTES) + " k";
 			}
 			return "n/a";
@@ -192,16 +183,16 @@ public class Format extends AbstractSAPI {
 			if (value < 0) {
 				return '-' + Format.Compact.toBytes(-value);
 			}
-			if (value < 1000L) {
+			if (value < 1_000L) {
 				return String.valueOf(value) + ' ';
 			}
-			if (value >= 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_TERA_BYTES) + " T";
 			}
-			if (value >= 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_GIGA_BYTES) + " G";
 			}
-			if (value >= 1000L * 1000L) {
+			if (value >= 1_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_MEGA_BYTES) + " M";
 			}
 			return NumberFormatter.format2(value / Format.DOUBLE_KILO_BYTES) + " k";
@@ -225,28 +216,28 @@ public class Format extends AbstractSAPI {
 			if (value < Format.DOUBLE_NANO) {
 				return String.valueOf(value);
 			}
-			if (value >= 100L * 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 100_000_000_000_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_TERA) + "T";
 			}
-			if (value >= 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_TERA) + "T";
 			}
-			if (value >= 100L * 1000L * 1000L * 1000L) {
+			if (value >= 100_000_000_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_GIGA) + "G";
 			}
-			if (value >= 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_GIGA) + "G";
 			}
-			if (value >= 100L * 1000L * 1000L) {
+			if (value >= 100_000_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_MEGA) + "M";
 			}
-			if (value >= 1000L * 1000L) {
+			if (value >= 1_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_MEGA) + "M";
 			}
-			if (value >= 100L * 1000L) {
+			if (value >= 100_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_KILO) + "k";
 			}
-			if (value >= 1000L) {
+			if (value >= 1_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_KILO) + "k";
 			}
 			if (value >= 20L) {
@@ -274,28 +265,28 @@ public class Format extends AbstractSAPI {
 			if (value < 0) {
 				return '-' + Format.Compact.toDecimal(-value);
 			}
-			if (value >= 100L * 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 100_000_000_000_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_TERA) + "T";
 			}
-			if (value >= 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_TERA) + "T";
 			}
-			if (value >= 100L * 1000L * 1000L * 1000L) {
+			if (value >= 100_000_000_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_GIGA) + "G";
 			}
-			if (value >= 1000L * 1000L * 1000L) {
+			if (value >= 1_000_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_GIGA) + "G";
 			}
-			if (value >= 100L * 1000L * 1000L) {
+			if (value >= 100_000_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_MEGA) + "M";
 			}
-			if (value >= 1000L * 1000L) {
+			if (value >= 1_000_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_MEGA) + "M";
 			}
-			if (value >= 100L * 1000L) {
+			if (value >= 100_000L) {
 				return NumberFormatter.format1(value / Format.DOUBLE_KILO) + "k";
 			}
-			if (value >= 1000L) {
+			if (value >= 1_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_KILO) + "k";
 			}
 			if (value >= 100L) {
@@ -343,22 +334,31 @@ public class Format extends AbstractSAPI {
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
-			if (value >= 1000L * 60L * 60L * 24L * 7L) {
+			if (value >= 60_000L * 60L * 24L * 7L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_WEEK_PERIOD) + " week(s)";
 			}
-			if (value >= 1000L * 60L * 60L * 24L) {
+			if (value >= 60_000L * 60L * 24L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_DAY_PERIOD) + " day(s)";
 			}
-			if (value >= 1000L * 60L * 60L) {
+			if (value >= 60_000L * 60L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_HOUR_PERIOD) + " hour(s)";
 			}
-			if (value >= 1000L * 60L) {
+			if (value >= 60_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_MINUTE_PERIOD) + " minute(s)";
 			}
-			if (value >= 1000L) {
+			if (value >= 1_000L) {
 				return NumberFormatter.format2(value / Format.DOUBLE_SECOND_PERIOD) + " second(s)";
 			}
 			return NumberFormatter.format2(value) + " ms";
+		}
+		
+		static final int limitStringCompact() {
+			
+			return Report.MODE_ASSERT || Report.MODE_DEBUG
+				? Report.MODE_DEVEL
+					? 128
+					: 64
+				: 32;
 		}
 		
 		private Compact() {
@@ -381,47 +381,6 @@ public class Format extends AbstractSAPI {
 				IMPL = AbstractSAPI.createObject("ru.myx.ae3.help.ImplementFormatDescribe");
 				assert Describe.IMPL != null : "Format.Describe implementation is not accessible!";
 			}
-		}
-		
-		static final StringBuilder ident(final StringBuilder builder, final String ident, final int count) {
-			
-			if (ident != null) {
-				builder.append(ident);
-			}
-			for (int i = count; i > 0; --i) {
-				builder.append("  |  ");
-			}
-			return builder;
-		}
-		
-		static final String limitStringCompact(final String stringValue) {
-			
-			final int length = stringValue.length();
-			final int limit = Format.Compact.limitStringCompact();
-			if (length <= limit) {
-				return stringValue.replace("\r", "").replace("\n", "\\n").replace("\t", "\\t");
-			}
-			return stringValue.substring(0, limit).replace("\r", "").replace("\n", "\\n").replace("\t", "\\t") + "... +" + (length - limit);
-		}
-		
-		static final int limitStringDescribe() {
-			
-			return Report.MODE_ASSERT || Report.MODE_DEBUG
-				? Report.MODE_DEVEL
-					? 1024
-					: 512
-				: 256;
-		}
-		
-		static final String limitStringDescribe(final String stringValue) {
-			
-			final int length = stringValue.length();
-			final int limit = Describe.limitStringDescribe();
-			if (length <= limit) {
-				return stringValue.replace("\r", "").replace("\n", "\\n").replace("\t", "\\t");
-			}
-			return stringValue.substring(0, limit).replace("\r", "").replace("\n", "\\n").replace("\t", "\\t") + "... and " + (length - limit) + " of " + length
-					+ " characters left...";
 		}
 		
 		/** @param o
@@ -722,6 +681,47 @@ public class Format extends AbstractSAPI {
 			return builder;
 		}
 		
+		static final StringBuilder ident(final StringBuilder builder, final String ident, final int count) {
+			
+			if (ident != null) {
+				builder.append(ident);
+			}
+			for (int i = count; i > 0; --i) {
+				builder.append("  |  ");
+			}
+			return builder;
+		}
+		
+		static final String limitStringCompact(final String stringValue) {
+			
+			final int length = stringValue.length();
+			final int limit = Format.Compact.limitStringCompact();
+			if (length <= limit) {
+				return stringValue.replace("\r", "").replace("\n", "\\n").replace("\t", "\\t");
+			}
+			return stringValue.substring(0, limit).replace("\r", "").replace("\n", "\\n").replace("\t", "\\t") + "... +" + (length - limit);
+		}
+		
+		static final int limitStringDescribe() {
+			
+			return Report.MODE_ASSERT || Report.MODE_DEBUG
+				? Report.MODE_DEVEL
+					? 1024
+					: 512
+				: 256;
+		}
+		
+		static final String limitStringDescribe(final String stringValue) {
+			
+			final int length = stringValue.length();
+			final int limit = Describe.limitStringDescribe();
+			if (length <= limit) {
+				return stringValue.replace("\r", "").replace("\n", "\\n").replace("\t", "\\t");
+			}
+			return stringValue.substring(0, limit).replace("\r", "").replace("\n", "\\n").replace("\t", "\\t") + "... and " + (length - limit) + " of " + length
+					+ " characters left...";
+		}
+		
 		private Describe() {
 			
 			// empty
@@ -971,29 +971,29 @@ public class Format extends AbstractSAPI {
 				return String.valueOf(value);
 			}
 			final StringBuilder result = new StringBuilder(64);
-			if (value > 1000L * 60L * 60L * 24L * 7L) {
-				final int ml = (int) (value / (1000L * 60L * 60L * 24L * 7L));
-				value -= 1000L * 60L * 60L * 24L * 7L * ml;
+			if (value > 60_000L * 60L * 24L * 7L) {
+				final int ml = (int) (value / (60_000L * 60L * 24L * 7L));
+				value -= 60_000L * 60L * 24L * 7L * ml;
 				result.append(ml).append('w');
 			}
-			if (value > 1000L * 60L * 60L * 24L) {
-				final int ml = (int) (value / (1000L * 60L * 60L * 24L));
-				value -= 1000L * 60L * 60L * 24L * ml;
+			if (value > 60_000L * 60L * 24L) {
+				final int ml = (int) (value / (60_000L * 60L * 24L));
+				value -= 60_000L * 60L * 24L * ml;
 				result.append(ml).append('d');
 			}
-			if (value > 1000L * 60L * 60L) {
-				final int ml = (int) (value / (1000L * 60L * 60L));
-				value -= 1000L * 60L * 60L * ml;
+			if (value > 60_000L * 60L) {
+				final int ml = (int) (value / (60_000L * 60L));
+				value -= 60_000L * 60L * ml;
 				result.append(ml).append('h');
 			}
-			if (value > 1000L * 60L) {
-				final int ml = (int) (value / (1000L * 60L));
-				value -= 1000L * 60L * ml;
+			if (value > 60_000L) {
+				final int ml = (int) (value / 60_000L);
+				value -= 60_000L * ml;
 				result.append(ml).append('m');
 			}
-			if (value > 1000L) {
-				final int ml = (int) (value / 1000L);
-				value -= 1000L * ml;
+			if (value > 1_000L) {
+				final int ml = (int) (value / 1_000L);
+				value -= 1_000L * ml;
 				result.append(ml).append('s');
 			}
 			if (value > 0) {
@@ -1018,7 +1018,7 @@ public class Format extends AbstractSAPI {
 			if (value < 0) {
 				return '-' + Format.Round.toBytes(-value);
 			}
-			if (value < 1000L) {
+			if (value < 1_000L) {
 				return String.valueOf(value) + ' ';
 			}
 			if (value >= 3 * Format.DOUBLE_TERA_BYTES) {
@@ -1051,16 +1051,16 @@ public class Format extends AbstractSAPI {
 			if (value < Format.DOUBLE_NANO) {
 				return "0";
 			}
-			if (value >= 4 * 1000L * 1000L * 1000L * 1000L) {
+			if (value >= 4 * 1_000_000_000_000L) {
 				return (int) (value / Format.DOUBLE_TERA) + "T";
 			}
-			if (value >= 4 * 1000L * 1000L * 1000L) {
+			if (value >= 4 * 1_000_000_000L) {
 				return (int) (value / Format.DOUBLE_GIGA) + "G";
 			}
-			if (value >= 4 * 1000L * 1000L) {
+			if (value >= 4 * 1_000_000L) {
 				return (int) (value / Format.DOUBLE_MEGA) + "M";
 			}
-			if (value >= 4 * 1000L) {
+			if (value >= 4 * 1_000L) {
 				return (int) (value / Format.DOUBLE_KILO) + "k";
 			}
 			if (value >= 10L) {
@@ -1086,19 +1086,19 @@ public class Format extends AbstractSAPI {
 			if (value <= 0) {
 				return String.valueOf(value);
 			}
-			if (value >= 3 * 1000L * 60L * 60L * 24L * 7L) {
+			if (value >= 3 * 60_000L * 60L * 24L * 7L) {
 				return (int) (value / Format.DOUBLE_WEEK_PERIOD) + " week(s)";
 			}
-			if (value >= 3 * 1000L * 60L * 60L * 24L) {
+			if (value >= 3 * 60_000L * 60L * 24L) {
 				return (int) (value / Format.DOUBLE_DAY_PERIOD) + " day(s)";
 			}
-			if (value >= 3 * 1000L * 60L * 60L) {
+			if (value >= 3 * 60_000L * 60L) {
 				return (int) (value / Format.DOUBLE_HOUR_PERIOD) + " hour(s)";
 			}
-			if (value >= 3 * 1000L * 60L) {
+			if (value >= 3 * 60_000L) {
 				return (int) (value / Format.DOUBLE_MINUTE_PERIOD) + " minute(s)";
 			}
-			if (value >= 3 * 1000L) {
+			if (value >= 3 * 1_000L) {
 				return (int) (value / Format.DOUBLE_SECOND_PERIOD) + " second(s)";
 			}
 			return (int) value + " ms";
@@ -1731,62 +1731,62 @@ public class Format extends AbstractSAPI {
 	/**
 	 *
 	 */
-	public static final double DOUBLE_KILO = 1000L;
+	public static final double DOUBLE_KILO = 1_000L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_MEGA = 1000L * 1000L;
+	public static final double DOUBLE_MEGA = 1_000L * 1_000L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_GIGA = 1000L * 1000L * 1000L;
+	public static final double DOUBLE_GIGA = 1_000L * 1_000L * 1_000L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_TERA = 1000L * 1000L * 1000L * 1000L;
+	public static final double DOUBLE_TERA = 1_000L * 1_000L * 1_000L * 1_000L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_MILLI = 1000L / Format.DOUBLE_MEGA;
+	public static final double DOUBLE_MILLI = 1_000L / Format.DOUBLE_MEGA;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_MICRO = 1000L / Format.DOUBLE_GIGA;
+	public static final double DOUBLE_MICRO = 1_000L / Format.DOUBLE_GIGA;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_NANO = 1000L / Format.DOUBLE_TERA;
+	public static final double DOUBLE_NANO = 1_000L / Format.DOUBLE_TERA;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_SECOND_PERIOD = 1000L;
+	public static final double DOUBLE_SECOND_PERIOD = 1_000L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_MINUTE_PERIOD = 1000L * 60L;
+	public static final double DOUBLE_MINUTE_PERIOD = 60_000L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_HOUR_PERIOD = 1000L * 60L * 60L;
+	public static final double DOUBLE_HOUR_PERIOD = 60_000L * 60L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_DAY_PERIOD = 1000L * 60L * 60L * 24L;
+	public static final double DOUBLE_DAY_PERIOD = 60_000L * 60L * 24L;
 	
 	/**
 	 *
 	 */
-	public static final double DOUBLE_WEEK_PERIOD = 1000L * 60L * 60L * 24L * 7L;
+	public static final double DOUBLE_WEEK_PERIOD = 60_000L * 60L * 24L * 7L;
 	
 	/**
 	 *
