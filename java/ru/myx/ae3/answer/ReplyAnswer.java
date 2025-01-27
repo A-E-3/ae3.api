@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import ru.myx.ae3.Engine;
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseMessage;
 import ru.myx.ae3.base.BaseObject;
@@ -60,10 +59,7 @@ public interface ReplyAnswer extends BaseMessage {
 	 * @param value
 	 * @return reply */
 	@Override
-	default ReplyAnswer addAttribute(final String name, final double value) {
-
-		return this.addAttribute(name, Base.forDouble(value));
-	}
+	ReplyAnswer addAttribute(final String name, final double value);
 
 	/** Returns same or new message with corresponding attribute set.
 	 *
@@ -441,13 +437,14 @@ public interface ReplyAnswer extends BaseMessage {
 	/** Returns a response whose isEmpty(), isBinary() or isFile() method will return <b>true </b>
 	 * and getBinary() or getFile() will return a binary non-null representation of a response. When
 	 * a response is already meets conditions secified this method should return exactly the SAME
-	 * response object. The "Character-Encoding" of "Content-Type" attributes of a current response
-	 * and "Accept-Charset" or "Accept-Type" attributes of current query should be considered when
-	 * possible. "UTF-8" encoding should be used by default.
+	 * response object.
+	 *
+	 * The "Content-Charset" or "Content-Type" attributes of a current response and "Accept-Charset"
+	 * or "Accept-Type" attributes of current query should be considered when possible. "UTF-8"
+	 * encoding should be used by default.
 	 *
 	 * @return reply
-	 * @throws Flow.FlowOperationException
-	 */
+	 * @throws Flow.FlowOperationException */
 	@Override
 	default BinaryReplyAnswer<?> toBinary() throws Flow.FlowOperationException {
 
@@ -513,13 +510,12 @@ public interface ReplyAnswer extends BaseMessage {
 	/** Returns a response whose isEmpty(), isCharacter() or isObject() method will return <b>true
 	 * </b> and getText() or getObject() will return a <b>non-null </b> stringual representation of
 	 * a response. When a response is already meets conditions secified this method should return
-	 * exactly the SAME response object. The "Character-Encoding" attribute of a current response
-	 * and "Accept-Charset" attribute of current query should be considered when possible. "UTF-8"
+	 * exactly the SAME response object. The "Content-Charset" attribute of a current response and
+	 * "Accept-Charset" attribute of current query should be considered when possible. "UTF-8"
 	 * encoding should be used by default.
 	 *
 	 * @return reply
-	 * @throws Flow.FlowOperationException
-	 */
+	 * @throws Flow.FlowOperationException */
 	@Override
 	default CharacterReplyAnswer<?> toCharacter() throws Flow.FlowOperationException {
 
@@ -538,20 +534,21 @@ public interface ReplyAnswer extends BaseMessage {
 				? "application/octet-stream"
 				: Base.getString(ownAttributes, "Content-Type", "application/octet-stream");
 			final String currentEncoding = Base.getString(Flow.mimeAttribute("", "", contentType).getAttributes(), "charset", "").trim();
+			final String UTF8 = "UTF-8";
 			final String encoding = currentEncoding.length() > 0
 				? currentEncoding
 				: ownAttributes == null
-					? Engine.ENCODING_UTF8
+					? UTF8
 					: Base.getString(
 							ownAttributes, //
-							"Character-Encoding",
+							"Content-Charset",
 							this.getQuery() == null
 								? null
 								: this.getQuery().getAttributes(),
 							"Accept-Charset",
-							Engine.ENCODING_UTF8);
-			final String chosenEncoding = encoding.indexOf('*') != -1
-				? Engine.ENCODING_UTF8
+							UTF8);
+			final String chosenEncoding = encoding != UTF8 && encoding.indexOf('*') != -1
+				? UTF8
 				: encoding;
 			final BaseObject attributes = BaseObject.createObject();
 			if (ownAttributes != null) {

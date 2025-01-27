@@ -11,7 +11,6 @@ import java.util.StringTokenizer;
 import java.util.function.Function;
 
 import ru.myx.ae3.AbstractSAPI;
-import ru.myx.ae3.Engine;
 import ru.myx.ae3.act.Act;
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseMap;
@@ -231,7 +230,7 @@ public final class Flow extends AbstractSAPI {
 					contentTypeAttribute != null
 						? contentTypeAttribute.getText() + "; charset=UTF-8"
 						: "text/plain; charset=UTF-8");
-			attributes.baseDefine("Content-Charset", Engine.ENCODING_UTF8);
+			attributes.baseDefine("Content-Charset", "UTF-8");
 			attributes.baseDefine("Content-Length", binary.length());
 			
 			return Flow.FLOW_IMPL.wrapCharacterMessageAsUniversal(characterMessage, attributes, binary);
@@ -288,13 +287,14 @@ public final class Flow extends AbstractSAPI {
 			? ""
 			: Base.getString(originalAttributes, "Content-Type", "application/octet-stream").trim();
 		final String currentEncoding = Base.getString(Flow.mimeAttribute("", "", contentType), "charset", "").trim();
+		final String UTF8 = "UTF-8";
 		final String encoding = currentEncoding.length() > 0
 			? currentEncoding
 			: originalAttributes == null
-				? Engine.ENCODING_UTF8
-				: Base.getString(originalAttributes, "Character-Encoding", Engine.ENCODING_UTF8);
-		final String chosenEncoding = encoding.indexOf('*') != -1
-			? Engine.ENCODING_UTF8
+				? UTF8
+				: Base.getString(originalAttributes, "Content-Charset", UTF8);
+		final String chosenEncoding = encoding != UTF8 && encoding.indexOf('*') != -1
+			? UTF8
 			: encoding;
 		final BaseObject attributes;
 		if (currentEncoding.length() == 0) {
@@ -324,7 +324,7 @@ public final class Flow extends AbstractSAPI {
 		Act.launch(null, new Function<Object, Object>() {
 			
 			@Override
-			public Object apply(Object v) {
+			public Object apply(final Object v) {
 				
 				Flow.transferFully(source, target);
 				return null;

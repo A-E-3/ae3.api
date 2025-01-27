@@ -140,7 +140,7 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	/** Returns a text representation of copier contents. Any binary-to-character conversions (if
 	 * any) are performed using system-default locale and encoding.
 	 *
-	 * returns nextCopy().toString(); */
+	 * returns this.toString(Charset.defaultCharset()); */
 	@Override
 	String toString();
 	
@@ -192,9 +192,12 @@ public interface TransferCopier extends BaseObject, Value<TransferCopier>, Compa
 	/** Returns a text representation of copier contents. Any binary-to-character conversions (if
 	 * any) are performed using utf-8 encoding.
 	 *
-	 * @return nextCopy().toString(Engine.CHARSET_UTF8); */
+	 * @return this.toString(StandardCharsets.UTF_8); */
 	@ReflectionExplicit
-	String toStringUtf8();
+	default String toStringUtf8() {
+
+		return this.toString(StandardCharsets.UTF_8);
+	}
 	/** Returns a checksum.
 	 *
 	 * @param digest

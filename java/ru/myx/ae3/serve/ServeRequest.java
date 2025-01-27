@@ -8,7 +8,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 
-import ru.myx.ae3.Engine;
 import ru.myx.ae3.answer.ReplyAnswer;
 import ru.myx.ae3.base.Base;
 import ru.myx.ae3.base.BaseMessage;
@@ -408,8 +407,8 @@ public interface ServeRequest extends BaseMessage {
 	/** Returns a request whose isEmpty(), isBinary() or isFile() method will return <b>true </b>
 	 * and getBinary() or getFile() will return a binary non-null representation of a response. When
 	 * a response is already meets conditions specified this method should return exactly the SAME
-	 * response object. The "Character-Encoding" of "Content-Type" attributes of a current response
-	 * and "Accept-Charset" or "Accept-Type" attributes of current query should be considered when
+	 * response object. The "Content-Charset" or "Content-Type" attributes of a current response and
+	 * "Accept-Charset" or "Accept-Type" attributes of current query should be considered when
 	 * possible. "UTF-8" encoding should be used by default.
 	 *
 	 * @return reply
@@ -482,8 +481,8 @@ public interface ServeRequest extends BaseMessage {
 	/** Returns a request whose isEmpty(), isTextual() or isObject() method will return <b>true </b>
 	 * and getText() or getObject() will return a <b>non-null </b> stringual representation of a
 	 * response. When a response is already meets conditions specified this method should return
-	 * exactly the SAME response object. The "Character-Encoding" attribute of a current response
-	 * and "Accept-Charset" attribute of current query should be considered when possible. "UTF-8"
+	 * exactly the SAME response object. The "Content-Charset" attribute of a current response and
+	 * "Accept-Charset" attribute of current query should be considered when possible. "UTF-8"
 	 * encoding should be used by default.
 	 *
 	 * @return reply
@@ -504,16 +503,17 @@ public interface ServeRequest extends BaseMessage {
 			}
 		}
 		if (this.isFile()) {
+			final TransferBuffer buffer = Transfer.createBuffer(this.getFile());
 			final BaseObject ownAttributes = this.getAttributes();
 			assert ownAttributes != null : "NULL java object!";
-			final TransferBuffer buffer = Transfer.createBuffer(this.getFile());
 			final String contentType = Base.getString(ownAttributes, "Content-Type", "application/octet-stream");
 			final String currentEncoding = Base.getString(Flow.mimeAttribute("", "", contentType), "charset", "").trim();
+			final String UTF8 = "UTF-8";
 			final String encoding = currentEncoding.length() > 0
 				? currentEncoding
-				: Base.getString(ownAttributes, "Character-Encoding", Engine.ENCODING_UTF8);
-			final String chosenEncoding = encoding.indexOf('*') != -1
-				? Engine.ENCODING_UTF8
+				: Base.getString(ownAttributes, "Content-Charset", UTF8);
+			final String chosenEncoding = encoding != UTF8 && encoding.indexOf('*') != -1
+				? UTF8
 				: encoding;
 			final BaseObject attributes = BaseObject.createObject();
 			if (!ownAttributes.baseIsPrimitive()) {

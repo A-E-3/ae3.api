@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -29,26 +27,6 @@ import ru.myx.ae3.base.BaseObject;
 /** @author myx */
 public final class Engine extends AbstractSAPI {
 	
-	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.US_ASCII */
-	@Deprecated
-	public static final Charset CHARSET_ASCII = StandardCharsets.US_ASCII;
-	
-	/** ATTN: JUST USE: java.nio.charset.Charset.defaultCharset() */
-	@Deprecated
-	public static final Charset CHARSET_DEFAULT = Charset.defaultCharset();
-	
-	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.ISO_8859_1 */
-	@Deprecated
-	public static final Charset CHARSET_ISO_8859_1 = StandardCharsets.ISO_8859_1;
-	
-	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.UTF_16 */
-	@Deprecated
-	public static final Charset CHARSET_UTF16 = StandardCharsets.UTF_16;
-	
-	/** ATTN: JUST USE: java.nio.charset.StandardCharsets.UTF_8 */
-	@Deprecated
-	public static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
-	
 	/** Uses low-resolution polled time, suitable to measure long periods, like 20 second timeouts
 	 * 8-)
 	 *
@@ -56,27 +34,6 @@ public final class Engine extends AbstractSAPI {
 	public static final Date CURRENT_TIME;
 	
 	private static final MessageDigest DIGEST;
-	
-	/** this is internalized canonical name for US-ASCII character set */
-	public static final String ENCODING_ASCII = StandardCharsets.US_ASCII.name();
-	
-	/** ATTN: use `Charset.defaultCharset().name()` wherever possible */
-	public static final String ENCODING_DEFAULT = Charset.defaultCharset().name();
-	
-	/** ATTN: use `StandardCharsets.ISO_8859_1.name()` wherever possible
-	 *
-	 * this is internalized canonical name for ISO-8859-1 character set */
-	public static final String ENCODING_ISO_8859_1 = StandardCharsets.ISO_8859_1.name();
-	
-	/** ATTN: use `StandardCharsets.UTF_16.name()` wherever possible
-	 *
-	 * this is internalized canonical name for UTF-16 character set */
-	public static final String ENCODING_UTF16 = StandardCharsets.UTF_16.name();
-	
-	/** ATTN: use `StandardCharsets.UTF_8.name()` wherever possible
-	 *
-	 * this is internalized canonical name for UTF-8 character set */
-	public static final String ENCODING_UTF8 = StandardCharsets.UTF_8.name();
 	
 	/** "devel".equals(GROUP_NAME); */
 	public static final boolean GROUP_DEVEL;
@@ -281,6 +238,19 @@ public final class Engine extends AbstractSAPI {
 		}
 	}
 	
+	private static final String getHostName() {
+		
+		final String parameter = System.getProperty("ru.myx.ae3.properties.hostname", "").trim();
+		if (parameter.length() > 0) {
+			return parameter;
+		}
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (final UnknownHostException e) {
+			return null;
+		}
+	}
+	
 	/** GUID is a sequence of characters used for a distinct identification of any object in a
 	 * globally accessible, concurrently modifiable space for a long term life.
 	 * <p>
@@ -424,19 +394,6 @@ public final class Engine extends AbstractSAPI {
 	public static final long fastTime() {
 		
 		return Engine.CURRENT_TIME.getTime();
-	}
-	
-	private static final String getHostName() {
-		
-		final String parameter = System.getProperty("ru.myx.ae3.properties.hostname", "").trim();
-		if (parameter.length() > 0) {
-			return parameter;
-		}
-		try {
-			return InetAddress.getLocalHost().getHostName();
-		} catch (final UnknownHostException e) {
-			return null;
-		}
 	}
 	
 	/** @return */
