@@ -50,60 +50,69 @@ import ru.myx.util.IteratorSingle;
  * @author myx */
 @ReflectionDisable
 public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/* , ExecArguments */, BaseArray {
-
+	
 	private static final boolean DBG_TMP_NODIRECT = true;
-
+	
 	static ExecTracer fldTracerStatic;
-
+	
 	/** no Object.prototype properties here
 	 *
 	 * TODO: should it be always IdentityObject? */
 	public static final BaseObject GLOBAL = BaseObject.createObject(null);
-
+	
 	/** Use this to have faster access to 'arguments' context property. (No BaseString lookup
 	 * needed) */
 	public static final BasePrimitiveString PROPERTY_BASE_ARGUMENTS = Base.forString("arguments");
-
+	
 	/** Use this to have faster access to 'arguments' context property. (No BaseString lookup
 	 * needed) */
 	public static final String PROPERTY_STRING_ARGUMENTS = ExecProcess.PROPERTY_BASE_ARGUMENTS.baseValue();
-
+	
 	/**
 	 *
 	 */
 	protected static final int STACK_INITIAL = 128;
-
+	
+	private static final BaseObject arrayReadClean(final BaseObject[] array, final int index) {
+		
+		try {
+			return array[index];
+		} finally {
+			array[index] = null;
+		}
+	}
+	
 	/** @param tracer
 	 * @return */
 	public static final ExecTracer setTracerStatic(final ExecTracer tracer) {
-
+		
 		try {
 			return ExecProcess.fldTracerStatic;
 		} finally {
 			ExecProcess.fldTracerStatic = tracer;
 		}
-
+		
 	}
-
+	
 	/** TODO: inline as BaseObject.execNative();
 	 *
 	 * @param ctx
 	 * @param suspected
 	 * @return */
 	public static final BaseObject vmEnsureArgumentsDetached(final ExecProcess ctx, final BaseObject suspected) {
-
+		
 		return suspected instanceof ExecValueDirect
 			? ((ExecValueDirect<?>) suspected).toDetached(ctx)
 			: suspected;
 	}
-
+	
 	/** TODO: inline as BaseObject.execNative();
 	 *
 	 * @param ctx
 	 * @param suspected
 	 * @return */
 	public static final BaseObject vmEnsureDetached(final ExecProcess ctx, final BaseObject suspected) {
-
+		
 		if (ExecProcess.DBG_TMP_NODIRECT) {
 			return suspected;
 		}
@@ -111,169 +120,169 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			? ((ExecValueDirect<?>) suspected).toDetached(ctx)
 			: suspected;
 	}
-
+	
 	/** TODO: inline as BaseObject.execDetach();
 	 *
 	 * @param suspected
 	 * @return */
 	public static final BaseObject vmEnsureNative(final BaseObject suspected) {
-
+		
 		return suspected instanceof ExecValueStack
 			? ((ExecValueStack<?>) suspected).toNative()
 			: suspected;
 	}
-
+	
 	/** code part of executable */
 	Instruction[] fldCode;
-
+	
 	/** Attached console or NULL */
 	Console fldConsole;
-
+	
 	/**
 	 *
 	 */
 	public BaseObject[] fldStack;
-
+	
 	ExecProcessState fldState;
-
+	
 	ExecTracer fldTracer;
-
+	
 	/** TODO: default access and getter
 	 *
 	 * Focused object.
 	 *
 	 * Analog to 'this' */
 	public Entry fldVfsFocus;
-
+	
 	/** TODO: default access and getter
 	 *
 	 * Root object. To allow internal relative addressing. */
 	public EntryVfsRoot fldVfsRoot;
-
+	
 	/** TODO: default access and getter
 	 *
 	 * Share<?> object. To allow external relative addressing. */
 	public Entry fldVfsShare;
-
+	
 	/**
 	 *
 	 */
 	private final ExecProcess parent;
-
+	
 	/** ACCUMULATOR / EXECUTION RESULT / Object */
 	public BaseObject ra0RB;
-
+	
 	/** ACCUMULATOR / EXECUTION RESULT / Integer */
 	public long ra1RL;
-
+	
 	/** ACCUMULATOR / EXECUTION RESULT / Floating */
 	public double ra2RD;
-
+	
 	/** ACCUMULATOR / EXECUTION RESULT / Character */
 	public CharSequence ra3RS;
-
+	
 	/** Call 'this' (instance) */
 	public BaseObject rb4CT;
-
 	/** Call callee */
 	public BaseFunction rb5CC;
+	
 	/** Call arguments */
 	public BaseArray rb6CA;
-
+	
 	/** LOCAL FRAME CONTEXT VALUES */
 	public BaseObject rb7FV;
-
+	
 	/**
 	 *
 	 */
 	public int ri08IP = 0;
-
+	
 	/**
 	 *
 	 */
 	public int ri09IL = 0;
-
+	
 	/**
 	 *
 	 */
 	public int ri0ASP = 0;
-
+	
 	/**
 	 *
 	 */
 	public int ri0BSB = 0;
-
+	
 	/**
 	 *
 	 */
 	public int ri0CBT = -1;
-
+	
 	/**
 	 *
 	 */
 	public int ri0DCT = -1;
-
+	
 	/**
 	 *
 	 */
 	public int ri0EET = -1;
-
+	
 	/**
 	 *
 	 */
 	public int ri0FI0 = 0;
-
+	
 	/** GLOBAL CONTEXT VALUES */
 	public BaseObject ri10GV;
-
+	
 	/** loop iterators, non-directly accessible. ITRPREPXXX and ITRNEXT is using it, Frames for
 	 * loops and calls are saving it and replacing with NULL. */
 	IteratorImpl ri11II;
-
+	
 	/** Iteration iterable object */
 	BaseObject ri12IA;
-
+	
 	/** Iteration value / key / index / parameter */
 	Object ri13IV;
-
+	
 	/** named arguments mapper */
 	NamedToIndexMapper riCallNameMapper;
-
+	
 	/**
 	 *
 	 */
 	public ResultHandler riCallResultHandler;
-
+	
 	/**
 	 *
 	 */
 	Object riDebug;
-
+	
 	/** current output target */
 	BaseFunction riOutput;
-
+	
 	ValueDirectInteger rzDirectInteger;
-
+	
 	ValueDirectLong rzDirectLong;
-
+	
 	ValueDirectNumber rzDirectNumber;
-
+	
 	ValueDirectString rzDirectString;
-
+	
 	/** Calls this(parent, parent)
 	 *
 	 * @param parent */
 	protected ExecProcess(final ExecProcess parent) {
-
+		
 		this(parent, parent);
 	}
-
+	
 	/** @param execParent
 	 *            context to derive process from
 	 * @param callParent
 	 *            context to derive tracer and VFS settings */
 	protected ExecProcess(final ExecProcess execParent, final ExecProcess callParent) {
-
+		
 		this.parent = execParent;
 		this.fldState = INA;
 		this.fldStack = new BaseObject[ExecProcess.STACK_INITIAL];
@@ -286,7 +295,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			this.fldConsole = callParent.fldConsole;
 		}
 	}
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -294,7 +303,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * @param constant
 	 * @return arguments */
 	public abstract ExecArguments argumentsConstant(final BaseObject constant);
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -304,7 +313,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * @param size
 	 * @return arguments */
 	public abstract ExecArguments argumentsCopy(final int size);
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -315,25 +324,12 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * @param desc
 	 * @return arguments */
 	public abstract ExecArguments argumentsCopyMap(final int size, final NamedToIndexMapper desc);
-
-	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
-	 * read during current call and before new arguments are generated (by direct call to
-	 * argumentsXXX method or by AE3-VM execution).
-	 *
-	 * for CALLO and CALLS. Use (/Map) some on stack.
-	 *
-	 * for CALLM. Use (/Map) some on stack, use description.
-	 *
-	 * @param size
-	 * @param desc
-	 * @return arguments */
-	protected abstract ExecArguments argumentsCtx(final int size, final NamedToIndexMapper desc);
-
+	
 	/** Returns singleton empty arguments object with no 'callee' property
 	 *
 	 * @return arguments */
 	public abstract ExecArguments argumentsEmpty();
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -342,7 +338,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *
 	 * @return arguments */
 	public abstract ExecArguments argumentsList1(BaseObject argument);
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -352,7 +348,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *
 	 * @return arguments */
 	public abstract ExecArguments argumentsList2(BaseObject argument1, BaseObject argument2);
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -361,7 +357,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *
 	 * @return arguments */
 	public abstract ExecArguments argumentsListA(BaseObject... arguments);
-
+	
 	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
 	 * read during current call and before new arguments are generated (by direct call to
 	 * argumentsXXX method or by AE3-VM execution).
@@ -370,98 +366,98 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *
 	 * @return arguments */
 	public abstract ExecArguments argumentsMap(BaseObject map);
-
+	
 	/** Not an array. But, function arguments for a call accessible via this method as an array. */
 	@SuppressWarnings("deprecation")
 	@Override
 	public final BaseArray baseArray() {
-
+		
 		return this.rb6CA;
 	}
-
+	
 	@Override
 	@ReflectionHidden
 	public final BaseArrayAdvanced<?> baseArraySlice(final int start) {
-
+		
 		return this.rb6CA.baseArraySlice(start);
 	}
-
+	
 	@Override
 	@ReflectionHidden
 	public final BaseArrayAdvanced<?> baseArraySlice(final int start, final int end) {
-
+		
 		return this.rb6CA.baseArraySlice(start, end);
 	}
-
+	
 	@Override
 	public final BaseFunction baseCall() {
-
+		
 		return this.rb7FV.baseCall();
 	}
-
+	
 	@Override
 	public final String baseClass() {
-
+		
 		return "Process";
 	}
-
+	
 	@Override
 	public final BaseFunction baseConstruct() {
-
+		
 		return this.rb7FV.baseConstruct();
 	}
-
+	
 	@Override
 	public final boolean baseContains(final BaseObject value) {
-
+		
 		return this.rb6CA.baseContains(value);
 	}
-
+	
 	@Override
 	public final boolean baseDefine(final BasePrimitiveString name, final BaseObject value, final short attributes) {
-
+		
 		return this.rb7FV.baseDefine(name, value, attributes);
 	}
-
+	
 	@Override
 	public final boolean baseDefine(final String name, final BaseObject value, final short attributes) {
-
+		
 		return this.rb7FV.baseDefine(name, value, attributes);
 	}
-
+	
 	@Override
 	public final boolean baseDelete(final BaseObject name) {
-
+		
 		return this.rb7FV.baseDelete(name);
 	}
-
+	
 	@Override
 	public final boolean baseDelete(final String name) {
-
+		
 		return this.rb7FV.baseDelete(name);
 	}
-
+	
 	@Override
 	public final BaseObject baseGet(final int index, final BaseObject defaultValue) {
-
+		
 		return this.rb6CA.baseGet(index, defaultValue);
 	}
-
+	
 	@Override
 	public BaseObject baseGetFirst(final BaseObject defaultValue) {
-
+		
 		return this.rb6CA.baseGetFirst(defaultValue);
 	}
-
+	
 	@Override
 	public BaseObject baseGetLast(final BaseObject defaultValue) {
-
+		
 		return this.rb6CA.baseGetLast(defaultValue);
 	}
-
+	
 	@Override
 	public final BaseProperty baseGetOwnProperty(final BasePrimitiveString name) {
-
+		
 		{
 			/** not OWN */
 			for (BaseObject object = this.rb7FV;;) {
@@ -483,10 +479,10 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 		}
 		return null;
 	}
-
+	
 	@Override
 	public final BaseProperty baseGetOwnProperty(final String name) {
-
+		
 		{
 			/** not OWN */
 			for (BaseObject object = this.rb7FV;;) {
@@ -508,102 +504,102 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 		}
 		return null;
 	}
-
+	
 	@Override
 	public final boolean baseHasKeysOwn() {
-
+		
 		/** Not FV but arguments, FV through prototype chain though */
 		return this.rb6CA.baseHasKeysOwn();
 	}
-
+	
 	@Override
 	public final boolean baseIsExtensible() {
-
+		
 		return this.rb7FV.baseIsExtensible();
 	}
-
+	
 	@Override
 	public final Iterator<? extends BaseObject> baseIterator() {
-
+		
 		return this.rb6CA.baseIterator();
 	}
-
+	
 	@Override
 	public final Iterator<String> baseKeysOwn() {
-
+		
 		final BaseArray rb6ca = this.rb6CA;
 		return rb6ca == null
 			? BaseObject.ITERATOR_EMPTY
 			: rb6ca.baseKeysOwn();/** Not FV but arguments, FV through prototype chain though */
 		// return Base.keys(this.r6FV);
 	}
-
+	
 	@Override
 	public final Iterator<? extends CharSequence> baseKeysOwnAll() {
-
+		
 		final Iterator<? extends CharSequence> locals = Base.keysAll(this.rb7FV);
 		return this.rb6CA != null
 			? Base.joinIterators(locals, new IteratorSingle<>(ExecProcess.PROPERTY_STRING_ARGUMENTS))
 			: locals;
 	}
-
+	
 	@Override
 	public final Iterator<? extends BasePrimitive<?>> baseKeysOwnPrimitive() {
-
+		
 		return Base.keysPrimitive(this.rb7FV);
 	}
-
+	
 	@Override
 	public final BaseObject basePrototype() {
-
+		
 		return this.parent;
 	}
-
+	
 	@Override
 	public final BasePrimitiveBoolean baseToBoolean() {
-
+		
 		return this.rb7FV.baseToBoolean();
 	}
-
+	
 	@Override
 	public final BasePrimitiveNumber baseToInt32() {
-
+		
 		return this.rb7FV.baseToInt32();
 	}
-
+	
 	@Override
 	public final BasePrimitiveNumber baseToInteger() {
-
+		
 		return this.rb7FV.baseToInteger();
 	}
-
+	
 	@Override
 	public final BasePrimitiveNumber baseToNumber() {
-
+		
 		return this.rb7FV.baseToNumber();
 	}
-
+	
 	@Override
 	public final BasePrimitive<?> baseToPrimitive(final ToPrimitiveHint hint) {
-
+		
 		return this.rb7FV.baseToPrimitive(hint);
 	}
-
+	
 	@Override
 	public final BasePrimitiveString baseToString() {
-
+		
 		return this.rb7FV.baseToString();
 	}
-
+	
 	@Override
 	public final ExecProcess baseValue() {
-
+		
 		return this;
 	}
-
+	
 	@Override
 	public final void contextCreateMutableBinding(final BasePrimitiveString name, final BaseObject value, final boolean dynamic) {
-
+		
 		this.rb7FV.baseDefine(
 				name, //
 				value,
@@ -611,10 +607,10 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 					? BaseProperty.ATTRS_MASK_WED
 					: BaseProperty.ATTRS_MASK_WEN);
 	}
-
+	
 	@Override
 	public final void contextCreateMutableBinding(final String name, final BaseObject value, final boolean dynamic) {
-
+		
 		this.rb7FV.baseDefine(
 				name, //
 				value,
@@ -622,10 +618,10 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 					? BaseProperty.ATTRS_MASK_WED
 					: BaseProperty.ATTRS_MASK_WEN);
 	}
-
+	
 	@Override
 	public final boolean contextDeleteBinding(final String name) {
-
+		
 		BaseProperty property = null;
 		BaseObject source = this.rb7FV;
 		for (;;) {
@@ -648,7 +644,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			}
 		}
 	}
-
+	
 	/** Setups new context with actual arguments being bind.
 	 *
 	 * Should return ExecStateCode but do not fool yourself, there would be always null. It never
@@ -660,7 +656,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *            NULL value is special, it causes system to ignore arguments totally regardless of
 	 *            actual arguments passed. */
 	public final void contextExecFARGS(final BasePrimitiveString calleeName, final BasePrimitiveString[] arguments) {
-
+		
 		if (arguments == null) {
 			return;
 		}
@@ -674,7 +670,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 						: callee,
 					false);
 		}
-
+		
 		final BaseArray list = this.rb6CA;
 		final int sizea = arguments.length;
 		if (list == null) {
@@ -722,25 +718,25 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			}
 		}
 	}
-
+	
 	/** @param message
 	 * @return NULL */
 	public final ExecStateCode contextExecFDEBUG(final Object message) {
-
+		
 		assert this.fldTracer == null
 			? ExecProcess.fldTracerStatic == null || ExecProcess.fldTracerStatic.traceDebug(this, message)
 			: this.fldTracer.traceDebug(this, message);
-
+		
 		this.riDebug = message;
 		return null;
 	}
-
+	
 	/** @return value of internal 'arguments' register */
 	public final BaseArray contextGetArguments() {
-
+		
 		final BaseArray arguments = this.rb6CA;
 		if (arguments instanceof ExecArguments.NeedsDetachment) {
-
+			
 			final BaseArray replacement = ((ExecArguments.NeedsDetachment) arguments).toDetached(this);
 			if (arguments != replacement) {
 				return this.rb6CA = replacement;
@@ -748,10 +744,10 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 		}
 		return arguments;
 	}
-
+	
 	@Override
 	public final BaseObject contextGetBindingValue(final BasePrimitiveString name, final boolean strict) {
-
+		
 		BaseObject source = this.rb7FV;
 		/** from r6FV to r5GV or BaseObject.PROTOTYPE when r6FV does not contain r5GV in its
 		 * prototype chain. */
@@ -805,10 +801,10 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 		}
 		return BaseObject.UNDEFINED;
 	}
-
+	
 	@Override
 	public final BaseObject contextGetBindingValue(final String name, final boolean strict) {
-
+		
 		BaseObject source = this.rb7FV;
 		/** from r6FV to r5GV or BaseObject.PROTOTYPE when r6FV does not contain r5GV in its
 		 * prototype chain. */
@@ -859,58 +855,58 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			assert prototype != source : "prototype should not be equal to this instance, class=" + source.getClass().getName();
 			source = prototype;
 		}
-
+		
 		if (strict) {
 			throw new RuntimeException("TypeError");
 		}
-
+		
 		return BaseObject.UNDEFINED;
 	}
-
+	
 	// @Override
 	/** @return value of internal 'debug' register */
 	public final Object contextGetDebug() {
-
+		
 		return this.riDebug;
 	}
-
+	
 	@Override
 	public final boolean contextHasBinding(final String name) {
-
+		
 		return Base.hasProperty(this.rb7FV, name);
 	}
-
+	
 	/** <code>
 	&#64;Override
 	public final BaseFunction execCallee() {
-
-
+	
+	
 		return this.fldArguments.execCallee();
 	}
-
+	
 	&#64;Override
 	public final ExecArguments execDetachable() {
-
-
+	
+	
 		return this.fldArguments = this.fldArguments.execDetachable();
 	}
-
+	
 	&#64;Override
 	public final BaseObject execInstance() {
-
-
+	
+	
 		return this.r4RT;
 		// return this.fldArguments.execInstance();
 	}
-
+	
 	</code> **/
-
+	
 	@Override
 	public final BaseObject contextImplicitThisValue() {
-
+		
 		return this.ri10GV;
 	}
-
+	
 	/** DIFFERS: strict = false would add new binding!
 	 *
 	 *
@@ -930,7 +926,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * TypeError exception. */
 	@Override
 	public final boolean contextSetMutableBinding(final BasePrimitiveString name, final BaseObject value, final boolean strict) {
-
+		
 		BaseProperty property = null;
 		BaseObject source = this.rb7FV;
 		for (;;) {
@@ -981,7 +977,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			: source) //
 					.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-
+	
 	/** DIFFERS: strict = false would add new binding!
 	 *
 	 *
@@ -1001,7 +997,7 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * TypeError exception. */
 	@Override
 	public final boolean contextSetMutableBinding(final String name, final BaseObject value, final boolean strict) {
-
+		
 		BaseProperty property = null;
 		BaseObject source = this.rb7FV;
 		for (;;) {
@@ -1048,47 +1044,47 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			: source) //
 					.baseDefine(name, value, BaseProperty.ATTRS_MASK_WED);
 	}
-
+	
 	/** @param name
 	 * @param value
 	 * @param strict */
 	public final void contextSetMutableBinding(final String name, final double value, final boolean strict) {
-
+		
 		this.contextSetMutableBinding(name, Base.forDouble(value), strict);
 	}
-
+	
 	/** @param name
 	 * @param value
 	 * @param strict */
 	public final void contextSetMutableBinding(final String name, final long value, final boolean strict) {
-
+		
 		this.contextSetMutableBinding(name, Base.forLong(value), strict);
 	}
-
+	
 	/** @param name
 	 * @param value
 	 * @param strict */
 	@Deprecated
 	public final void contextSetMutableBinding(final String name, final Object value, final boolean strict) {
-
+		
 		this.contextSetMutableBinding(name, Base.forUnknown(value), strict);
 	}
-
+	
 	/** @param pw */
 	public final void dump(final PrintStream pw) {
-
+		
 		final StringBuilder sb = new StringBuilder(1024);
 		this.dump(sb);
 		pw.println(sb.toString());
 	}
-
+	
 	/** @param sb */
 	public abstract void dump(final StringBuilder sb);
-
+	
 	/** @param object
 	 * @return */
 	public final ExecStateCode execOutput(final BaseObject object) {
-
+		
 		if (object == null) {
 			return null;
 		}
@@ -1104,143 +1100,204 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 		}
 		return code;
 	}
-
+	
 	/** null outputs are welcome. Check OutputBuilder class.
 	 *
 	 * @param output
 	 * @return previous output */
 	public final BaseFunction execOutputReplace(final BaseFunction output) {
-
+		
 		try {
 			return this.riOutput;
 		} finally {
 			this.riOutput = output;
 		}
 	}
-
-	/** @param codeDefault
-	 * @return */
-	abstract ExecStateCode frameUp(final ExecStateCode codeDefault);
-
+	
 	@Override
 	public final Object get(final int i) {
-
+		
 		return this.rb6CA.get(i);
 	}
-
+	
 	/** returns local process's console or recursively calls parent context's method.
 	 *
 	 * @return */
 	public Console getConsole() {
-
+		
 		return this.fldConsole == null
 			? this.parent == null
 				? null
 				: this.parent.getConsole()
 			: this.fldConsole;
 	}
-
+	
 	/** @return chain */
 	public final ExecProcess getParentProcess() {
-
+		
 		return this.parent;
 	}
-
+	
 	/** @return */
 	public Entry getVfsFocus() {
-
+		
 		return this.fldVfsFocus;
 	}
-
+	
 	/** @return */
 	public Entry getVfsRoot() {
-
+		
 		return this.fldVfsRoot;
 	}
-
+	
 	/** @return */
 	public Entry getVfsShare() {
-
+		
 		return this.fldVfsShare;
 	}
-
+	
 	@Override
 	public final boolean isEmpty() {
-
+		
 		return this.rb6CA.isEmpty();
 	}
-
+	
 	@Override
 	public final Iterator<?> iterator() {
-
+		
 		return this.rb6CA.iterator();
 	}
-
+	
 	@Override
 	public final int length() {
-
+		
 		return this.rb6CA.length();
 	}
-
+	
 	/** @param title
 	 * @throws IllegalArgumentException */
 	public abstract void replaceInfo(final String title) throws IllegalArgumentException;
-
-	/** @return */
-	abstract ExecStateCode runImpl(final int stackBase);
-
+	
 	/** @param console */
 	public void setConsole(final Console console) {
-
+		
 		this.fldConsole = console;
 	}
-
+	
 	/** @param tracer
 	 * @return */
 	public final ExecTracer setTracer(final ExecTracer tracer) {
-
+		
 		try {
 			return this.fldTracer;
 		} finally {
 			this.fldTracer = tracer;
 		}
-
+		
 	}
-
+	
 	/** <code>this.fldStack[pointer - 1]</code>
 	 *
 	 * @return topmost stack object */
 	@Override
 	public abstract BaseObject stackPeek();
-
+	
 	/** <code>this.fldStack[pointer - 1 - more]</code>
 	 *
 	 * @param more
 	 * @return stack object */
 	@Override
 	public abstract BaseObject stackPeek(int more);
-
+	
 	/** @return topmost stack object */
 	@Override
 	public abstract BaseObject stackPop();
-
+	
 	/** Pushes RR */
 	@Override
 	public abstract void stackPush();
-
+	
 	/** @param value */
 	@Override
 	public abstract void stackPush(BaseObject value);
-
+	
 	/** returns $stack internal array */
 	@Override
 	public final BaseObject[] stackRaw() {
-
+		
 		return this.fldStack;
 	}
-
-	abstract BaseAbstractException throwError(final Object msg, final Throwable t);
-
+	
+	/** FCALLAxxx instruction implementation
+	 *
+	 * function implementation should not return RETURN or exception could be raised
+	 *
+	 * EVERYTHING ON STACK
+	 *
+	 * @param constant
+	 *            number of arguments on stack (plus 1: callee)
+	 * @param resultHandler
+	 * @return */
+	public final ExecStateCode vmCall_FCALLA_FSS(//
+			final int constant,
+			final ResultHandler resultHandler //
+	) {
+		
+		if (this.ri0ASP - (constant + 1) < this.ri0BSB) {
+			return this.vmRaise("FCALLA: " + (constant + 1) + " stack arguments expected");
+		}
+		
+		final BaseObject[] stack = this.fldStack;
+		
+		switch (constant) {
+			case 0 : {
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = this.contextImplicitThisValue();
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false);
+			}
+			case 1 : {
+				final BaseObject argument = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = this.contextImplicitThisValue();
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false, argument);
+			}
+			case 2 : {
+				final BaseObject argument2 = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				final BaseObject argument1 = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = this.contextImplicitThisValue();
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false, argument1, argument2);
+			}
+			default : {
+				
+				final ExecArguments arguments = this.argumentsCopy(constant);
+				/** have to clean up */
+				final int rASP = this.ri0ASP;
+				for (int i = constant; i > 0; --i) {
+					stack[rASP - i] = null;
+				}
+				this.ri0ASP -= constant;
+				
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = this.contextImplicitThisValue();
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false, arguments);
+			}
+		}
+		
+	}
+	
 	/** function implementation should not return RETURN or exception could be raised
 	 *
 	 * @param callee
@@ -1248,18 +1305,19 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * @param mapper
 	 * @param resultHandler
 	 * @return */
-	public final ExecStateCode vmCallM(//
+	public final ExecStateCode vmCall_Generic_MapArgs(//
 			final BaseFunction callee,
 			final BaseObject thisValue,
 			final NamedToIndexMapper mapper,
-			final ResultHandler resultHandler) {
-
+			final ResultHandler resultHandler//
+	) {
+		
 		final int count = mapper.length();
-
+		
 		if (count == 0) {
 			return callee.execCallPrepare(this, thisValue, resultHandler, false);
 		}
-
+		
 		{
 			/** Can't use CTX - used for vm calls and stack values are overwritten immediately */
 			final ExecArguments arguments = this.argumentsCopyMap(count, mapper);
@@ -1270,12 +1328,12 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 				stack[rASP - i] = null;
 			}
 			this.ri0ASP -= count;
-
+			
 			return callee.execCallPrepare(this, thisValue, resultHandler, false, arguments);
 		}
-
+		
 	}
-
+	
 	/** CALLSxxx instruction implementation
 	 *
 	 * function implementation should not return RETURN or exception could be raised
@@ -1288,16 +1346,21 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *            number of arguments on stack
 	 * @param resultHandler
 	 * @return */
-	public final ExecStateCode vmCallS(final BaseFunction callee, final BaseObject thisValue, final int count, final ResultHandler resultHandler) {
-
+	public final ExecStateCode vmCall_Generic_StackArgs(//
+			final BaseFunction callee,
+			final BaseObject thisValue,
+			final int count,
+			final ResultHandler resultHandler//
+	) {
+		
 		if (count == 0) {
 			return callee.execCallPrepare(this, thisValue, resultHandler, false);
 		}
-
+		
 		if (count == 1) {
 			return callee.execCallPrepare(this, thisValue, resultHandler, false, this.stackPop());
 		}
-
+		
 		{
 			final ExecArguments arguments = this.argumentsCopy(count);
 			/** have to clean up */
@@ -1307,44 +1370,48 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 				stack[rASP - i] = null;
 			}
 			this.ri0ASP -= count;
-
+			
 			return callee.execCallPrepare(this, thisValue, resultHandler, false, arguments);
 		}
 	}
-
+	
 	/** CALLSxxx instruction implementation
 	 *
 	 * function implementation should not return RETURN or exception could be raised
 	 *
 	 * thisObject and ARGUMENTS are ON STACK
 	 *
-	 * @param argumentB
+	 * @param accessProperty
 	 *            propertyName
 	 * @param count
 	 *            number of arguments on stack
 	 * @param resultHandler
 	 * @return */
-	public final ExecStateCode vmCallTS(final BaseObject argumentB, final int count, final ResultHandler resultHandler) {
+	public final ExecStateCode vmCall_RCALL_SaS(//
+			final BaseObject accessProperty,
+			final int count,
+			final ResultHandler resultHandler//
+	) {
 		
 		if (count <= 0) {
 			return this.vmRaise("vmCallTS: invalid count argument: " + count);
 		}
-
-		final BaseObject[] stack = this.fldStack;
-		final BaseObject argumentA = stack[this.ri0ASP - count];
 		
-		assert argumentA != this || this == this.rb4CT : "Use FCALLS then";
-
-		final BaseObject candidate = argumentA.baseGet(argumentB, BaseObject.UNDEFINED);
+		final BaseObject[] stack = this.fldStack;
+		final BaseObject thisValue = stack[this.ri0ASP - count];
+		
+		assert thisValue != this || this == this.rb4CT : "Use FCALLS then";
+		
+		final BaseObject candidate = thisValue.baseGet(accessProperty, BaseObject.UNDEFINED);
 		
 		final BaseFunction callee = candidate.baseCall();
 		if (callee == null) {
 			if (candidate == BaseObject.UNDEFINED) {
 				return this.vmRaise(
-						Format.Compact.baseObject(argumentA) + " has no property called " //
-								+ Format.Compact.baseObject(argumentB));
+						Format.Compact.baseObject(thisValue) + " has no property called " //
+								+ Format.Compact.baseObject(accessProperty));
 			}
-			return this.vmRaise("Not a function: key=" + argumentB.baseToJavaString() + ", class=" + candidate.getClass().getName());
+			return this.vmRaise("Not a function: key=" + accessProperty.baseToJavaString() + ", class=" + candidate.getClass().getName());
 		}
 		
 		{
@@ -1355,16 +1422,86 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			for (int i = count; i > 0; --i) {
 				stack[rASP - i] = null;
 			}
-
+			
 			this.ri0ASP -= count;
-
-			return callee.execCallPrepare(this, argumentA, resultHandler, false, arguments);
+			
+			return callee.execCallPrepare(this, thisValue, resultHandler, false, arguments);
 		}
 	}
-
+	
+	/** RCALLAxxx instruction implementation
+	 *
+	 * function implementation should not return RETURN or exception could be raised
+	 *
+	 * EVERYTHING ON STACK
+	 *
+	 * @param constant
+	 *            number of arguments on stack (plus 2: callee & thisValue)
+	 * @param resultHandler
+	 * @return */
+	public final ExecStateCode vmCall_RCALLA_SSS(//
+			final int constant,
+			final ResultHandler resultHandler //
+	) {
+		
+		if (this.ri0ASP - (constant + 2) < this.ri0BSB) {
+			return this.vmRaise("CALLA: " + (constant + 2) + " stack arguments expected");
+		}
+		
+		final BaseObject[] stack = this.fldStack;
+		
+		switch (constant) {
+			case 0 : {
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false);
+			}
+			case 1 : {
+				final BaseObject argument = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false, argument);
+			}
+			case 2 : {
+				final BaseObject argument2 = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				final BaseObject argument1 = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false, argument1, argument2);
+			}
+			default : {
+				
+				final ExecArguments arguments = this.argumentsCopy(constant);
+				/** have to clean up */
+				final int rASP = this.ri0ASP;
+				for (int i = constant; i > 0; --i) {
+					stack[rASP - i] = null;
+				}
+				this.ri0ASP -= constant;
+				
+				final BaseFunction callee = ExecProcess.arrayReadClean(stack, --this.ri0ASP).baseCall();
+				final BaseObject instance = ExecProcess.arrayReadClean(stack, --this.ri0ASP);
+				if (callee == null) {
+					return this.vmRaise("Not a function: class=" + instance.getClass().getName());
+				}
+				return callee.execCallPrepare(this, instance, resultHandler, false, arguments);
+			}
+		}
+		
+	}
+	
 	/** @return */
 	public abstract ExecStateCode vmFrameEntryExBlock();
-
+	
 	/** @param inline
 	 * @param thisValue
 	 * @param callee
@@ -1376,288 +1513,288 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			final BaseFunction callee,
 			final BaseArray arguments,
 			final ResultHandler exitHandler);
-
+	
 	/** @return */
 	public abstract ExecStateCode vmFrameEntryExCode();
-
+	
 	/** @return */
 	public abstract ExecStateCode vmFrameEntryExFull();
-
+	
 	/** (CTRL + VARS + DEBUG, NEW VARS)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpCatch(final int leaveAddress);
-
+	
 	/** (CTRL)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpCtrl(final int leaveAddress);
-
+	
 	/** (CTRL + VARS, NEW VARS)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpCtrlNewVars(final int leaveAddress);
-
+	
 	/** (ALL_REGS + CTRL + VARS)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpFull(final int leaveAddress);
-
+	
 	/** (ITER_REGS + CTRL + VARS)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpIterCtrl(final int leaveAddress);
-
+	
 	/** (ITER_REGS + CTRL + VARS, NEW VARS)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpIterCtrlNewVars(final int leaveAddress);
-
+	
 	/** (VARS, NEW VARS)
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpNewVars(final int leaveAddress);
-
+	
 	/** ()
 	 *
 	 * @param leaveAddress
 	 *            frame leave address or -1
 	 * @return */
 	public abstract ExecStateCode vmFrameEntryOpNone(final int leaveAddress);
-
+	
 	/** @return int */
 	public abstract ExecStateCode vmFrameLeave();
-
+	
 	/** Detachable RR
 	 *
 	 * Maybe: detach(BaseObject)?
 	 *
 	 * @return */
 	public final BaseObject vmGetResultDetachable() {
-
+		
 		return this.ra0RB instanceof ExecValueDirect<?>
 			? this.ra0RB = ((ExecValueDirect<?>) this.ra0RB).toDetached(this)
 			: this.ra0RB;
 	}
-
+	
 	/** @return */
 	public final BaseObject vmGetResultImmediate() {
-
+		
 		return this.ra0RB;
 	}
-
+	
 	/** Detachable RR
 	 *
 	 * .baseValue()
 	 *
 	 * @return */
 	public final Object vmGetResultJava() {
-
+		
 		return this.ra0RB != null
 			? this.ra0RB.baseValue()
 			: null;
 	}
-
+	
 	/** Detachable RR
 	 *
 	 * Maybe: detach(BaseObject)?
 	 *
 	 * @return */
 	public final BaseObject vmGetResultNative() {
-
+		
 		return this.ra0RB instanceof ExecValueStack<?>
 			? this.ra0RB = ((ExecValueStack<?>) this.ra0RB).toNative()
 			: this.ra0RB;
 	}
-
+	
 	@Override
 	public final ExecStateCode vmPropertyRead(final ExecProcess ctx, final int index, final BaseObject originalIfKnown, final BaseObject defaultValue, final ResultHandler store) {
-
+		
 		return this.rb6CA.vmPropertyRead(ctx, index, originalIfKnown, defaultValue, store);
 	}
-
+	
 	/** Throws error with given text as an error message. (Much like 'throw new Error(e)')
 	 *
 	 * @param o
 	 * @return */
 	public abstract ExecStateCode vmRaise(final String o);
-
+	
 	/** Throws error with given text as an error message. (Much like 'throw new Error(e)')
 	 *
 	 * @param o
 	 * @return */
 	public abstract ExecStateCode vmRaise(final Throwable o);
-
+	
 	/** Throws syntax error with given text as an error message. (Much like 'throw new
 	 * SyntaxError(e)')
 	 *
 	 * @param o
 	 * @return */
 	public abstract ExecStateCode vmRaiseSyntax(final String o);
-
+	
 	/** Throws syntax error with given text as an error message. (Much like 'throw new
 	 * TypeError(e)')
 	 *
 	 * @param o
 	 * @return */
 	public abstract ExecStateCode vmRaiseType(final String o);
-
+	
 	/** Remember to use same direct transport type
 	 *
 	 * @param newHandler
 	 * @param oldHandler */
 	public abstract void vmReplaceCallResultHandler(final ResultHandler newHandler, final ResultHandler oldHandler);
-
+	
 	/** @param mixIn
 	 * @return */
 	public final BaseObject vmScopeCreateMixIn(final BaseObject mixIn) {
-
+		
 		/** non checked */
 		this.ri10GV = mixIn;
 		return this.rb7FV = BaseObject.createObject(new BaseJoined(mixIn, this.rb7FV));
 	}
-
+	
 	/** @param deriveFrom
 	 * @return */
 	public final BaseObject vmScopeCreateSandbox(final BaseObject deriveFrom) {
-
+		
 		return this.rb7FV = this.ri10GV = BaseObject.createObject(Base.seal(deriveFrom));
 	}
-
+	
 	/** @param deriveFrom
 	 * @return */
 	public final BaseObject vmScopeDeriveContext(final BaseObject deriveFrom) {
-
+		
 		return this.rb7FV = this.ri10GV = BaseObject.createObject(deriveFrom);
 	}
-
+	
 	/** @param process
 	 * @return */
 	public final BaseObject vmScopeDeriveContext(final ExecProcess process) {
-
+		
 		return this.rb7FV = this.ri10GV = BaseObject.createObject(process.rb7FV);
 	}
-
+	
 	/** @return */
 	public final BaseObject vmScopeDeriveContextFromFV() {
-
+		
 		final BaseObject prototype = this.rb7FV;
 		return this.rb7FV = this.ri10GV = BaseObject.createObject(prototype);
 	}
-
+	
 	/** @return */
 	public final BaseObject vmScopeDeriveContextFromGV() {
-
+		
 		final BaseObject prototype = this.ri10GV;
 		return this.rb7FV = this.ri10GV = BaseObject.createObject(prototype);
 	}
-
+	
 	/** @return */
 	public final BaseObject vmScopeDeriveLocals() {
-
+		
 		final BaseObject prototype = this.rb7FV;
 		return this.rb7FV = BaseObject.createObject(prototype);
 	}
-
+	
 	/** @param process
 	 * @return */
 	public final BaseObject vmScopeDeriveLocals(final ExecProcess process) {
-
+		
 		return this.rb7FV = BaseObject.createObject(this.ri10GV = process.rb7FV);
 	}
-
+	
 	/** @param r7RR
 	 * @return */
 	public final ExecStateCode vmSetCallResult(final BaseObject r7RR) {
-
+		
 		return this.riCallResultHandler.execReturn(this, r7RR);
 	}
-
+	
 	/** @param r7RR
 	 * @return */
 	public final ExecStateCode vmSetCallResultBoolean(final boolean r7RR) {
-
+		
 		return this.riCallResultHandler.execReturn(
 				this,
 				r7RR
 					? BaseObject.TRUE
 					: BaseObject.FALSE);
 	}
-
+	
 	/** false - result
 	 *
 	 * @return */
 	public final ExecStateCode vmSetCallResultFalse() {
-
+		
 		return this.riCallResultHandler.execReturn(this, BaseObject.FALSE);
 	}
-
+	
 	/** null - result
 	 *
 	 * @return */
 	public final ExecStateCode vmSetCallResultNull() {
-
+		
 		return this.riCallResultHandler.execReturn(this, BaseObject.NULL);
 	}
-
+	
 	/** @param r7RR
 	 * @return */
 	public final ExecStateCode vmSetCallResultNumeric(final double r7RR) {
-
+		
 		return this.riCallResultHandler.execReturnNumeric(this, r7RR);
 	}
-
+	
 	/** @param r7RR
 	 * @return */
 	public final ExecStateCode vmSetCallResultNumeric(final int r7RR) {
-
+		
 		return this.riCallResultHandler.execReturnNumeric(this, r7RR);
 	}
-
+	
 	/** @param r7RR
 	 * @return */
 	public final ExecStateCode vmSetCallResultNumeric(final long r7RR) {
-
+		
 		return this.riCallResultHandler.execReturnNumeric(this, r7RR);
 	}
-
+	
 	/** @param r7RR
 	 * @return */
 	public final ExecStateCode vmSetCallResultString(final String r7RR) {
-
+		
 		return this.riCallResultHandler.execReturnString(this, r7RR);
 	}
-
+	
 	/** true - result
 	 *
 	 * @return */
 	public final ExecStateCode vmSetCallResultTrue() {
-
+		
 		return this.riCallResultHandler.execReturn(this, BaseObject.TRUE);
 	}
-
+	
 	/** undefined - result
 	 *
 	 * @return */
 	public final ExecStateCode vmSetCallResultUndefined() {
-
+		
 		return this.riCallResultHandler.execReturn(this, BaseObject.UNDEFINED);
 	}
-
+	
 	/** prepares special call, for next loop, and then repeat same instruction after call finished
 	 *
 	 * @param instructions
@@ -1665,170 +1802,19 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 * @param stop
 	 * @return */
 	public ExecStateCode vmSetResultCallRepeat(final Instruction[] instructions, final int start, final int stop) {
-
+		
 		final ExecProcessState state = this.fldState;
 		assert state == RUN || state == CLL : "Wrong process state: " + state;
-
+		
 		this.fldState = CLL;
-
+		
 		this.fldCode = instructions;
 		this.ri08IP = start;
 		this.ri09IL = stop;
 		this.ri0FI0 = start;
 		return REPEAT;
 	}
-
-	final ExecStateCode vmSetResultVmDirectNumeric(final double r7RR) {
-
-		{
-			final BasePrimitiveNumber precached = Base.forDoublePrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		if (ExecProcess.DBG_TMP_NODIRECT) {
-			this.ra0RB = r7RR == (long) r7RR
-				? new ValueStackLong((long) r7RR)
-				: new ValueStackNumber(r7RR);
-			return null;
-		}
-		{
-			final ValueDirectNumber directNumber = this.rzDirectNumber;
-			if (directNumber != null) {
-				this.ra0RB = directNumber.setValue(r7RR);
-				return null;
-			}
-		}
-		this.ra0RB = this.rzDirectNumber = new ValueDirectNumber(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmDirectNumeric(final int r7RR) {
-
-		{
-			final BasePrimitiveNumber precached = Base.forIntegerPrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		if (ExecProcess.DBG_TMP_NODIRECT) {
-			this.ra0RB = new ValueStackInteger(r7RR);
-			return null;
-		}
-		{
-			final ValueDirectInteger directInteger = this.rzDirectInteger;
-			if (directInteger != null) {
-				this.ra0RB = directInteger.setValue(r7RR);
-				return null;
-			}
-		}
-		this.ra0RB = this.rzDirectInteger = new ValueDirectInteger(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmDirectNumeric(final long r7RR) {
-
-		{
-			final BasePrimitiveNumber precached = Base.forLongPrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		if (ExecProcess.DBG_TMP_NODIRECT) {
-			this.ra0RB = new ValueStackLong(r7RR);
-		}
-		{
-			final ValueDirectLong directLong = this.rzDirectLong;
-			if (directLong != null) {
-				this.ra0RB = directLong.setValue(r7RR);
-				return null;
-			}
-		}
-		this.ra0RB = this.rzDirectLong = new ValueDirectLong(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmDirectString(final String r7RR) {
-
-		{
-			final BasePrimitiveString precached = Base.forStringPrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		if (ExecProcess.DBG_TMP_NODIRECT) {
-			this.ra0RB = new ValueStackString(r7RR);
-			return null;
-		}
-		{
-			final ValueDirectString directString = this.rzDirectString;
-			if (directString != null) {
-				this.ra0RB = this.rzDirectString.setValue(r7RR);
-				return null;
-			}
-		}
-		this.ra0RB = this.rzDirectString = new ValueDirectString(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmStackNumeric(final double r7RR) {
-
-		{
-			final BasePrimitiveNumber precached = Base.forDoublePrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		this.ra0RB = r7RR == (long) r7RR
-			? new ValueStackLong((long) r7RR)
-			: new ValueStackNumber(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmStackNumeric(final int r7RR) {
-
-		{
-			final BasePrimitiveNumber precached = Base.forIntegerPrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		this.ra0RB = new ValueStackInteger(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmStackNumeric(final long r7RR) {
-
-		{
-			final BasePrimitiveNumber precached = Base.forLongPrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		this.ra0RB = new ValueStackLong(r7RR);
-		return null;
-	}
-
-	final ExecStateCode vmSetResultVmStackString(final String r7RR) {
-
-		{
-			final BasePrimitiveString precached = Base.forStringPrecachedOrNull(r7RR);
-			if (precached != null) {
-				this.ra0RB = precached;
-				return null;
-			}
-		}
-		this.ra0RB = new ValueStackString(r7RR);
-		return null;
-	}
-
+	
 	/** SB equals stackBase after this call.
 	 *
 	 * @param resultCode
@@ -1837,14 +1823,14 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 	 *            TODO
 	 * @return */
 	public final ExecStateCode vmStateFinalizeFrames(final ExecStateCode resultCode, final int stackBase, final boolean inline) {
-
+		
 		run : for (ExecStateCode code = resultCode;;) {
 			if (this.ri0BSB <= stackBase) {
 				/** <code>
 				new Error().printStackTrace();
 				System.err.println(">>>> >>> FFNX(" + this.ri0BSB + " | " + this.ri0ASP + " | " + stackBase + "), code: " + code + ", state: " + this.fldState);
 					</code> */
-
+				
 				return inline && code == NEXT
 					? null
 					: code;
@@ -1926,11 +1912,11 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 			}
 		}
 	}
-
+	
 	/** @param code
 	 * @throws BaseAbstractException */
 	public final void vmStateToErrorOrSilence(final ExecStateCode code) throws BaseAbstractException {
-
+		
 		if (code == null) {
 			return;
 		}
@@ -1951,14 +1937,187 @@ public abstract class ExecProcess implements ExecLexicalScope, ExecStackContext/
 		}
 		throw this.throwError("Unknown state for inline finisher: " + code, null);
 	}
-
+	
 	/** Throws (not an error but) a given object. (Much like 'throw o')
 	 *
 	 * @param o
 	 * @return */
 	public final ExecStateCode vmThrow(final BaseObject o) {
-
+		
 		this.ra0RB = o;
 		return ERROR;
+	}
+	
+	/** Creates (probably) temporary arguments object. The guarantee is that they can be properly
+	 * read during current call and before new arguments are generated (by direct call to
+	 * argumentsXXX method or by AE3-VM execution).
+	 *
+	 * for CALLO and CALLS. Use (/Map) some on stack.
+	 *
+	 * for CALLM. Use (/Map) some on stack, use description.
+	 *
+	 * @param size
+	 * @param desc
+	 * @return arguments */
+	protected abstract ExecArguments argumentsCtx(final int size, final NamedToIndexMapper desc);
+	
+	/** @param codeDefault
+	 * @return */
+	abstract ExecStateCode frameUp(final ExecStateCode codeDefault);
+	
+	/** @return */
+	abstract ExecStateCode runImpl(final int stackBase);
+	
+	abstract BaseAbstractException throwError(final Object msg, final Throwable t);
+	
+	final ExecStateCode vmSetResultVmDirectNumeric(final double r7RR) {
+		
+		{
+			final BasePrimitiveNumber precached = Base.forDoublePrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		if (ExecProcess.DBG_TMP_NODIRECT) {
+			this.ra0RB = r7RR == (long) r7RR
+				? new ValueStackLong((long) r7RR)
+				: new ValueStackNumber(r7RR);
+			return null;
+		}
+		{
+			final ValueDirectNumber directNumber = this.rzDirectNumber;
+			if (directNumber != null) {
+				this.ra0RB = directNumber.setValue(r7RR);
+				return null;
+			}
+		}
+		this.ra0RB = this.rzDirectNumber = new ValueDirectNumber(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmDirectNumeric(final int r7RR) {
+		
+		{
+			final BasePrimitiveNumber precached = Base.forIntegerPrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		if (ExecProcess.DBG_TMP_NODIRECT) {
+			this.ra0RB = new ValueStackInteger(r7RR);
+			return null;
+		}
+		{
+			final ValueDirectInteger directInteger = this.rzDirectInteger;
+			if (directInteger != null) {
+				this.ra0RB = directInteger.setValue(r7RR);
+				return null;
+			}
+		}
+		this.ra0RB = this.rzDirectInteger = new ValueDirectInteger(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmDirectNumeric(final long r7RR) {
+		
+		{
+			final BasePrimitiveNumber precached = Base.forLongPrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		if (ExecProcess.DBG_TMP_NODIRECT) {
+			this.ra0RB = new ValueStackLong(r7RR);
+		}
+		{
+			final ValueDirectLong directLong = this.rzDirectLong;
+			if (directLong != null) {
+				this.ra0RB = directLong.setValue(r7RR);
+				return null;
+			}
+		}
+		this.ra0RB = this.rzDirectLong = new ValueDirectLong(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmDirectString(final String r7RR) {
+		
+		{
+			final BasePrimitiveString precached = Base.forStringPrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		if (ExecProcess.DBG_TMP_NODIRECT) {
+			this.ra0RB = new ValueStackString(r7RR);
+			return null;
+		}
+		{
+			final ValueDirectString directString = this.rzDirectString;
+			if (directString != null) {
+				this.ra0RB = this.rzDirectString.setValue(r7RR);
+				return null;
+			}
+		}
+		this.ra0RB = this.rzDirectString = new ValueDirectString(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmStackNumeric(final double r7RR) {
+		
+		{
+			final BasePrimitiveNumber precached = Base.forDoublePrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		this.ra0RB = r7RR == (long) r7RR
+			? new ValueStackLong((long) r7RR)
+			: new ValueStackNumber(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmStackNumeric(final int r7RR) {
+		
+		{
+			final BasePrimitiveNumber precached = Base.forIntegerPrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		this.ra0RB = new ValueStackInteger(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmStackNumeric(final long r7RR) {
+		
+		{
+			final BasePrimitiveNumber precached = Base.forLongPrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		this.ra0RB = new ValueStackLong(r7RR);
+		return null;
+	}
+	
+	final ExecStateCode vmSetResultVmStackString(final String r7RR) {
+		
+		{
+			final BasePrimitiveString precached = Base.forStringPrecachedOrNull(r7RR);
+			if (precached != null) {
+				this.ra0RB = precached;
+				return null;
+			}
+		}
+		this.ra0RB = new ValueStackString(r7RR);
+		return null;
 	}
 }

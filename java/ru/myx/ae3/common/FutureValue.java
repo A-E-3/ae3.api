@@ -11,7 +11,7 @@ import ru.myx.ae3.help.Format;
  * @param <V>
  *            value type */
 public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Value<V>, Describable {
-
+	
 	/** Actually throws something based on 'error' field. Never returns normally.
 	 *
 	 * @param error
@@ -19,31 +19,31 @@ public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Val
 	 *
 	 * @return */
 	static Error throwTaskFailedError(final Object error, final FutureValue<?> task) {
-
-		if (error instanceof Error) {
-			throw (Error) error;
+		
+		if (error instanceof final Error ee) {
+			throw ee;
 		}
-		if (error instanceof RuntimeException) {
-			throw (RuntimeException) error;
+		if (error instanceof final RuntimeException ee) {
+			throw ee;
 		}
-		if (error instanceof BaseObject) {
+		if (error instanceof final BaseObject ee) {
 			throw Exec.createThrown(
-					(BaseObject) error, //
+					ee, //
 					task.baseDescribe(),
 					task.getClass().getSimpleName() + ": task failed");
 		}
-		if (error instanceof Throwable) {
-			throw new Error(Format.Describe.toEcmaSource(task, ""), (Throwable) error);
+		if (error instanceof final Throwable ee) {
+			throw new Error(Format.Describe.toEcmaSource(task, ""), ee);
 		}
 		throw Exec.createThrown(
 				Base.forUnknown(error), //
 				task.baseDescribe(),
 				task.getClass().getSimpleName() + ": task failed");
 	}
-	
+
 	/** @return */
 	default boolean baseAwait() {
-
+		
 		if (this.isFailed()) {
 			return false;
 		}
@@ -54,10 +54,10 @@ public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Val
 			return false;
 		}
 	}
-	
+
 	@Override
 	default Object baseDescribe() {
-
+		
 		if (!this.isDone()) {
 			return "Unfinished task: " + this.getClass().getSimpleName();
 		}
@@ -70,19 +70,19 @@ public interface FutureValue<V> extends /* java.util.concurrent.Future<V>, */Val
 			return Format.Describe.toEcmaSource(t, "");
 		}
 	}
-	
+
 	/** @return */
 	default boolean isCancelled() {
-
+		
 		return this.isFailed();
 	}
-	
+
 	/** @return */
 	boolean isDone();
-	
+
 	/** @return */
 	boolean isFailed();
-	
+
 	/** @return */
 	// BaseObject toNative();
 }
