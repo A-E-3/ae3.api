@@ -11,6 +11,8 @@ import ru.myx.ae3.reflect.ReflectionHidden;
 
 /** @author myx
  *
+ *         TODO: please, move all ECMA/JS (non generic) constants to Ecma place...
+ *		
  * @param <T> */
 public interface BaseString<T extends CharSequence> extends CharSequence, BaseArray, RandomAccess, Value<T> {
 	
@@ -19,25 +21,65 @@ public interface BaseString<T extends CharSequence> extends CharSequence, BaseAr
 	 */
 	@ReflectionHidden
 	BasePrimitiveString EMPTY = new PrimitiveStringEmpty();
+
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BaseObject PROTOTYPE = BaseObject.createObject(BaseObject.PROTOTYPE);
+	
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_BOOLEAN = new PrimitiveStringBaseNaN("boolean");
+	
 	/** ...and it actually will hold java-name, keeping it in memory and increasing probability of
 	 * == check success, especially when 'length' string comes from VM execution. */
 	@ReflectionHidden
 	BasePrimitiveString STR_CALLEE = new PrimitiveStringBaseNaN("callee");
+	
 	/** ...and it actually will hold java-name, keeping it in memory and increasing probability of
 	 * == check success, especially when 'length' string comes from VM execution. */
 	@ReflectionHidden
 	BasePrimitiveString STR_CONSTRUCTOR = new PrimitiveStringBaseNaN("constructor");
-
+	
+	/**
+	 *
+	 */
+	@ReflectionHidden
+	BasePrimitiveString STR_ENUMERABLE = new PrimitiveStringBaseNaN("enumerable");
+	
+	/**
+	 *
+	 */
+	@ReflectionHidden
+	BasePrimitiveString STR_WRITABLE = new PrimitiveStringBaseNaN("writable");
+	
+	/**
+	 *
+	 */
+	@ReflectionHidden
+	BasePrimitiveString STR_CONFIGURABLE = new PrimitiveStringBaseNaN("configurable");
+	
+	/**
+	 *
+	 */
+	@ReflectionHidden
+	BasePrimitiveString STR_GET = new PrimitiveStringBaseNaN("get");
+	
+	/**
+	 *
+	 */
+	@ReflectionHidden
+	BasePrimitiveString STR_SET = new PrimitiveStringBaseNaN("set");
+	
+	/**
+	 *
+	 */
+	@ReflectionHidden
+	BasePrimitiveString STR_VALUE = new PrimitiveStringBaseNaN("value");
+	
 	/**
 	 *
 	 */
@@ -99,40 +141,40 @@ public interface BaseString<T extends CharSequence> extends CharSequence, BaseAr
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_PINFINITY = new PrimitiveStringBaseNumber("+Infinity", Double.POSITIVE_INFINITY);
-
+	
 	/** ...and it actually will hold java-name, keeping it in memory and increasing probability of
 	 * == check success, especially when 'length' string comes from VM execution. */
 	@ReflectionHidden
 	BasePrimitiveString STR_PROTOTYPE = new PrimitiveStringBaseNaN("prototype");
-
+	
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_STRING = new PrimitiveStringBaseNaN("string");
-
+	
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_TO_STRING = new PrimitiveStringBaseNaN("toString");
-
+	
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_TRUE = new PrimitiveStringBaseNaN("true");
-
+	
 	/**
 	 *
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_UNDEFINED = new PrimitiveStringBaseNaN("undefined");
-
+	
 	/** 'utf-8' */
 	@ReflectionHidden
 	BasePrimitiveString STR_UTF8 = new PrimitiveStringBaseNaN("utf-8");
-
+	
 	/**
 	 *
 	 */
@@ -144,7 +186,7 @@ public interface BaseString<T extends CharSequence> extends CharSequence, BaseAr
 	 */
 	@ReflectionHidden
 	BasePrimitiveString STR_ZERO = new PrimitiveStringZero();
-
+	
 	@Override
 	@ReflectionHidden
 	default String baseClass() {
@@ -253,7 +295,7 @@ public interface BaseString<T extends CharSequence> extends CharSequence, BaseAr
 	 * @param replaceValue
 	 * @return */
 	default BaseString<?> replace(final CharSequence searchValue, final CharSequence replaceValue) {
-
+		
 		final String source = this.baseToJavaString();
 		final String result = source.replace(searchValue, replaceValue);
 		return source == result
@@ -274,7 +316,7 @@ public interface BaseString<T extends CharSequence> extends CharSequence, BaseAr
 		
 		return this.stringCompare(s) == 0;
 	}
-
+	
 	/** TODO: can make FutureMergeableCharSequence(start, end) when !isDone() */
 	@Override
 	default CharSequence subSequence(final int start, final int end) {
@@ -285,7 +327,7 @@ public interface BaseString<T extends CharSequence> extends CharSequence, BaseAr
 	/** Must OVERRIDE! */
 	@Override
 	String toString();
-
+	
 	/** @return */
 	default BaseString<?> trim() {
 		
