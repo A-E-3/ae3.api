@@ -88,7 +88,7 @@ public interface ResultHandler {
 				return RB;
 			}
 		},
-		/** Virtual - Call Handler */
+		/** Virtual - Call RequestHandler */
 		CH {
 			
 			@Override
@@ -109,7 +109,7 @@ public interface ResultHandler {
 		public abstract DirectTransport transportForBooleanCheck();
 	}
 
-	/** 'CH' - Call Handler
+	/** 'CH' - Call RequestHandler
 	 *
 	 *
 	 * @author myx */

@@ -11,7 +11,7 @@ import java.io.OutputStream;
  * Idea is to collect in memory or disk dynamically generated data and to collect references on
  * statically available data. */
 public interface TransferCollector extends Closeable, TransferSource {
-	
+
 	/** NUL COLLECTOR instance - dummy collector. It is important to use this one - since
 	 * implementations can easily check for equality and perform some shortcuts while rendering
 	 * something. */
@@ -31,28 +31,26 @@ public interface TransferCollector extends Closeable, TransferSource {
 	 * @return target */
 	TransferTarget getTarget();
 
-	/** @param binary
-	 */
+	/** @param binary */
 	default void printBinary(final TransferCopier binary) {
 
 		this.printBytes(binary.nextDirectArray());
 	}
 
-	/** @param i
-	 */
+	/** @param i */
 	void printByte(int i);
 
-	/** @param bytes
-	 */
+	/** @param bytes */
 	void printBytes(byte[] bytes);
 
-	/** <code>
-		void printString(String string, Charset charset);
-		void printString(String string, String encoding) throws UnsupportedEncodingException;
-	 * </code>
-	 *
-	 * @param string
-	 */
+	/** @param format
+	 * @param args */
+	default void printFormatUtf8(final String format, final Object... args) {
+
+		this.printUtf8(String.format(format, args));
+	}
+
+	/** @param string */
 	void printUtf8(String string);
 
 	/** This method should reset any collector in any state to an clean, empty, opened and ready to
@@ -67,16 +65,14 @@ public interface TransferCollector extends Closeable, TransferSource {
 	 * @param minChunk
 	 * @param maxChunk
 	 * @throws IllegalStateException
-	 * @throws IllegalArgumentException
-	 */
+	 * @throws IllegalArgumentException */
 	void startChunking(final int minChunk, final int maxChunk) throws IllegalStateException, IllegalArgumentException;
 
 	/** Forces collector to exit it's 'chunking' state and write an exit sequence for a
 	 * chunked-encoded data. This method should be called automatically when invoking collector's
 	 * close() method while in 'chunking' state.
 	 *
-	 * @throws IllegalStateException
-	 */
+	 * @throws IllegalStateException */
 	void stopChunking() throws IllegalStateException;
 
 	/** If collector is not closed yet close() method will be called automatically.

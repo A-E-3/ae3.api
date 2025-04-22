@@ -10,7 +10,7 @@ import ru.myx.ae3.serve.ServeRequest;
  * @author myx
  * 
  */
-public interface Handler {
+public interface RequestHandler {
 	/**
 	 * @param request
 	 * @return reply

@@ -8,7 +8,7 @@ import ru.myx.ae3.vfs.Entry;
  * @author myx
  * 
  */
-public interface TargetInterface extends Handler {
+public interface TargetInterface extends RequestHandler {
 	/**
 	 * @return
 	 */
