@@ -20,6 +20,7 @@ final class ExecValueFormat {
 			data.append(describable.baseDescribe());
 			return;
 		}
+		
 		final String stringValue;
 		{
 			String stringValueCheck;
