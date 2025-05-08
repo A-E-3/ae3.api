@@ -2,7 +2,7 @@ package ru.myx.ae3.answer;
 
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.flow.BinaryMessage;
-import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.reflect.ReflectionHidden;
 
@@ -38,5 +38,5 @@ public interface BinaryReplyAnswer<T extends BinaryReplyAnswer<?>> extends Reply
 	}
 
 	@Override
-	UniversalReplyAnswer<?> toCharacter() throws Flow.FlowOperationException;
+	UniversalReplyAnswer<?> toCharacter() throws FlowOperationException;
 }

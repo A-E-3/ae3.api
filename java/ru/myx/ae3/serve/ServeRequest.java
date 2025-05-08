@@ -16,6 +16,7 @@ import ru.myx.ae3.binary.Transfer;
 import ru.myx.ae3.binary.TransferBuffer;
 import ru.myx.ae3.binary.TransferCollector;
 import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.help.Format;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.transform.SerializationRequest;
@@ -412,9 +413,9 @@ public interface ServeRequest extends BaseMessage {
 	 * possible. "UTF-8" encoding should be used by default.
 	 *
 	 * @return reply
-	 * @throws Flow.FlowOperationException */
+	 * @throws FlowOperationException */
 	@Override
-	default BinaryServeRequest<?> toBinary() throws Flow.FlowOperationException {
+	default BinaryServeRequest<?> toBinary() throws FlowOperationException {
 		
 		if (this.isEmpty() || this.isBinary()) {
 			assert this instanceof BinaryServeRequest : "Expected to be an instance of BinaryServeRequest, class: " + this.getClass().getName();
@@ -425,7 +426,7 @@ public interface ServeRequest extends BaseMessage {
 			try {
 				return Request.binaryWrapCharacter((CharacterServeRequest<?>) this);
 			} catch (final UnsupportedEncodingException e) {
-				throw new Flow.FlowOperationException("Error converting from character to binary", e);
+				throw new FlowOperationException("Error converting from character to binary", e);
 			}
 		}
 		if (this.isObject()) {
@@ -486,9 +487,9 @@ public interface ServeRequest extends BaseMessage {
 	 * encoding should be used by default.
 	 *
 	 * @return reply
-	 * @throws Flow.FlowOperationException */
+	 * @throws FlowOperationException */
 	@Override
-	default CharacterServeRequest<?> toCharacter() throws Flow.FlowOperationException {
+	default CharacterServeRequest<?> toCharacter() throws FlowOperationException {
 		
 		if (this.isEmpty() || this.isCharacter()) {
 			assert this instanceof CharacterServeRequest : "Expected to be an instance of CharacterServeRequest, class: " + this.getClass().getName();
@@ -499,7 +500,7 @@ public interface ServeRequest extends BaseMessage {
 			try {
 				return Request.characterWrapBinary((BinaryServeRequest<?>) this);
 			} catch (final UnsupportedEncodingException e) {
-				throw new Flow.FlowOperationException("Error converting from binary to character", e);
+				throw new FlowOperationException("Error converting from binary to character", e);
 			}
 		}
 		if (this.isFile()) {
@@ -526,7 +527,7 @@ public interface ServeRequest extends BaseMessage {
 			try {
 				text = new String(buffer.toDirectArray(), chosenEncoding);
 			} catch (final UnsupportedEncodingException e) {
-				throw new Flow.FlowOperationException("Error creating String from Buffer", e);
+				throw new FlowOperationException("Error creating String from Buffer", e);
 			}
 			return Request.character(this.getEventTypeId(), this.getTitle(), attributes, text);
 		}

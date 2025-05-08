@@ -1,7 +1,7 @@
 package ru.myx.ae3.produce;
 
 import ru.myx.ae3.base.BaseObject;
-import ru.myx.ae3.flow.Flow.FlowOperationException;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.flow.ObjectSource;
 import ru.myx.ae3.flow.ObjectTarget;
 

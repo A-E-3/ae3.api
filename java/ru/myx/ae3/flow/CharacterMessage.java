@@ -27,7 +27,7 @@ public interface CharacterMessage<T extends CharacterMessage<?>> extends BaseMes
 	}
 	
 	@Override
-	UniversalMessage<?> toBinary() throws Flow.FlowOperationException;
+	UniversalMessage<?> toBinary() throws FlowOperationException;
 
 	/**
 	 * It is nasty to explicitly call to toCharacter() when knowing for sure

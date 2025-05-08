@@ -6,7 +6,7 @@ package ru.myx.ae3.answer;
 import java.nio.charset.Charset;
 
 import ru.myx.ae3.base.BaseObject;
-import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.reflect.ReflectionIgnore;
 
 @ReflectionIgnore
@@ -242,7 +242,7 @@ final class WrapperReplyException extends AbstractReplyException {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public WrapperReplyException toBinary() throws Flow.FlowOperationException {
+	public WrapperReplyException toBinary() throws FlowOperationException {
 
 		this.reply = this.reply.toBinary();
 		return this;
@@ -250,7 +250,7 @@ final class WrapperReplyException extends AbstractReplyException {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public WrapperReplyException toCharacter() throws Flow.FlowOperationException {
+	public WrapperReplyException toCharacter() throws FlowOperationException {
 
 		this.reply = this.reply.toCharacter();
 		return this;

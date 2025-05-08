@@ -38,5 +38,5 @@ public interface BinaryMessage<T extends BinaryMessage<?>> extends BaseMessageEd
 	}
 
 	@Override
-	UniversalMessage<?> toCharacter() throws Flow.FlowOperationException;
+	UniversalMessage<?> toCharacter() throws FlowOperationException;
 }

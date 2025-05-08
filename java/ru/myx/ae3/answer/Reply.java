@@ -22,6 +22,7 @@ import ru.myx.ae3.binary.TransferBuffer;
 import ru.myx.ae3.binary.TransferCopier;
 import ru.myx.ae3.flow.CharacterMessage;
 import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.vfs.EntryBinary;
 
 /** CD_XXX codes represent values of HTTP response codes, you can look up their values and
@@ -529,7 +530,7 @@ public class Reply extends AbstractSAPI {
 		try {
 			return Reply.REPLY_IMPL.wrapBinaryReplyAsUniversal(binaryReply, attributes, binary.toString(chosenEncoding));
 		} catch (final UnsupportedEncodingException e) {
-			throw new Flow.FlowOperationException("Error converting from binary to character", e);
+			throw new FlowOperationException("Error converting from binary to character", e);
 		}
 	}
 

@@ -16,6 +16,7 @@ import ru.myx.ae3.binary.Transfer;
 import ru.myx.ae3.binary.TransferBuffer;
 import ru.myx.ae3.binary.TransferCollector;
 import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.help.Format;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.report.Report;
@@ -444,9 +445,9 @@ public interface ReplyAnswer extends BaseMessage {
 	 * encoding should be used by default.
 	 *
 	 * @return reply
-	 * @throws Flow.FlowOperationException */
+	 * @throws FlowOperationException */
 	@Override
-	default BinaryReplyAnswer<?> toBinary() throws Flow.FlowOperationException {
+	default BinaryReplyAnswer<?> toBinary() throws FlowOperationException {
 
 		if (this.isEmpty() || this.isBinary()) {
 			assert this instanceof BinaryReplyAnswer : "Expected to be an instance of BinaryReplyAnswer, class: " + this.getClass().getName();
@@ -515,9 +516,9 @@ public interface ReplyAnswer extends BaseMessage {
 	 * encoding should be used by default.
 	 *
 	 * @return reply
-	 * @throws Flow.FlowOperationException */
+	 * @throws FlowOperationException */
 	@Override
-	default CharacterReplyAnswer<?> toCharacter() throws Flow.FlowOperationException {
+	default CharacterReplyAnswer<?> toCharacter() throws FlowOperationException {
 
 		if (this.isEmpty() || this.isCharacter()) {
 			assert this instanceof CharacterReplyAnswer : "Expected to be an instance of CharacterReplyAnswer, class: " + this.getClass().getName();
@@ -561,7 +562,7 @@ public interface ReplyAnswer extends BaseMessage {
 			try {
 				text = new String(buffer.toDirectArray(), chosenEncoding);
 			} catch (final UnsupportedEncodingException e) {
-				throw new Flow.FlowOperationException("Error creating String from Buffer", e);
+				throw new FlowOperationException("Error creating String from Buffer", e);
 			}
 			return Reply.string(
 					this.getEventTypeId(), //

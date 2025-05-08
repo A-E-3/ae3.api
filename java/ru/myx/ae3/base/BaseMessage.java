@@ -14,6 +14,7 @@ import ru.myx.ae3.common.HasAttributes;
 import ru.myx.ae3.flow.BinaryMessage;
 import ru.myx.ae3.flow.CharacterMessage;
 import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.help.Format;
 import ru.myx.ae3.reflect.ReflectionHidden;
 import ru.myx.ae3.report.Event;
@@ -288,7 +289,7 @@ public interface BaseMessage extends Event, BodyAccessUnknown, HasAttributes {
 	 * encoding should be used by default.
 	 *
 	 * @return message
-	 * @throws Flow.FlowOperationException,
+	 * @throws FlowOperationException,
 	 *             Transfer.TransferOperationException */
 	@Override
 	default BinaryMessage<?> toBinary() {
@@ -359,9 +360,9 @@ public interface BaseMessage extends Event, BodyAccessUnknown, HasAttributes {
 	 * encoding should be used by default.
 	 *
 	 * @return message
-	 * @throws Flow.FlowOperationException */
+	 * @throws FlowOperationException */
 	@Override
-	default CharacterMessage<?> toCharacter() throws Flow.FlowOperationException, Transfer.TransferOperationException {
+	default CharacterMessage<?> toCharacter() throws FlowOperationException, Transfer.TransferOperationException {
 		
 		if (this.isEmpty() || this.isCharacter()) {
 			assert this instanceof CharacterMessage : "Expected to be an instance of CharacterMessage, class: " + this.getClass().getName();
@@ -395,7 +396,7 @@ public interface BaseMessage extends Event, BodyAccessUnknown, HasAttributes {
 			try {
 				text = new String(buffer.toDirectArray(), chosenEncoding);
 			} catch (final UnsupportedEncodingException e) {
-				throw new Flow.FlowOperationException("Error creating String from Buffer", e);
+				throw new FlowOperationException("Error creating String from Buffer", e);
 			}
 			return Flow.character(this.getEventTypeId(), this.getTitle(), attributes, text);
 		}

@@ -30,18 +30,6 @@ import ru.myx.ae3.vfs.EntryBinary;
  *         the creation of type comments go to Window>Preferences>Java>Code Generation. */
 public final class Flow extends AbstractSAPI {
 	
-	/** @author myx */
-	@SuppressWarnings("serial")
-	public static class FlowOperationException extends RuntimeException {
-		
-		/** @param message
-		 * @param parent */
-		public FlowOperationException(final String message, final Throwable parent) {
-			
-			super(message, parent);
-		}
-	}
-	
 	private static final AbstractFlowImpl FLOW_IMPL;
 	
 	static {
@@ -307,7 +295,7 @@ public final class Flow extends AbstractSAPI {
 		try {
 			return Flow.FLOW_IMPL.wrapBinaryMessageAsUniversal(binaryMessage, attributes, binary.toString(chosenEncoding));
 		} catch (final UnsupportedEncodingException e) {
-			throw new Flow.FlowOperationException("Error converting from binary to universal", e);
+			throw new FlowOperationException("Error converting from binary to universal", e);
 		}
 	}
 	
@@ -321,7 +309,7 @@ public final class Flow extends AbstractSAPI {
 			((ObjectSourceAsync<T>) source).connectTarget(target);
 			return true;
 		}
-		Act.launch(null, new Function<Object, Object>() {
+		Act.launch(null, new Function<>() {
 			
 			@Override
 			public Object apply(final Object v) {
@@ -511,8 +499,8 @@ public final class Flow extends AbstractSAPI {
 	
 	/** @param source
 	 * @param target
-	 * @throws Flow.FlowOperationException */
-	public static final <T> void transferFully(final ObjectSource<T> source, final ObjectTarget<T> target) throws Flow.FlowOperationException {
+	 * @throws FlowOperationException */
+	public static final <T> void transferFully(final ObjectSource<T> source, final ObjectTarget<T> target) throws FlowOperationException {
 		
 		for (;;) {
 			while (source.isReady()) {
@@ -522,7 +510,7 @@ public final class Flow extends AbstractSAPI {
 			}
 			if (!source.isExhausted()) {
 				try {
-					Thread.sleep(50L);
+					Thread.sleep(45L);
 				} catch (final InterruptedException e) {
 					throw new RuntimeException("interrupted", e);
 				}

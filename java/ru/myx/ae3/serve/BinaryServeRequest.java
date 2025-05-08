@@ -2,7 +2,7 @@ package ru.myx.ae3.serve;
 
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.flow.BinaryMessage;
-import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.reflect.ReflectionHidden;
 import ru.myx.ae3.reflect.ReflectionIgnore;
@@ -36,5 +36,5 @@ public interface BinaryServeRequest<T extends BinaryServeRequest<?>> extends Ser
 	}
 	
 	@Override
-	UniversalServeRequest<?> toCharacter() throws Flow.FlowOperationException;
+	UniversalServeRequest<?> toCharacter() throws FlowOperationException;
 }

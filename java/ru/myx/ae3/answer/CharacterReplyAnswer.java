@@ -2,7 +2,7 @@ package ru.myx.ae3.answer;
 
 import ru.myx.ae3.base.BaseObject;
 import ru.myx.ae3.flow.CharacterMessage;
-import ru.myx.ae3.flow.Flow;
+import ru.myx.ae3.flow.FlowOperationException;
 import ru.myx.ae3.reflect.Reflect;
 import ru.myx.ae3.reflect.ReflectionHidden;
 
@@ -27,7 +27,7 @@ public interface CharacterReplyAnswer<T extends CharacterReplyAnswer<?>> extends
 	}
 
 	@Override
-	UniversalReplyAnswer<?> toBinary() throws Flow.FlowOperationException;
+	UniversalReplyAnswer<?> toBinary() throws FlowOperationException;
 	
 	/**
 	 * It is nasty to explicitly call to toCharacter() when knowing for sure
