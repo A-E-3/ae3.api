@@ -11,80 +11,50 @@ import ru.myx.ae3.flow.ObjectSource;
 import ru.myx.ae3.flow.ObjectTarget;
 
 abstract class FactoryGroup {
-	static final int	EXACT	= 0;
-	
-	static final int	GROUP	= 1;
-	
-	/**
-	 * @param type
+
+	static final int EXACT = 0;
+
+	static final int GROUP = 1;
+
+	/** @param type
 	 * @param attributes
 	 * @param context
-	 * @return boolean
-	 */
+	 * @return boolean */
 	abstract boolean accepts(final String type, final BaseObject attributes, final Class<?> context);
-	
-	/**
-	 * @param factory
-	 */
+
+	/** @param factory */
 	abstract void add(final ObjectFactory<?, ?> factory);
-	
-	/**
-	 * @param type
+
+	/** @return factory array */
+	abstract ObjectFactory<?, ?>[] factories();
+
+	/** @param type
+	 * @param attributes
+	 * @param sourceClass
+	 * @return factory */
+	abstract ObjectFactory<Object, Object> factory(final String type, final BaseObject attributes, final Class<?> sourceClass);
+
+	/** @param type
+	 * @param attributes
+	 * @param sourceClass
+	 * @param context
+	 * @return object */
+	abstract Object produce(final String type, final BaseObject attributes, final Class<?> sourceClass, final Object context);
+
+	/** @return int */
+	abstract int type();
+
+	/** @param type
+	 * @param attributes
+	 * @param sourceClass
+	 * @param context
+	 * @return source */
+	abstract ObjectSource<Object> wrapSource(final String type, final BaseObject attributes, final Class<?> sourceClass, final Object context);
+
+	/** @param type
 	 * @param attributes
 	 * @param sourceClass
 	 * @param chain
-	 * @return target
-	 */
-	abstract ObjectTarget<Object> connect(
-			final String type,
-			final BaseObject attributes,
-			final Class<?> sourceClass,
-			final ObjectTarget<Object> chain);
-	
-	/**
-	 * @return factory array
-	 */
-	abstract ObjectFactory<?, ?>[] factories();
-	
-	/**
-	 * @param type
-	 * @param attributes
-	 * @param sourceClass
-	 * @return factory
-	 */
-	abstract ObjectFactory<Object, Object> factory(
-			final String type,
-			final BaseObject attributes,
-			final Class<?> sourceClass);
-	
-	/**
-	 * @param type
-	 * @param attributes
-	 * @param sourceClass
-	 * @param context
-	 * @return source
-	 */
-	abstract ObjectSource<Object> prepare(
-			final String type,
-			final BaseObject attributes,
-			final Class<?> sourceClass,
-			final Object context);
-	
-	/**
-	 * @param type
-	 * @param attributes
-	 * @param sourceClass
-	 * @param context
-	 * @return object
-	 */
-	abstract Object produce(
-			final String type,
-			final BaseObject attributes,
-			final Class<?> sourceClass,
-			final Object context);
-	
-	/**
-	 * @return int
-	 */
-	abstract int type();
+	 * @return target */
+	abstract ObjectTarget<Object> wrapTarget(final String type, final BaseObject attributes, final Class<?> sourceClass, final ObjectTarget<Object> chain);
 }

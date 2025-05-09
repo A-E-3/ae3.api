@@ -29,12 +29,12 @@ final class ExactWrapper extends FactoryGroup {
 	}
 	
 	@Override
-	public final ObjectTarget<Object> connect(
+	public final ObjectTarget<Object> wrapTarget(
 			final String type,
 			final BaseObject attributes,
 			final Class<?> sourceClass,
 			final ObjectTarget<Object> chain) {
-		return this.factory.connect( type, attributes, sourceClass, chain );
+		return this.factory.wrapTarget( type, attributes, sourceClass, chain );
 	}
 	
 	@Override
@@ -51,12 +51,12 @@ final class ExactWrapper extends FactoryGroup {
 	}
 	
 	@Override
-	public final ObjectSource<Object> prepare(
+	public final ObjectSource<Object> wrapSource(
 			final String type,
 			final BaseObject attributes,
 			final Class<?> sourceClass,
 			final Object context) {
-		return this.factory.prepare( type, attributes, context );
+		return this.factory.wrapSource( type, attributes, context );
 	}
 	
 	@Override

@@ -50,7 +50,7 @@ final class TypeFactory extends FactoryGroup {
 	}
 	
 	@Override
-	public final ObjectTarget<Object> connect(
+	public final ObjectTarget<Object> wrapTarget(
 			final String type,
 			final BaseObject attributes,
 			final Class<?> sourceClass,
@@ -58,7 +58,7 @@ final class TypeFactory extends FactoryGroup {
 		final FactoryGroup factory = this.factoryGroup( type, attributes, sourceClass );
 		return factory == null
 				? null
-				: factory.connect( type, attributes, sourceClass, chain );
+				: factory.wrapTarget( type, attributes, sourceClass, chain );
 	}
 	
 	@Override
@@ -82,7 +82,7 @@ final class TypeFactory extends FactoryGroup {
 	}
 	
 	@Override
-	public final ObjectSource<Object> prepare(
+	public final ObjectSource<Object> wrapSource(
 			final String type,
 			final BaseObject attributes,
 			final Class<?> sourceClass,
@@ -90,7 +90,7 @@ final class TypeFactory extends FactoryGroup {
 		final FactoryGroup factory = this.factoryGroup( type, attributes, sourceClass );
 		return factory == null
 				? null
-				: factory.prepare( type, attributes, sourceClass, context );
+				: factory.wrapSource( type, attributes, sourceClass, context );
 	}
 	
 	@Override

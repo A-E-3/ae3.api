@@ -41,7 +41,7 @@ public interface ObjectFactory<S, T> {
 	 * @param target
 	 * @return target
 	 */
-	default ObjectTarget<S> connect(final String variant, final BaseObject attributes, final Class<?> source, final ObjectTarget<T> target) {
+	default ObjectTarget<S> wrapTarget(final String variant, final BaseObject attributes, final Class<?> source, final ObjectTarget<T> target) {
 
 		final ObjectFactory<S, T> factory = this.factory(variant, attributes, source);
 		if (factory == null) {
@@ -89,7 +89,7 @@ public interface ObjectFactory<S, T> {
 	 * @param source
 	 * @return source
 	 */
-	default ObjectSource<T> prepare(final String variant, final BaseObject attributes, final S source) {
+	default ObjectSource<T> wrapSource(final String variant, final BaseObject attributes, final S source) {
 
 		final ObjectFactory<S, T> factory = this.factory(variant, attributes, source == null
 			? null

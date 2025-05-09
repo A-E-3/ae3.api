@@ -71,17 +71,17 @@ final class ClassFactory extends FactoryGroup {
 	}
 	
 	@Override
-	public final ObjectTarget<Object> connect(
+	public final ObjectTarget<Object> wrapTarget(
 			final String type,
 			final BaseObject attributes,
 			final Class<?> sourceClass,
 			final ObjectTarget<Object> chain) {
 		final FactoryGroup factory = this.byType.get( type );
 		return factory != null
-				? factory.connect( type, attributes, sourceClass, chain )
+				? factory.wrapTarget( type, attributes, sourceClass, chain )
 				: this.wildcard == null
 						? null
-						: this.wildcard.connect( type, attributes, sourceClass, chain );
+						: this.wildcard.wrapTarget( type, attributes, sourceClass, chain );
 	}
 	
 	@Override
@@ -103,17 +103,17 @@ final class ClassFactory extends FactoryGroup {
 	}
 	
 	@Override
-	public final ObjectSource<Object> prepare(
+	public final ObjectSource<Object> wrapSource(
 			final String type,
 			final BaseObject attributes,
 			final Class<?> sourceClass,
 			final Object context) {
 		final FactoryGroup factory = this.byType.get( type );
 		return factory != null
-				? factory.prepare( type, attributes, sourceClass, context )
+				? factory.wrapSource( type, attributes, sourceClass, context )
 				: this.wildcard == null
 						? null
-						: this.wildcard.prepare( type, attributes, sourceClass, context );
+						: this.wildcard.wrapSource( type, attributes, sourceClass, context );
 	}
 	
 	@Override

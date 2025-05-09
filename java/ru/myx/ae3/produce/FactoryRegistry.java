@@ -66,7 +66,7 @@ final class FactoryRegistry {
 	 * @param attributes
 	 * @param context
 	 * @return object */
-	final Object create(final Class<?> target, final String type, final BaseObject attributes, final Object context) {
+	final Object produce(final Class<?> target, final String type, final BaseObject attributes, final Object context) {
 
 		final FactoryGroup factory = this.byClass.get(target);
 		if (factory == null) {
@@ -126,14 +126,14 @@ final class FactoryRegistry {
 	 * @param attributes
 	 * @param context
 	 * @return source */
-	final ObjectSource<?> sourcePrepared(final Class<?> target, final String type, final BaseObject attributes, final Object context) {
+	final ObjectSource<?> wrapSource(final Class<?> target, final String type, final BaseObject attributes, final Object context) {
 
 		final FactoryGroup factory = this.byClass.get(target);
 		if (factory == null) {
 			return null;
 		}
 
-		return factory.prepare(
+		return factory.wrapSource(
 				type,
 				attributes,
 				context == null
@@ -148,7 +148,13 @@ final class FactoryRegistry {
 	 * @param sourceClass
 	 * @param chain
 	 * @return target */
-	final ObjectTarget<?> targetConnected(final Class<?> target, final String type, final BaseObject attributes, final Class<?> sourceClass, final ObjectTarget<?> chain) {
+	final ObjectTarget<?> wrapTarget(//
+			final Class<?> target,
+			final String type,
+			final BaseObject attributes,
+			final Class<?> sourceClass,
+			final ObjectTarget<?> chain//
+	) {
 
 		final FactoryGroup factory = this.byClass.get(target);
 		if (factory == null) {
@@ -158,6 +164,6 @@ final class FactoryRegistry {
 		@SuppressWarnings("unchecked")
 		final ObjectTarget<Object> targetChain = (ObjectTarget<Object>) chain;
 
-		return factory.connect(type, attributes, sourceClass, targetChain);
+		return factory.wrapTarget(type, attributes, sourceClass, targetChain);
 	}
 }
