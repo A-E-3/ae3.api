@@ -4,7 +4,6 @@ Title: AE3 API Package
 Requires: \
 	myx/clean-java.io \
 	myx/clean-java.util \
-	myx/clean-java.e5 \
 
 Provides: \
 	ae3.api \
