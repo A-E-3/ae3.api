@@ -8,7 +8,7 @@ package ru.myx.ae3.vfs.ars;
  * @param <O>
  * @param <R>
  * @param <A> */
-public interface ArsStorage<O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> extends ArsInterface<O, R, A> {
+public interface ArsStorage<O extends ArsRecord, R extends ArsReference<O>, A extends ArsRefArray<R>> extends ArsInterface<O, R, A> {
 	
 	/** @return */
 	R getRootReference();

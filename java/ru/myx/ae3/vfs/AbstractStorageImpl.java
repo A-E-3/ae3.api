@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import ru.myx.ae3.exec.ExecProcess;
-import ru.myx.ae3.vfs.ars.ArsArray;
+import ru.myx.ae3.vfs.ars.ArsRefArray;
 import ru.myx.ae3.vfs.ars.ArsRecord;
 import ru.myx.ae3.vfs.ars.ArsReference;
 import ru.myx.ae3.vfs.ars.ArsStorage;
@@ -19,7 +19,7 @@ abstract class AbstractStorageImpl implements VfsStorage {
 	public abstract//
 	EntryContainer createRamStorageRoot(String name);
 	
-	public abstract <O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> //
+	public abstract <O extends ArsRecord, R extends ArsReference<O>, A extends ArsRefArray<R>> //
 	EntryContainer createRoot(final ArsStorage<O, R, A> impl);
 	
 	public abstract//

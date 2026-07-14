@@ -11,14 +11,14 @@ import ru.myx.ae3.vfs.TreeReadType;
  * @param <O>
  * @param <R>
  * @param <A> */
-public interface ArsInterface<O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> {
+public interface ArsInterface<O extends ArsRecord, R extends ArsReference<O>, A extends ArsRefArray<R>> {
 
 	/** @author myx
 	 *
 	 * @param <O>
 	 * @param <R>
 	 * @param <A> */
-	public static interface ReadOnly<O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> extends ArsInterface<O, R, A> {
+	public static interface ReadOnly<O extends ArsRecord, R extends ArsReference<O>, A extends ArsRefArray<R>> extends ArsInterface<O, R, A> {
 		
 		@Override
 		public default Value<R> doLinkDelete(final R template, final O object, final O key, final TreeLinkType mode) {

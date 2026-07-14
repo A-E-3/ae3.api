@@ -3,6 +3,8 @@
 	<name>ae3.api</name>
 	<comment></comment>
 	<projects>
+		<project>clean-java.io</project>
+		<project>clean-java.util</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -18,17 +20,7 @@
 		<link>
 			<name>clean-java.e5</name>
 			<type>2</type>
-			<location>/Volumes/ws-2017/myx-work/source/myx/clean-java.e5/java</location>
-		</link>
-		<link>
-			<name>clean-java.io</name>
-			<type>2</type>
-			<location>/Volumes/ws-2017/myx-work/source/myx/clean-java.io/java</location>
-		</link>
-		<link>
-			<name>clean-java.util</name>
-			<type>2</type>
-			<location>/Volumes/ws-2017/myx-work/source/myx/clean-java.util/java</location>
+			<location>/Volumes/workspace/myx/clean-java.e5/java</location>
 		</link>
 	</linkedResources>
 	<filteredResources>

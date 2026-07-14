@@ -8,7 +8,7 @@ import ru.myx.ae3.common.Transaction;
  * @param <O>
  * @param <R>
  * @param <A> */
-public interface ArsTransaction<O extends ArsRecord, R extends ArsReference<O>, A extends ArsArray<R>> extends ArsInterface<O, R, A>, Transaction {
+public interface ArsTransaction<O extends ArsRecord, R extends ArsReference<O>, A extends ArsRefArray<R>> extends ArsInterface<O, R, A>, Transaction {
 	
 	/** @throws Exception */
 	@Override
