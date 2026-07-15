@@ -9,7 +9,6 @@
 	</classpathentry>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.util"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.io"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ae3.api.e5"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.e5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
