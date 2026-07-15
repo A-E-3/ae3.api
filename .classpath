@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="java"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ae3.api.e5"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.io"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.util"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.util"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.io"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ae3.api.e5"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/clean-java.e5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
