@@ -3,6 +3,7 @@
 	<name>ae3.api</name>
 	<comment></comment>
 	<projects>
+		<project>ae3.api.e5</project>
 		<project>clean-java.io</project>
 		<project>clean-java.util</project>
 	</projects>
@@ -16,13 +17,6 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>clean-java.e5</name>
-			<type>2</type>
-			<location>/Volumes/workspace/myx/clean-java.e5/java</location>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1652425905754</id>
