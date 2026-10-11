@@ -566,6 +566,9 @@ public interface ResultHandler {
 	/** stack / detach-able */
 	static ResultHandlerDirect FS_BNN_NXT = EFS_BNN_NXT.INSTANCE;
 	
+	/** stack push / detach-able; string results stay raw (ValueStackString), no string-cache */
+	static ResultHandlerBasic FS_BSN_NXT = EFS_BSN_NXT.INSTANCE;
+	
 	/** temp / context-local */
 	static ResultHandler FT_BNN_NXT = EFT_BNN_NXT.INSTANCE;
 	
